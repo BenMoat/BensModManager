@@ -1,1 +1,1 @@
-A Web App to manage Supra modifications
+A Web App to manage Supra mods

@@ -1,7 +1,7 @@
-﻿@model PaginatedList<BensModManager.Models.Modification>
+﻿@model PaginatedList<BensModManager.Models.Mod>
 
 <div class="title-container text-center text-light">
-    <h1 class="modifications-header offcanvas-header text-light">Mods</h1>
+    <h1 class="mods-header offcanvas-header text-light">Mods</h1>
 </div>
 
 <form asp-action="Index" method="get">
@@ -16,12 +16,12 @@
         </div>
         <div class="col">
             <input type="text"
-                   for="Mod"
-                   name="Mod"
-                   id="searchModificationName"
+                   for="ModName"
+                   name="ModName"
+                   id="searchModName"
                    class="form-control bg-dark text-light"
                    placeholder="Mod Name"
-                   value="@ViewData["Mod"]" />
+                   value="@ViewData["ModName"]" />
         </div>
 
         <div class="col">
@@ -32,7 +32,7 @@
                 <i class="fas fa-search"></i>
             </button>
         </div>
-        @if (@ViewData["Mod"] != null || @ViewData["ModType"] != null)
+        @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
         {
             <div class="col">
                 <a id="fullListBtn"
@@ -60,16 +60,16 @@
                     Mod Type
                 </th>
                 <th scope="col">
-                    <a onclick="showInPopup('@Url.Action("AddOrEdit","Modifications",null,Context.Request.Scheme)','New Mod')" class="btn btn-success text-white"><i class="fas fa-car"></i>+</a>
+                    <a onclick="showInPopup('@Url.Action("AddOrEdit","Mods",null,Context.Request.Scheme)','New Mod')" class="btn btn-success text-white"><i class="fas fa-car"></i>+</a>
                 </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr onclick="showInPopup('@Url.Action("AddOrEdit","Modifications",new {id=item.ID},Context.Request.Scheme)','Update Mod')" class="focusAnchor">
+                <tr onclick="showInPopup('@Url.Action("AddOrEdit","Mods",new {id=item.ID},Context.Request.Scheme)','Update Mod')" class="focusAnchor">
                     <td>
-                        @Html.DisplayFor(modelItem => item.Mod)
+                        @Html.DisplayFor(modelItem => item.ModName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Price)
@@ -92,14 +92,14 @@
     <a asp-action="Index"
        asp-route-sortOrder="@ViewData["CurrentSort"]"
        asp-route-pageNumber="@(Model.PageIndex - 1)"
-       asp-route-currentFilter="@ViewData["Mod"]"
+       asp-route-currentFilter="@ViewData["ModName"]"
        class="btn btn-default btn-outline-light @prevDisabled">
         Previous
     </a>
     <a asp-action="Index"
        asp-route-sortOrder="@ViewData["CurrentSort"]"
        asp-route-pageNumber="@(Model.PageIndex + 1)"
-       asp-route-currentFilter="@ViewData["Mod"]"
+       asp-route-currentFilter="@ViewData["ModName"]"
        class="btn btn-default btn-outline-light @nextDisabled">
         Next
     </a>

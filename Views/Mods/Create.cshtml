@@ -1,4 +1,4 @@
-﻿@model BensModManager.Models.Modification
+﻿@model BensModManager.Models.Mod
 
 @{
     ViewData["Title"] = "Create";
@@ -13,9 +13,9 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Mod" class="control-label"></label>
-                <input asp-for="Mod" class="form-control" />
-                <span asp-validation-for="Mod" class="text-danger"></span>
+                <label asp-for="ModName" class="control-label"></label>
+                <input asp-for="ModName" class="form-control" />
+                <span asp-validation-for="ModName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>

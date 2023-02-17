@@ -14,31 +14,31 @@ namespace BensModManager.Models
                 serviceProvider.GetRequiredService<
 					DbContextOptions<BensModManagerContext>>()))
             {
-                // Look for any modifications.
-                if (context.Modification.Any())
+                // Look for any mods.
+                if (context.Mod.Any())
                 {
                     
                     return;   // DB has been seeded
                 }
 
-                context.Modification.AddRange(
-                    new Modification
+                context.Mod.AddRange(
+                    new Mod
                     {
-                        Mod = "MST Intake and Turbo Inlet",
+                        ModName = "MST Intake and Turbo Inlet",
                         Price = "443.59",
                         ModType = "Performance",
                     },
 
-                    new Modification
+                    new Mod
                     {
-                        Mod = "Motech Performance Wheel Spacers & Locking Nut",
+                        ModName = "Motech Performance Wheel Spacers & Locking Nut",
                         Price = "214.95",
                         ModType = "Exterior",
                     },
                     
-                    new Modification
+                    new Mod
                     {
-                        Mod = "OHC Steering Wheel",
+                        ModName = "OHC Steering Wheel",
                         Price = "641.50",
                         ModType = "Interior",
                     }

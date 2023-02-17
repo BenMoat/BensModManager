@@ -8,6 +8,6 @@ namespace BensModManager.Data
 			: base(options)
 		{
 		}
-		public DbSet<Models.Modification> Modification { get; set; }
+		public DbSet<Models.Mod> Mod { get; set; }
 	}
 }

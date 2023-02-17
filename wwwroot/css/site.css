@@ -102,11 +102,11 @@ tr.focusRow:not(#headers) {
     align-self: center;
     }
 
-#searchModificationName {
+#searchModName {
     height: 55px;
 }
 
-#modificationPopup {
+#modPopup {
     animation: popup 0.3s;
 }
 
@@ -162,11 +162,11 @@ tr.focusRow:not(#headers) {
     border-color: #198754;
 }
 
-#searchModificationName::placeholder {
+#searchModName::placeholder {
     color: white;
 }
 
-.modifications-header {
+.mods-header {
     display: block;
     margin-top: 5%;
     margin-bottom: 5%;

@@ -12,7 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 #endregion
 
-namespace ForzaColourSearch
+namespace BensModManager
 {
     public class Helper
     {

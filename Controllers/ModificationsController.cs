@@ -4,20 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ForzaColourSearch.Data;
-using ForzaColourSearch.Models;
-using static ForzaColourSearch.Helper;
+using BensModManager.Data;
+using BensModManager.Models;
+using static BensModManager.Helper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 #endregion
 
-namespace ForzaColourSearch.Controllers
+namespace BensModManager.Controllers
 {
     public class ModificationsController : Controller
     {
-        private readonly ForzaColourSearchContext _context;
+        private readonly BensModManagerContext _context;
 
-        public ModificationsController(ForzaColourSearchContext context)
+        public ModificationsController(BensModManagerContext context)
         {
             _context = context;
         }
@@ -38,8 +38,8 @@ namespace ForzaColourSearch.Controllers
             ViewData["CurrentSort"] = sortOrder;
 
 
-            var vehicles = from s in _context.Vehicle
-                           select s;
+            var vehicles = from s in _context.Modification
+						   select s;
 
             //SearchMake search criteria =
             if (!String.IsNullOrEmpty(Mod))
@@ -70,7 +70,7 @@ namespace ForzaColourSearch.Controllers
                 return View(new Modification());
             else
             {
-                var vehicleModel = await _context.Vehicle.FindAsync(id);
+                var vehicleModel = await _context.Modification.FindAsync(id);
                 if (vehicleModel == null)
                 {
                     return NotFound();
@@ -107,7 +107,7 @@ namespace ForzaColourSearch.Controllers
                         { throw; }
                     }
                 }
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Vehicle.ToList()) });
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Modification.ToList()) });
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", vehicleModel) });
         }
@@ -120,7 +120,7 @@ namespace ForzaColourSearch.Controllers
                 return NotFound();
             }
 
-            var vehicleModel = await _context.Vehicle
+            var vehicleModel = await _context.Modification
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (vehicleModel == null)
             {
@@ -135,15 +135,15 @@ namespace ForzaColourSearch.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var vehicleModel = await _context.Vehicle.FindAsync(id);
-            _context.Vehicle.Remove(vehicleModel);
+            var vehicleModel = await _context.Modification.FindAsync(id);
+            _context.Modification.Remove(vehicleModel);
             await _context.SaveChangesAsync();
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Vehicle.ToList()) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Modification.ToList()) });
         }
 
         private bool VehicleModelExists(int id)
         {
-            return _context.Vehicle.Any(e => e.ID == id);
+            return _context.Modification.Any(e => e.ID == id);
         }
     }
 }

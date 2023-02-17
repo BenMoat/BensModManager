@@ -5,10 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using ForzaColourSearch.Data;
+using BensModManager.Data;
 #endregion
 
-namespace ForzaColourSearch
+namespace BensModManager
 {
 	public class Startup
 	{
@@ -24,8 +24,8 @@ namespace ForzaColourSearch
 		{
 			services.AddControllersWithViews();
 
-		    services.AddDbContext<ForzaColourSearchContext>(options =>
-		            options.UseSqlServer(Configuration.GetConnectionString("ForzaColourSearchContext")));
+		    services.AddDbContext<BensModManagerContext>(options =>
+		            options.UseSqlServer(Configuration.GetConnectionString("BensModManagerContext")));
 
 
 		}

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ForzaColourSearch.Models
+namespace BensModManager.Models
 {
 	public class Modification
 	{

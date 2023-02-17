@@ -1,11 +1,11 @@
 ﻿#region using statements
-using ForzaColourSearch.Models;
+using BensModManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 #endregion
 
-namespace ForzaColourSearch.Controllers
+namespace BensModManager.Controllers
 {
 	public class HomeController : Controller
 	{

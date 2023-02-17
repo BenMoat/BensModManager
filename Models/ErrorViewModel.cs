@@ -1,6 +1,6 @@
 using System;
 
-namespace ForzaColourSearch.Models
+namespace BensModManager.Models
 {
 	public class ErrorViewModel
 	{

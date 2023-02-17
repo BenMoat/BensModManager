@@ -1,27 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using ForzaColourSearch.Data;
+using BensModManager.Data;
 using System;
 using System.Linq;
 
-namespace ForzaColourSearch.Models
+namespace BensModManager.Models
 {
     public static class SeedData
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using (var context = new ForzaColourSearchContext(
+            using (var context = new BensModManagerContext(
                 serviceProvider.GetRequiredService<
-					DbContextOptions<ForzaColourSearchContext>>()))
+					DbContextOptions<BensModManagerContext>>()))
             {
                 // Look for any vehicles.
-                if (context.Vehicle.Any())
+                if (context.Modification.Any())
                 {
                     
                     return;   // DB has been seeded
                 }
 
-                context.Vehicle.AddRange(
+                context.Modification.AddRange(
                     new Modification
                     {
                         Mod = "Ferrari",

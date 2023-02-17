@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <StartupObject>ForzaColourSearch.Program</StartupObject>
+    <StartupObject>BensModManager.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

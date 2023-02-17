@@ -1,7 +1,7 @@
 ﻿@model PaginatedList<BensModManager.Models.Modification>
 
 <div class="title-container text-center text-light">
-    <h1 class="vehicles-header offcanvas-header text-light">Mods</h1>
+    <h1 class="modifications-header offcanvas-header text-light">Mods</h1>
 </div>
 
 <form asp-action="Index" method="get">
@@ -18,7 +18,7 @@
             <input type="text"
                    for="Mod"
                    name="Mod"
-                   id="searchModName"
+                   id="searchModificationName"
                    class="form-control bg-dark text-light"
                    placeholder="Mod Name"
                    value="@ViewData["Mod"]" />

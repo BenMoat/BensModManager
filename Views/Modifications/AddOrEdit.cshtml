@@ -3,7 +3,7 @@
 @{ Layout = null; }
 
 <form asp-action="AddOrEdit" asp-route-id="@Model.ID"
-	  class="needs-validation row g-3" id="vehicleForm" novalidate
+	  class="needs-validation row g-3" id="modificationForm" novalidate
 	  onclick="validation()"
 	  onload="custVis()"
 	  onsubmit="return jQueryAjaxPost(this);">
@@ -40,9 +40,9 @@
 			<option selected disabled value=""></option>
 		</select>
 		<div class="invalid-feedback">
-			Please choose a paint type. This can be typed and selected from the dropdown.
+			Please choose a Mod type. This can be typed and selected from the dropdown.
 		</div>
-		<!--Use ID from this input to parse the paint type as the default dropdown selection for editing a vehicle-->
+		<!--Use ID from this input to parse the Mod type as the default dropdown selection for editing a modification-->
 		<input hidden asp-for="ModType" type="text" id="ModTypeValue">
 	</div>
 	<button type="submit" onclick="validation()" class="btn btn-default btn-outline-light">Submit</button>

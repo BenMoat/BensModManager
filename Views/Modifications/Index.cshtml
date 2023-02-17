@@ -1,30 +1,29 @@
 ﻿@model PaginatedList<BensModManager.Models.Modification>
 
-@{ ViewData["Title"] = "Index"; }
-
+@{
+    ViewData["Title"] = "Index";
+}
 
 <div id="view-all">
-	@await Html.PartialAsync("_ViewAll", Model)
+    @await Html.PartialAsync("_ViewAll", Model)
 </div>
 
 <div class="modal" tabindex="-1" role="dialog" id="form-modal">
 
-	<div class="modal-dialog modal-dialog-centered" role="document" id="vehicleDetails">
-		<div class="modal-content bg-dark" id="vehiclePopup">
-			<div class="modal-header text-light">
-				<h5 class="modal-title"></h5>
-				<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
-
-				</button>
-			</div>
-			<div class="modal-body">
-
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog modal-dialog-centered" role="document" id="modificationDetails">
+        <div class="modal-content bg-dark" id="modificationPopup">
+            <div class="modal-header text-light">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
 </div>
 
-
 @section Scripts{
-	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

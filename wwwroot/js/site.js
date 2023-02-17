@@ -18,11 +18,11 @@ let ModTypes = [
 //Retain user search selections
 let ModTypeSelection = document.getElementById("searchModType").getAttribute("value");
 
-//Load Paint Type dropdown
+//Load Mod Type dropdown
 new TomSelect('#searchModType', {
     options: [ModTypes],
     items: [ModTypeSelection],
-    placeholder: 'Paint Type',
+    placeholder: 'Mod Type',
     labelField: 'name',
     searchField: ['name'],
     openOnFocus: true,
@@ -96,7 +96,7 @@ jQueryAjaxPost = form => {
                 console.log(err)
             }
         });
-        //to prevent default form submit event
+        //To prevent default form submit event
         return false;
     } catch (ex) {
         console.log(ex)
@@ -122,6 +122,6 @@ jQueryAjaxDelete = form => {
     } catch (ex) {
         console.log(ex)
     }
-    //prevent default form submit event
+    //Prevent default form submit event
     return false;
 }

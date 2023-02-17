@@ -14,7 +14,7 @@ namespace BensModManager.Models
                 serviceProvider.GetRequiredService<
 					DbContextOptions<BensModManagerContext>>()))
             {
-                // Look for any vehicles.
+                // Look for any modifications.
                 if (context.Modification.Any())
                 {
                     
@@ -24,23 +24,23 @@ namespace BensModManager.Models
                 context.Modification.AddRange(
                     new Modification
                     {
-                        Mod = "Ferrari",
-                        //Price = 0.47,
-                        ModType = "TEST",
+                        Mod = "MST Intake and Turbo Inlet",
+                        Price = "443.59",
+                        ModType = "Performance",
                     },
 
                     new Modification
                     {
-                        Mod = "BMW",
-                        //Price = "TEST",
-                        ModType = "TEST",
+                        Mod = "Motech Performance Wheel Spacers & Locking Nut",
+                        Price = "214.95",
+                        ModType = "Exterior",
                     },
                     
                     new Modification
                     {
-                        Mod = "Abarth",
-                        //Price = "TEST",
-                        ModType = "TEST",
+                        Mod = "OHC Steering Wheel",
+                        Price = "641.50",
+                        ModType = "Interior",
                     }
                 );
                 context.SaveChanges();

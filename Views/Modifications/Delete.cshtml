@@ -3,7 +3,7 @@
 @{ Layout = null; }
 
 <form asp-action="Delete" asp-route-id="@Model.ID"
-      class="row g-3" id="vehicleDeleteForm"
+      class="row g-3" id="modificationDeleteForm"
       onsubmit="return jQueryAjaxDelete(this);">
     <input type="hidden" asp-for="ID" />
 
@@ -12,7 +12,6 @@
                style="padding-top: 0rem; padding-bottom: 0rem; pointer-events: none;"
                class="form-control bg-dark text-light">
     </div>
-
 
     <div class="form-floating mb-3">
         <input asp-for="Price" type="text"

@@ -78,11 +78,11 @@
 
   <ItemGroup>
     <None Include="web.config" />
-    <None Include="wwwroot\lib\jquery\dist\bindings\inputmask.binding.js" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\lib\jquery\dist\bindings\" />
   </ItemGroup>
 
 </Project>

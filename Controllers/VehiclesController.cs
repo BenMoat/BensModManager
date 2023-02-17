@@ -81,7 +81,7 @@ namespace ForzaColourSearch.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, [Bind("ID,Make,ColourName,ModType,ColourX,SaturationX,BrightnessX,ColourY,SaturationY,BrightnessY")] Vehicle vehicleModel)
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("ID,Mod,Price,ModType")] Vehicle vehicleModel)
         {
             if (ModelState.IsValid)
             {

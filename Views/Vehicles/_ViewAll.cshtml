@@ -7,14 +7,6 @@
 <form asp-action="Index" method="get">
     <div id="inlineSearch" class="row">
         <div class="col">
-            <select for="Mod"
-                    id="searchMake"
-                    name="Mod"
-                    class="form-floating"
-                    value="@ViewData["Make"]">
-            </select>
-        </div>
-        <div class="col">
             <select for="ModType"
                     id="searchModType"
                     name="ModType"
@@ -24,12 +16,12 @@
         </div>
         <div class="col">
             <input type="text"
-                   for="ColourName"
-                   name="ColourName"
-                   id="searchColourName"
+                   for="Mod"
+                   name="Mod"
+                   id="searchModName"
                    class="form-control bg-dark text-light"
                    placeholder="Colour Name"
-                   value="@ViewData["ColourName"]" />
+                   value="@ViewData["Mod"]" />
         </div>
 
         <div class="col">
@@ -40,7 +32,7 @@
                 <i class="fas fa-search"></i>
             </button>
         </div>
-        @if (@ViewData["Mod"] != null || @ViewData["ModType"] != null || @ViewData["ColourName"] != null)
+        @if (@ViewData["Mod"] != null || @ViewData["ModType"] != null)
         {
             <div class="col">
                 <a id="fullListBtn"

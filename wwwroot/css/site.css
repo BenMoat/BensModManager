@@ -102,7 +102,7 @@ tr.focusRow:not(#headers) {
     align-self: center;
     }
 
-#searchColourName {
+#searchModName {
     height: 55px;
 }
 
@@ -162,7 +162,7 @@ tr.focusRow:not(#headers) {
     border-color: #198754;
 }
 
-#searchColourName::placeholder {
+#searchModName::placeholder {
     color: white;
 }
 

@@ -22,21 +22,21 @@ namespace ForzaColourSearch.Models
                 }
 
                 context.Vehicle.AddRange(
-                    new Vehicle
+                    new Modification
                     {
                         Mod = "Ferrari",
                         //Price = 0.47,
                         ModType = "TEST",
                     },
 
-                    new Vehicle
+                    new Modification
                     {
                         Mod = "BMW",
                         //Price = "TEST",
                         ModType = "TEST",
                     },
                     
-                    new Vehicle
+                    new Modification
                     {
                         Mod = "Abarth",
                         //Price = "TEST",

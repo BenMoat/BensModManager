@@ -13,11 +13,11 @@ using System.Collections.Generic;
 
 namespace ForzaColourSearch.Controllers
 {
-    public class VehiclesController : Controller
+    public class ModificationsController : Controller
     {
         private readonly ForzaColourSearchContext _context;
 
-        public VehiclesController(ForzaColourSearchContext context)
+        public ModificationsController(ForzaColourSearchContext context)
         {
             _context = context;
         }
@@ -44,21 +44,21 @@ namespace ForzaColourSearch.Controllers
             //SearchMake search criteria =
             if (!String.IsNullOrEmpty(Mod))
             {
-                vehicles = (IOrderedQueryable<Vehicle>)vehicles.Where(s => s.Mod.Contains(Mod));
+                vehicles = (IOrderedQueryable<Modification>)vehicles.Where(s => s.Mod.Contains(Mod));
             }
 
             if (!String.IsNullOrEmpty(Price))
             {
-                vehicles = (IOrderedQueryable<Vehicle>)vehicles.Where(s => s.Price.Contains(Price));
+                vehicles = (IOrderedQueryable<Modification>)vehicles.Where(s => s.Price.Contains(Price));
             }
 
             if (!String.IsNullOrEmpty(ModType))
             {
-                vehicles = (IOrderedQueryable<Vehicle>)vehicles.Where(s => s.ModType.Contains(ModType));
+                vehicles = (IOrderedQueryable<Modification>)vehicles.Where(s => s.ModType.Contains(ModType));
             }
 
             var pageSize = 50;
-            return View(await PaginatedList<Vehicle>.CreateAsync(vehicles.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<Modification>.CreateAsync(vehicles.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Vehicles/AddOrEdit(Insert)
@@ -67,7 +67,7 @@ namespace ForzaColourSearch.Controllers
         public async Task<IActionResult> AddOrEdit(int id = 0)
         {
             if (id == 0)
-                return View(new Vehicle());
+                return View(new Modification());
             else
             {
                 var vehicleModel = await _context.Vehicle.FindAsync(id);
@@ -81,7 +81,7 @@ namespace ForzaColourSearch.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, [Bind("ID,Mod,Price,ModType")] Vehicle vehicleModel)
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("ID,Mod,Price,ModType")] Modification vehicleModel)
         {
             if (ModelState.IsValid)
             {

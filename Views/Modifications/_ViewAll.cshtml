@@ -1,4 +1,4 @@
-﻿@model PaginatedList<ForzaColourSearch.Models.Vehicle>
+﻿@model PaginatedList<ForzaColourSearch.Models.Modification>
 
 <div class="title-container text-center text-light">
     <h1 class="vehicles-header offcanvas-header text-light">Mods</h1>
@@ -60,14 +60,14 @@
                     Mod Type
                 </th>
                 <th scope="col">
-                    <a onclick="showInPopup('@Url.Action("AddOrEdit","Vehicles",null,Context.Request.Scheme)','New Vehicle')" class="btn btn-success text-white"><i class="fas fa-car"></i>+</a>
+                    <a onclick="showInPopup('@Url.Action("AddOrEdit","Modifications",null,Context.Request.Scheme)','New Mod')" class="btn btn-success text-white"><i class="fas fa-car"></i>+</a>
                 </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr onclick="showInPopup('@Url.Action("AddOrEdit","Vehicles",new {id=item.ID},Context.Request.Scheme)','Update Vehicle')" class="focusAnchor">
+                <tr onclick="showInPopup('@Url.Action("AddOrEdit","Modifications",new {id=item.ID},Context.Request.Scheme)','Update Mod')" class="focusAnchor">
                     <td>
                         @Html.DisplayFor(modelItem => item.Mod)
                     </td>

@@ -4,18 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ForzaColourSearch.Models
 {
-	public class Vehicle
+	public class Modification
 	{
 		public int ID { get; set; }
-
-		[StringLength(50, MinimumLength = 2)]
 		public string Mod { get; set; }
-
-        [Display(Name = "Price")]
         public string Price { get; set; }
-
-        [Display(Name = "Name")]
-        public string ModType { get; set; }
-
+		public string ModType { get; set; }
 	}
 }

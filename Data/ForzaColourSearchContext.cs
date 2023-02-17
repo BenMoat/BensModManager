@@ -9,6 +9,6 @@ namespace ForzaColourSearch.Data
         {
         }
 
-        public DbSet<ForzaColourSearch.Models.Vehicle> Vehicle { get; set; }
+        public DbSet<ForzaColourSearch.Models.Modification> Vehicle { get; set; }
     }
 }

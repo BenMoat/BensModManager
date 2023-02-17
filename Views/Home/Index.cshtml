@@ -1,0 +1,30 @@
+﻿@{ ViewData["Title"] = "Home Page"; }
+
+<div class="title-container text-center text-light">
+	<h1 class="vehicles-header offcanvas-header text-light">Forza Colours</h1>
+	<h4>Vehicle or Wheels?</h4>
+</div>
+
+<div class="row">
+	<div class="col-sm-6">
+		<div class="card pop-out-card with-transform">
+			<img src="~/images/car-thumb.png" class="card-img-top" alt="...">
+			<div class="card-body ">
+				<h5 class="card-title">Vehicle Colours</h5>
+				<p class="card-text">A search engine to enable you to find the Forza colour decimals of your desired vehicle.</p>
+				<a class="stretched-link" asp-controller="Vehicles" asp-action="Index"></a>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="card pop-out-card with-transform">
+			<img src="~/images/wheel-thumb.png" class="card-img-top" alt="...">
+			<div class="card-body">
+				<h5 class="card-title">Wheel Colours</h5>
+				<p class="card-text">A search engine to enable you to find the Forza colour decimals of your desired wheel.</p>
+				<a class="stretched-link" asp-controller="Vehicles" asp-action="Index"></a>
+			</div>
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,291 @@
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+/*Custom CSS file for modifying and overriding bootstrap elements*/
+.navbar-color {
+    background-color: #2c3034;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    box-shadow: inset 0 0 0 1px #fff;
+    overflow: hidden;
+}
+
+table {
+    table-layout: fixed;
+    margin: auto;
+    /*width: 700px !important;*/
+}
+
+td {
+   /* width: 1000px !important;*/
+    /*height: 100px;*/
+    transition: 0.25s;
+    box-shadow: inset 0 0 0 2px;
+}
+
+tr:hover {
+    background-size: 100% 100%;
+    transform: scale(1.08,1.0);
+    transform-origin: center;
+    font-weight: bold;
+    font-size: 17px;
+    --bs-table-hover-bg: #157347;
+    --bs-table-bg: #157347;
+    --bs-table-striped-bg: #157347;
+    z-index: 2;
+}
+
+/*td {
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+tr.focusRow:not(#headers) {
+    cursor: pointer;
+    transition: transform .2s ease-in-out;
+    transform: scale(1.00);
+}
+
+    tr.focusRow:not(#headers):hover {
+        transition: transform .15s ease-in-out;
+        transform: scale(1.1);
+        font-weight: bold;
+        --bs-table-hover-bg: #157347;
+        --bs-table-bg: #157347;
+        --bs-table-striped-bg: #157347;
+        z-index: 2;
+    }*/
+
+    #deleteBtn {
+        margin-top: 25px;
+    }
+
+::-webkit-scrollbar {
+    height: 12px;
+    width: 7px;
+    background: #212529;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #7b7b7b;
+    -webkit-border-radius: 1ex;
+    -webkit-box-shadow: 0px 1px 2px rgb(123, 123, 123);
+}
+
+.scrollable {
+    max-width: 2000px;
+    max-height: 100%;
+    height: 450px;
+    /* change ` overflow: scroll ` to ` overflow: auto ` if you only want vertical scroll */
+    overflow: scroll;
+}
+
+#inlineSearch {
+    padding-bottom: 25px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+    #inlineSearch .col {
+    padding-right: 5px;
+    padding-left: 5px;
+    align-self: center;
+    }
+
+#searchColourName {
+    height: 55px;
+}
+
+#vehiclePopup {
+    animation: popup 0.3s;
+}
+
+@keyframes popup {
+    0% {
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.1;
+    }
+
+    20% {
+        opacity: 0.2;
+    }
+
+    30% {
+        opacity: 0.3;
+    }
+
+    40% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    60% {
+        opacity: 0.6;
+    }
+
+    70% {
+        opacity: 0.7;
+    }
+
+    80% {
+        opacity: 0.8;
+    }
+
+    90% {
+        opacity: 0.9;
+    }
+
+    100% {
+        opacity: 1.0;
+    }
+}
+
+.btn-success {
+    color: #fff;
+    background-color: transparent;
+    border-color: #198754;
+}
+
+#searchColourName::placeholder {
+    color: white;
+}
+
+.vehicles-header {
+    display: block;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    background-color: #2c3034;
+}
+
+.pop-out-card {
+    float: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    transition: all .2s;
+    font: normal 16px calibri;
+}
+
+    .pop-out-card:hover {
+        box-shadow: 2px 12px 15px #000;
+    }
+
+    .pop-out-card.with-transform:hover {
+        transform: translateY(-10px);
+    }
+
+.title-container {
+    margin-top: 3% !important;
+    margin-bottom: 5% !important;
+}
+
+.ouput-text-search-filter {
+    text-decoration: none;
+}
+
+.text-nowrap.col-header {
+    white-space: nowrap !important;
+    margin: 115% !important;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.btn-outline-add {
+    color: lawngreen;
+    border-color: lawngreen;
+}
+
+    .btn-outline-add:hover {
+        color: #000;
+        background-color: lawngreen;
+        border-color: lawngreen;
+    }
+
+.btn-info {
+    color: #0dcaf0;
+    background-color: transparent;
+    border-color: #0dcaf0;
+}
+
+.btn-danger {
+    color: #dc3545;
+    background-color: transparent;
+    border-color: #dc3545;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}

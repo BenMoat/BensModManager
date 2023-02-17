@@ -7,14 +7,6 @@
 <form asp-action="Index" method="get">
     <div id="inlineSearch" class="row">
         <div class="col">
-            <select for="ModType"
-                    id="searchModType"
-                    name="ModType"
-                    class="form-floating"
-                    value="@ViewData["ModType"]">
-            </select>
-        </div>
-        <div class="col">
             <input type="text"
                    for="ModName"
                    name="ModName"
@@ -23,8 +15,16 @@
                    placeholder="Mod Name"
                    value="@ViewData["ModName"]" />
         </div>
-
         <div class="col">
+            <select for="ModType"
+                    id="searchModType"
+                    name="ModType"
+                    class="form-floating"
+                    value="@ViewData["ModType"]">
+            </select>
+        </div>
+
+        <div class="col-2">
             <button type="submit"
                     id="searchBtn"
                     class="form-control btn btn-success text-white"
@@ -32,6 +32,10 @@
                 <i class="fas fa-search"></i>
             </button>
         </div>
+        <div class="col-2">
+            <a onclick="showInPopup('@Url.Action("AddOrEdit","Mods",null,Context.Request.Scheme)','New Mod')" class="btn btn-success text-white">New Mod</a>
+        </div>
+
         @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
         {
             <div class="col">
@@ -50,17 +54,14 @@
     <table class="table table-dark table-striped table-hover">
         <thead>
             <tr id="headers" class="align-middle">
-                <th scope="col">
-                    Mod
+                <th scope="col" class="col-7">
+                    Mod Name
                 </th>
-                <th scope="col">
+                <th scope="col" class="col-2">
                     Price
                 </th>
-                <th scope="col">
+                <th scope="col" class="col-3">
                     Mod Type
-                </th>
-                <th scope="col">
-                    <a onclick="showInPopup('@Url.Action("AddOrEdit","Mods",null,Context.Request.Scheme)','New Mod')" class="btn btn-success text-white"><i class="fas fa-car"></i>+</a>
                 </th>
             </tr>
         </thead>

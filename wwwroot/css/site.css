@@ -1,38 +1,23 @@
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-a.navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
-}
 
 /*Custom CSS file for modifying and overriding bootstrap elements*/
 .navbar-color {
     background-color: #2c3034;
 }
 
-thead {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    box-shadow: inset 0 0 0 1px #fff;
-    overflow: hidden;
-}
-
 table {
     table-layout: fixed;
     margin: auto;
-    /*width: 700px !important;*/
+    width: 100%;
 }
 
 td {
-   /* width: 1000px !important;*/
-    /*height: 100px;*/
     transition: 0.25s;
     box-shadow: inset 0 0 0 2px;
 }
 
-tr:hover {
+tr:not(#headers):hover {
     background-size: 100% 100%;
     transform: scale(1.08,1.0);
     transform-origin: center;
@@ -44,31 +29,9 @@ tr:hover {
     z-index: 2;
 }
 
-/*td {
-    overflow: hidden;
-    white-space: nowrap;
-    vertical-align: middle;
+#deleteBtn {
+    margin-top: 25px;
 }
-
-tr.focusRow:not(#headers) {
-    cursor: pointer;
-    transition: transform .2s ease-in-out;
-    transform: scale(1.00);
-}
-
-    tr.focusRow:not(#headers):hover {
-        transition: transform .15s ease-in-out;
-        transform: scale(1.1);
-        font-weight: bold;
-        --bs-table-hover-bg: #157347;
-        --bs-table-bg: #157347;
-        --bs-table-striped-bg: #157347;
-        z-index: 2;
-    }*/
-
-    #deleteBtn {
-        margin-top: 25px;
-    }
 
 ::-webkit-scrollbar {
     height: 12px;
@@ -94,12 +57,12 @@ tr.focusRow:not(#headers) {
     padding-bottom: 25px;
     width: 100%;
     margin: 0 auto;
+    align-items: center;
 }
 
     #inlineSearch .col {
     padding-right: 5px;
     padding-left: 5px;
-    align-self: center;
     }
 
 #searchModName {

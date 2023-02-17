@@ -1,7 +1,7 @@
 ﻿@model PaginatedList<ForzaColourSearch.Models.Vehicle>
 
 <div class="title-container text-center text-light">
-    <h1 class="vehicles-header offcanvas-header text-light">Vehicle Colours</h1>
+    <h1 class="vehicles-header offcanvas-header text-light">Mods</h1>
 </div>
 
 <form asp-action="Index" method="get">
@@ -20,7 +20,7 @@
                    name="Mod"
                    id="searchModName"
                    class="form-control bg-dark text-light"
-                   placeholder="Colour Name"
+                   placeholder="Mod Name"
                    value="@ViewData["Mod"]" />
         </div>
 
@@ -92,14 +92,14 @@
     <a asp-action="Index"
        asp-route-sortOrder="@ViewData["CurrentSort"]"
        asp-route-pageNumber="@(Model.PageIndex - 1)"
-       asp-route-currentFilter="@ViewData["Make"]"
+       asp-route-currentFilter="@ViewData["Mod"]"
        class="btn btn-default btn-outline-light @prevDisabled">
         Previous
     </a>
     <a asp-action="Index"
        asp-route-sortOrder="@ViewData["CurrentSort"]"
        asp-route-pageNumber="@(Model.PageIndex + 1)"
-       asp-route-currentFilter="@ViewData["Make"]"
+       asp-route-currentFilter="@ViewData["Mod"]"
        class="btn btn-default btn-outline-light @nextDisabled">
         Next
     </a>

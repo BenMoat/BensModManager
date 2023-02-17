@@ -9,27 +9,24 @@
 	  onsubmit="return jQueryAjaxPost(this);">
 	<input type="hidden" asp-for="ID" />
 
-	<div class="form-floating mb-3">
-		<select asp-for="Mod"
-				id="select-make"
-				class="form-floating"
-				list="list-language"
-				required>
-			<option selected disabled value=""></option>
-		</select>
-		<div class="invalid-feedback">
-			Please choose a vehicle make. This can be typed and selected from the dropdown.
-		</div>
-		<!--Use ID from this input to parse the make as the default dropdown selection for editing a vehicle-->
-		<input hidden asp-for="Mod" type="text" id="makeValue">
-	</div>
 	<div class="col">
 		<div class="form-floating mb-3">
 			<input asp-for="Mod" type="text"
 				   class="form-control bg-dark text-light" id="mod"
 				   placeholder="Mod Name">
-			<label asp-for="Price"
+			<label asp-for="Mod"
 				   for="mod"
+				   class="text-light">
+			</label>
+		</div>
+	</div>
+	<div class="col">
+		<div class="form-floating mb-3">
+			<input asp-for="Price" type="text"
+				   class="form-control bg-dark text-light" id="price"
+				   placeholder="Price">
+			<label asp-for="Price"
+				   for="price"
 				   class="text-light">
 			</label>
 		</div>

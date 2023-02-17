@@ -1,14 +1,4 @@
-﻿//Table row will enlarge and change colour based on mouse hover
-$(document).ready(function () {
-    $('tr').hover(function () {
-        $('tr').removeClass('focusRow');
-        $(this).addClass('focusRow');
-    }, function () {
-        $(this).removeClass('focusRow');
-    });
-});
-
-//Set array of mod types
+﻿//Set array of mod types
 let ModTypes = [
     { value: "Performance", name: "Performance" },
     { value: "Interior", name: "Interior" },

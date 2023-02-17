@@ -1,11 +1,12 @@
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-/*Custom CSS file for modifying and overriding bootstrap elements*/
+/*-----Custom CSS file for modifying and overriding bootstrap elements-----*/
 .navbar-color {
     background-color: #2c3034;
 }
 
+/**Table hover animation**/
 table {
     table-layout: fixed;
     margin: auto;
@@ -29,30 +30,28 @@ tr:not(#headers):hover {
     z-index: 2;
 }
 
-#deleteBtn {
-    margin-top: 25px;
-}
-
+/*Custom browser scroll bar to match the darker theme**/
 ::-webkit-scrollbar {
     height: 12px;
     width: 7px;
     background: #212529;
 }
 
-::-webkit-scrollbar-thumb {
-    background: #7b7b7b;
-    -webkit-border-radius: 1ex;
-    -webkit-box-shadow: 0px 1px 2px rgb(123, 123, 123);
-}
+    ::-webkit-scrollbar-thumb {
+        background: #7b7b7b;
+        -webkit-border-radius: 1ex;
+        -webkit-box-shadow: 0px 1px 2px rgb(123, 123, 123);
+    }
 
-.scrollable {
-    max-width: 2000px;
-    max-height: 100%;
-    height: 450px;
-    /* change ` overflow: scroll ` to ` overflow: auto ` if you only want vertical scroll */
-    overflow: scroll;
-}
+    .scrollable {
+        max-width: 2000px;
+        max-height: 100%;
+        height: 450px;
+        /* change ` overflow: scroll ` to ` overflow: auto ` if you only want vertical scroll */
+        overflow: scroll;
+    }
 
+/**Main Search bar**/
 #inlineSearch {
     padding-bottom: 25px;
     width: 100%;
@@ -61,19 +60,24 @@ tr:not(#headers):hover {
 }
 
     #inlineSearch .col {
-    padding-right: 5px;
-    padding-left: 5px;
+        padding-right: 5px;
+        padding-left: 5px;
     }
 
-#searchModName {
-    height: 55px;
-}
+    #searchModName {
+        height: 55px;
+    }
+    #searchModName::placeholder {
+        color: white;
+    }
 
+
+/*Animate the popup with a smooth transition*/
 #modPopup {
     animation: popup 0.3s;
 }
 
-@keyframes popup {
+    @keyframes popup {
     0% {
         opacity: 0;
     }
@@ -125,8 +129,8 @@ tr:not(#headers):hover {
     border-color: #198754;
 }
 
-#searchModName::placeholder {
-    color: white;
+#deleteBtn {
+    margin-top: 25px;
 }
 
 .mods-header {
@@ -202,35 +206,6 @@ tr:not(#headers):hover {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-    font-size: 14px;
-}
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
-.border-top {
-    border-top: 1px solid #e5e5e5;
-}
-
-.border-bottom {
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-    font-size: 1rem;
-    line-height: inherit;
 }
 
 /* Sticky footer styles

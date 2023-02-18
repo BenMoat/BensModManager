@@ -1,4 +1,4 @@
-﻿#region using statements
+﻿#region Using statements
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

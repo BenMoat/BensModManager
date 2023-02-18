@@ -1,8 +1,10 @@
-﻿using System;
+﻿#region Using statements
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+#endregion
 
 namespace BensModManager
 

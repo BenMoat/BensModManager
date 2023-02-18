@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿#region Using statements
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using BensModManager.Data;
 using System;
 using System.Linq;
+#endregion
 
 namespace BensModManager.Models
 {

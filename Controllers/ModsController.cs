@@ -37,9 +37,10 @@ namespace BensModManager.Controllers
 
 
 			var mods = from s in _context.Mod
+					   orderby s.ModName
 					   select s;
 
-			//Search criteria =
+			//Search criteria
 			if (!String.IsNullOrEmpty(ModName))
 			{
 				mods = (IOrderedQueryable<Mod>)mods.Where(s => s.ModName.Contains(ModName));

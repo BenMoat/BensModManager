@@ -124,6 +124,16 @@ tr:not(#headers):hover {
     }
 }
 
+
+.form-floating > label {
+    left: unset !important;
+}
+
+#price {
+    height: 55px;
+}
+
+
 .btn-success {
     color: #fff;
     background-color: transparent;

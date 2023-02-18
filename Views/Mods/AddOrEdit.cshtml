@@ -10,26 +10,24 @@
       onload="custVis()"
       onsubmit="return jQueryAjaxPost(this);">
     <input type="hidden" asp-for="ID" />
-
-    <div class="col">
-        <div class="form-floating mb-3">
-            <input asp-for="ModName" type="text"
-                   class="form-control bg-dark text-light" id="modName"
-                   placeholder="Mod Name"
-                   required>
-            <label asp-for="ModName"
-                   for="modName"
-                   class="text-light">
-            </label>
-            <div class="invalid-feedback">
-                Please input the name of the mod.
-            </div>
+    
+    <div class="form-floating mb-3">
+        <input asp-for="ModName" type="text"
+               class="form-control bg-dark text-light" id="modName"
+               placeholder="Mod Name"
+               required>
+        <label asp-for="ModName"
+               class="text-light">
+        </label>
+        <div class="invalid-feedback">
+            Please input the name of the mod.
         </div>
     </div>
-    <div class="col">
+
+    <div class="col-5">
         <div class="form-floating mb-3">
             <input asp-for="Price" type="text"
-                   class="form-control bg-dark text-light" id="price" value="@Model.Price"
+                   class="form-control bg-dark text-light" id="price" 
                    placeholder="Price"
                    data-prefix="£"
                    required>
@@ -41,23 +39,25 @@
             </div>
         </div>
     </div>
-    <div class="form-floating mb-3">
-        <select asp-for="ModType"
-                id="select-ModType"
-                class="form-floating"
-                list="list-language"
-                required>
-            <option selected disabled value=""></option>
-        </select>
-        <div class="invalid-feedback">
-            Please choose a Mod type. This can be typed and selected from the dropdown.
+
+    <div class="col">
+        <div class="form-floating mb-3">
+            <select asp-for="ModType"
+                    id="select-ModType"
+                    class="form-floating"
+                    list="list-language"
+                    required>
+                <option selected disabled value=""></option>
+            </select>
+            <div class="invalid-feedback">
+                Please choose a Mod type. This can be typed and selected from the dropdown.
+            </div>
+            <!--Use ID from this input to parse the Mod type as the default dropdown selection for editing a mod-->
+            <input hidden asp-for="ModType" type="text" id="ModTypeValue">
         </div>
-        <!--Use ID from this input to parse the Mod type as the default dropdown selection for editing a mod-->
-        <input hidden asp-for="ModType" type="text" id="ModTypeValue">
     </div>
     <button type="submit" onclick="validation()" class="btn btn-default btn-outline-light">Submit</button>
 </form>
-
 
 @if (Model.ID != 0)
 {

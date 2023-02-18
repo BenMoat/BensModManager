@@ -28,6 +28,7 @@ tr:not(#headers):hover {
     --bs-table-bg: #157347;
     --bs-table-striped-bg: #157347;
     z-index: 2;
+    cursor: pointer;
 }
 
 /*Custom browser scroll bar to match the darker theme**/

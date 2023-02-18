@@ -26,14 +26,12 @@ namespace BensModManager.Controllers
 		public async Task<IActionResult> Index
 			(
 			string ModName,
-			string Price,
 			string ModType,
 			string sortOrder,
 			int? pageNumber
 			)
 		{
 			ViewData["ModName"] = ModName;
-			ViewData["Price"] = Price;
 			ViewData["ModType"] = ModType;
 			ViewData["CurrentSort"] = sortOrder;
 
@@ -45,11 +43,6 @@ namespace BensModManager.Controllers
 			if (!String.IsNullOrEmpty(ModName))
 			{
 				mods = (IOrderedQueryable<Mod>)mods.Where(s => s.ModName.Contains(ModName));
-			}
-
-			if (!String.IsNullOrEmpty(Price))
-			{
-				mods = (IOrderedQueryable<Mod>)mods.Where(s => s.Price.Contains(Price));
 			}
 
 			if (!String.IsNullOrEmpty(ModType))

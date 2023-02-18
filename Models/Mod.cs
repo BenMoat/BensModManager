@@ -7,8 +7,19 @@ namespace BensModManager.Models
 	public class Mod
 	{
 		public int ID { get; set; }
-		public string ModName { get; set; }
-        public string Price { get; set; }
-		public string ModType { get; set; }
+
+        [StringLength(75, MinimumLength = 3)]
+		[Required]
+        public string ModName { get; set; }
+
+        [Range(1, 100)]
+        [DataType(DataType.Currency)]
+		[Required]
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal Price { get; set; }
+
+        [StringLength(50, MinimumLength = 8)]
+        [Required]
+        public string ModType { get; set; }
 	}
 }

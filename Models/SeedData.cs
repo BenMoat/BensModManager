@@ -25,21 +25,21 @@ namespace BensModManager.Models
                     new Mod
                     {
                         ModName = "MST Intake and Turbo Inlet",
-                        Price = "443.59",
+                        Price = 443.59M,
                         ModType = "Performance",
                     },
 
                     new Mod
                     {
                         ModName = "Motech Performance Wheel Spacers & Locking Nut",
-                        Price = "214.95",
+                        Price = 214.95M,
                         ModType = "Exterior",
                     },
                     
                     new Mod
                     {
                         ModName = "OHC Steering Wheel",
-                        Price = "641.50",
+                        Price = 641.50M,
                         ModType = "Interior",
                     }
                 );

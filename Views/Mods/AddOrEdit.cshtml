@@ -22,16 +22,16 @@
                    class="text-light">
             </label>
             <div class="invalid-feedback">
-                Please input the financial mod name.
+                Please input the name of the mod.
             </div>
         </div>
     </div>
     <div class="col">
         <div class="form-floating mb-3">
-            <input asp-for="Price" type="text" value=""
-                   class="price form-control bg-dark text-light" id="price"
-                   data-prefix="£"
+            <input asp-for="Price" type="text"
+                   class="form-control bg-dark text-light" id="price" value="@Model.Price"
                    placeholder="Price"
+                   data-prefix="£"
                    required>
             <label asp-for="Price"
                    class="text-light">
@@ -69,6 +69,15 @@
 }
 
 <script>
+    //Apply jquery maskMoney to Price
+    $('#price').maskMoney({
+        allowZero: false
+    });
+    //Remove the default 0 from the Price
+    if ($('#price').val() == '0') {
+        $('#price').val("")
+    }
+
     //Form Validation
     function validation() {
         (() => {
@@ -89,9 +98,4 @@
             });
         })();
     }
-
-    //Apply jquery maskMoney to Price
-    $(function () {
-        $('.price').maskMoney();
-    })
 </script>

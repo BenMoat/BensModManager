@@ -1,3 +1,0 @@
-﻿Vehicle: Mercedes-AMG One
-	Vehicle Colour: Designo Brilliant Blue Magno 
-	Wheel Colour: Vision Gran Turismo AMG Alubeam Silver

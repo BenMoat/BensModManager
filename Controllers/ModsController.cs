@@ -17,7 +17,13 @@ namespace BensModManager.Controllers
 	{
 		private readonly BensModManagerContext _context;
 
-		public ModsController(BensModManagerContext context)
+        [Route("/Error")]
+        public IActionResult Error()
+        {
+            return View();
+        }
+
+        public ModsController(BensModManagerContext context)
 		{
 			_context = context;
 		}

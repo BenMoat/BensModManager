@@ -54,7 +54,7 @@ namespace BensModManager.Controllers
                 mods = (IOrderedQueryable<Mod>)mods.Where(s => s.ModType.Contains(ModType));
             }
 
-            var pageSize = 50;
+            var pageSize = 20;
             return View(await PaginatedList<Mod>.CreateAsync(mods.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 

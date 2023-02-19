@@ -10,7 +10,7 @@
       onload="custVis()"
       onsubmit="return jQueryAjaxPost(this);">
     <input type="hidden" asp-for="ID" />
-    
+
     <div class="form-floating mb-3">
         <input asp-for="ModName" type="text"
                class="form-control bg-dark text-light" id="modName"
@@ -27,9 +27,8 @@
     <div class="col-5">
         <div class="form-floating mb-3">
             <input asp-for="Price" type="text"
-                   class="form-control bg-dark text-light" id="price" 
+                   class="form-control bg-dark text-light" id="price"
                    placeholder="Price"
-                   data-prefix="£"
                    required>
             <label asp-for="Price"
                    class="text-light">
@@ -45,6 +44,7 @@
             <select asp-for="ModType"
                     id="select-ModType"
                     class="form-floating"
+                    placeholder="Mod Type"
                     list="list-language"
                     required>
                 <option selected disabled value=""></option>
@@ -71,8 +71,9 @@
 <script>
     //Apply jquery maskMoney to Price
     $('#price').maskMoney({
-        allowZero: false
+        max: 9999999.99
     });
+
     //Remove the default 0 from the Price
     if ($('#price').val() == '0') {
         $('#price').val("")

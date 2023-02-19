@@ -10,16 +10,17 @@ namespace BensModManager.Models
 	{
 		public int ID { get; set; }
 
+        [Display(Name = "Mod Name")]
         [StringLength(75, MinimumLength = 3)]
 		[Required]
         public string ModName { get; set; }
 
-        [Range(1, 100)]
         [DataType(DataType.Currency)]
 		[Required]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
 
+        [Display(Name = "Mod Type")]
         [StringLength(50, MinimumLength = 8)]
         [Required]
         public string ModType { get; set; }

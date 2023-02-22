@@ -12,11 +12,11 @@
 
     <div class="form-floating mb-3">
         <input asp-for="ModName" type="text"
-            class="form-control bg-dark text-light" id="modName"
-            placeholder="Mod Name"
-            required>
+               class="form-control bg-dark text-light" id="modName"
+               placeholder="Mod Name"
+               required>
         <label asp-for="ModName"
-            class="text-light">
+               class="text-light">
         </label>
         <div class="invalid-feedback">
             Please input the name of the mod.
@@ -26,11 +26,11 @@
     <div class="col-5">
         <div class="form-floating mb-3">
             <input asp-for="Price" type="text"
-                class="form-control bg-dark text-light" id="price"
-                placeholder="Price"
-                required>
+                   class="form-control bg-dark text-light" id="price"
+                   placeholder="Price"
+                   required>
             <label asp-for="Price"
-                class="text-light">
+                   class="text-light">
             </label>
             <div class="invalid-feedback">
                 Please input the financial mistake.
@@ -41,11 +41,11 @@
     <div class="col">
         <div class="form-floating mb-3">
             <select asp-for="ModType"
-                id="select-ModType"
-                class="form-floating"
-                placeholder="Mod Type"
-                list="list-language"
-                required>
+                    id="select-ModType"
+                    class="form-floating"
+                    placeholder="Mod Type"
+                    list="list-language"
+                    required>
                 <option selected disabled value=""></option>
             </select>
             <div class="invalid-feedback">
@@ -55,14 +55,24 @@
             <input hidden asp-for="ModType" type="text" id="ModTypeValue">
         </div>
     </div>
-    <button type="submit" onclick="validation()" class="btn btn-default btn-outline-light">Submit</button>
+
+    <button type="submit"
+            class="btn btn-default btn-outline-light"
+            onclick="validation()">
+        Submit
+    </button>
+
+    <!--If this is an existing record, append a Delete button-->
+    @if (Model.ID != 0)
+    {
+        <button type="button"
+                class="btn btn-default btn-danger text-white"
+                onclick="showInPopup('@Url.Action("Delete","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Mod')">
+            Delete
+        </button>
+    }
 </form>
 
-@if (Model.ID != 0)
-{
-    <button class="btn btn-default btn-danger text-white" 
-        onclick="showInPopup('@Url.Action("Delete","Mods",new {id=@Model.ID},Context.Request.Scheme)')">Delete</button>
-}
 
 <script>
     //Apply jQuery maskMoney to Price

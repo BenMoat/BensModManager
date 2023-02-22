@@ -7,17 +7,16 @@
 <form asp-action="AddOrEdit" asp-route-id="@Model.ID"
       class="needs-validation row g-3" id="modForm" novalidate
       onclick="validation()"
-      onload="custVis()"
       onsubmit="return jQueryAjaxPost(this);">
     <input type="hidden" asp-for="ID" />
 
     <div class="form-floating mb-3">
         <input asp-for="ModName" type="text"
-               class="form-control bg-dark text-light" id="modName"
-               placeholder="Mod Name"
-               required>
+            class="form-control bg-dark text-light" id="modName"
+            placeholder="Mod Name"
+            required>
         <label asp-for="ModName"
-               class="text-light">
+            class="text-light">
         </label>
         <div class="invalid-feedback">
             Please input the name of the mod.
@@ -27,11 +26,11 @@
     <div class="col-5">
         <div class="form-floating mb-3">
             <input asp-for="Price" type="text"
-                   class="form-control bg-dark text-light" id="price"
-                   placeholder="Price"
-                   required>
+                class="form-control bg-dark text-light" id="price"
+                placeholder="Price"
+                required>
             <label asp-for="Price"
-                   class="text-light">
+                class="text-light">
             </label>
             <div class="invalid-feedback">
                 Please input the financial mistake.
@@ -42,11 +41,11 @@
     <div class="col">
         <div class="form-floating mb-3">
             <select asp-for="ModType"
-                    id="select-ModType"
-                    class="form-floating"
-                    placeholder="Mod Type"
-                    list="list-language"
-                    required>
+                id="select-ModType"
+                class="form-floating"
+                placeholder="Mod Type"
+                list="list-language"
+                required>
                 <option selected disabled value=""></option>
             </select>
             <div class="invalid-feedback">
@@ -61,15 +60,12 @@
 
 @if (Model.ID != 0)
 {
-    <form asp-action="Delete" asp-route-id="@Model.ID"
-      class="needs-validation row g-3" onsubmit="return jQueryAjaxDelete(this);">
-        <input type="hidden" asp-for="ID" />
-        <button type="submit" id="deleteBtn" class="btn btn-default btn-danger text-white">Delete</button>
-    </form>
+    <button class="btn btn-default btn-danger text-white" 
+        onclick="showInPopup('@Url.Action("Delete","Mods",new {id=@Model.ID},Context.Request.Scheme)')">Delete</button>
 }
 
 <script>
-    //Apply jquery maskMoney to Price
+    //Apply jQuery maskMoney to Price
     $('#price').maskMoney({
         max: 9999999.99
     });

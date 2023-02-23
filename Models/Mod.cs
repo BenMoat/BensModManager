@@ -11,7 +11,6 @@ namespace BensModManager.Models
 		public int ID { get; set; }
 
         [Display(Name = "Mod Name")]
-        [StringLength(75, MinimumLength = 3)]
 		[Required]
         public string ModName { get; set; }
 
@@ -21,7 +20,6 @@ namespace BensModManager.Models
         public decimal Price { get; set; }
 
         [Display(Name = "Mod Type")]
-        [StringLength(50, MinimumLength = 8)]
         [Required]
         public string ModType { get; set; }
 	}

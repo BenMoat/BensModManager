@@ -15,6 +15,7 @@ namespace BensModManager.Controllers
     {
         private readonly BensModManagerContext _context;
 
+        #region Default Routes
         [Route("/Error")]
         public IActionResult Error()
         {
@@ -25,6 +26,8 @@ namespace BensModManager.Controllers
         {
             _context = context;
         }
+        #endregion
+
 
         //GET: Mods
         public async Task<IActionResult> Index
@@ -40,7 +43,7 @@ namespace BensModManager.Controllers
             ViewData["CurrentSort"] = sortOrder;
 
             var mods = from s in _context.Mod
-                       orderby s.ModType
+                       orderby s.ModName
                        select s;
 
             //Search criteria

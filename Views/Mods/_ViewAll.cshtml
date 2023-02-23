@@ -84,6 +84,8 @@
     </table>
 </div>
 
+<h1 class="text-light">Total: £@Model.Sum(x => x.Price)</h1>
+
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";

@@ -1,5 +1,6 @@
 ﻿#region Using statements
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 #endregion
@@ -22,5 +23,7 @@ namespace BensModManager.Models
         [Display(Name = "Mod Type")]
         [Required]
         public string ModType { get; set; }
+
+        public bool Obsolete { get; set; }
 	}
 }

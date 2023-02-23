@@ -81,7 +81,7 @@ namespace BensModManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, [Bind("ID,ModName,Price,ModType")] Mod modModel)
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("ID,ModName,Price,ModType,Obsolete")] Mod modModel)
         {
             if (ModelState.IsValid)
             {

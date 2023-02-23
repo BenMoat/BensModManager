@@ -81,6 +81,7 @@ jQueryAjaxPost = form => {
             success: function (res) {
                 $('#form-modal').modal('hide');
                 $("#tableAJAX").load(location.href + " #tableAJAX");
+                $("#totalSum").load(location.href + " #totalSum");
             },
             error: function (err) {
                 console.log(err)
@@ -104,6 +105,7 @@ jQueryAjaxDelete = form => {
             success: function (res) {
                 $('#form-modal').modal('hide');
                 $("#tableAJAX").load(location.href + " #tableAJAX");
+                $("#totalSum").load(location.href + " #totalSum");
             },
             error: function (err) {
                 console.log(err)

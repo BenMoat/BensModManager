@@ -5,14 +5,14 @@
 }
 
 <form asp-action="AddOrEdit" asp-route-id="@Model.ID"
-      class="needs-validation row g-3" id="modForm" novalidate
+      class="needs-validation row g-3" novalidate
       onclick="validation()"
       onsubmit="return jQueryAjaxPost(this);">
     <input type="hidden" asp-for="ID" />
 
     <div class="form-floating mb-3">
         <input asp-for="ModName" type="text"
-               class="form-control bg-dark text-light" id="modName"
+               class="form-control bg-dark text-light"
                placeholder="Mod Name"
                required>
         <label asp-for="ModName"
@@ -26,7 +26,8 @@
     <div class="col-5">
         <div class="form-floating mb-3">
             <input asp-for="Price" type="text"
-                   class="form-control bg-dark text-light" id="price"
+                   id="price"
+                   class="form-control bg-dark text-light"
                    placeholder="Price"
                    required>
             <label asp-for="Price"
@@ -51,7 +52,7 @@
             <div class="invalid-feedback">
                 Please choose a Mod type. This can be typed and selected from the dropdown.
             </div>
-            <!--Use ID from this input to parse the Mod type as the default dropdown selection for editing a mod-->
+            <!--Use ID from this record to populate the dropdown selection-->
             <input hidden asp-for="ModType" type="text" id="ModTypeValue">
         </div>
     </div>
@@ -78,7 +79,7 @@
     {
         <button type="button"
                 class="btn btn-default btn-danger text-white"
-                onclick="showInPopup('@Url.Action("Delete","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Mod')">
+                onclick="showInDeletePopup('@Url.Action("Delete","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Mod')">
             Delete
         </button>
     }
@@ -87,11 +88,9 @@
 
 <script>
     //Apply jQuery maskMoney to Price
-    $('#price').maskMoney({
-        max: 9999999.99
-    });
+    $('#price').maskMoney();
 
-    //Remove the default 0 from the Price
+    //Remove the default '0' from the Price
     if ($('#price').val() == '0') {
         $('#price').val("")
     }

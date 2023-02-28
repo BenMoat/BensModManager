@@ -1,0 +1,20 @@
+﻿@model BensModManager.Models.Mod
+
+@{
+    Layout = null;
+}
+
+<form asp-action="Invoice" asp-route-id="@Model.ID"
+      class="row g-3">
+    <input type="hidden" asp-for="ID" />
+
+    <h3 class="text-center text-white"><b>@Model.ModName</b></h3>
+
+    <iframe src="https://onedrive.live.com/embed?cid=411E96E81FA6FA62&resid=411E96E81FA6FA62%21144018&authkey=AMviBvTWlFSpKZk&em=2" 
+    width="500" height="300" frameborder="0" scrolling="no"></iframe>
+
+    <button type="button" class="btn btn-default btn-outline-light"
+            onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=@Model.ID},Context.Request.Scheme)','Update Mod')">
+        Back
+    </button>
+</form>

@@ -24,7 +24,7 @@ new TomSelect('#searchModType', {
 });
 
 //Set up and initialise the record popup function. 
-showInPopup = (url, title) => {
+modPopup = (url, title) => {
     $.ajax({
         type: 'GET',
         url: url,
@@ -54,7 +54,23 @@ showInPopup = (url, title) => {
     });
 }
 
-showInDeletePopup = (url, title) => {
+invoicePopup = (url, title) => {
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (res) {
+            //Display popup content
+            $('#form-modal .modal-body').html(res);
+            $('#form-modal .modal-title').html(title);
+            $('#form-modal').modal('show');
+            $('.modal-dialog').draggable({
+                handle: ".modal-header"
+            });
+        }
+    });
+}
+
+deletePopup = (url, title) => {
     $.ajax({
         type: 'GET',
         url: url,

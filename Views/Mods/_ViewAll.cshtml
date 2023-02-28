@@ -33,7 +33,7 @@
             </button>
         </div>
         <div class="col-2">
-            <a onclick="showInPopup('@Url.Action("AddOrEdit","Mods",null,Context.Request.Scheme)','New Mod')" class="btn btn-success text-white">New Mod</a>
+            <a onclick="modPopup('@Url.Action("AddOrEdit","Mods",null,Context.Request.Scheme)','New Mod')" class="btn btn-success text-white">New Mod</a>
         </div>
 
         @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
@@ -68,7 +68,7 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr onclick="showInPopup('@Url.Action("AddOrEdit","Mods",new {id=item.ID},Context.Request.Scheme)','Update Mod')" class="focusAnchor">
+                <tr onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=item.ID},Context.Request.Scheme)','Update Mod')" class="focusAnchor">
                     <td>
                         @Html.DisplayFor(modelItem => item.ModName)
                     </td>

@@ -12,7 +12,7 @@
     <button type="submit" class="btn btn-danger text-white">Delete</button>
 
     <button type="button" class="btn btn-default btn-outline-light" 
-        onclick="showInPopup('@Url.Action("AddOrEdit","Mods",new {id=@Model.ID},Context.Request.Scheme)','Update Mod')">
+        onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=@Model.ID},Context.Request.Scheme)','Update Mod')">
         Cancel
     </button>
 </form>

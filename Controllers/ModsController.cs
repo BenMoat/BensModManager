@@ -81,7 +81,7 @@ namespace BensModManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, [Bind("ID,ModName,Price,ModType,Obsolete")] Mod modModel)
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("ID,ModName,Price,ModType,Obsolete,FileLink,Notes")] Mod modModel)
         {
             if (ModelState.IsValid)
             {
@@ -110,6 +110,24 @@ namespace BensModManager.Controllers
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mod.ToList()) });
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", modModel) });
+        }
+
+        // GET: Mods/Invoice
+        public async Task<IActionResult> Invoice(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var modModel = await _context.Mod
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (modModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(modModel);
         }
 
         // GET: Mods/Delete

@@ -4,7 +4,7 @@
     Layout = null;
 }
 
-<form asp-action="AddOrEdit" asp-route-id="@Model.ID"
+<form asp-action="AddOrEdit" asp-route-id="@Model.ID" runat="server"
       class="needs-validation row g-3" novalidate
       onclick="validation()"
       onsubmit="return jQueryAjaxPost(this);">
@@ -68,18 +68,24 @@
         </div>
     </div>
 
-    <button type="submit"
+     <button type="submit"
             class="btn btn-default btn-outline-light"
             onclick="validation()">
         Submit
     </button>
 
-    <!--If this is an existing record, append a Delete button-->
+    <!--If this is an existing record, append the Delete and View Invoice button-->
     @if (Model.ID != 0)
     {
         <button type="button"
+                class="btn btn-default btn-info text-white"
+                onclick="invoicePopup('@Url.Action("Invoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Mod Invoice')">
+            View Invoice
+        </button>
+
+        <button type="button"
                 class="btn btn-default btn-danger text-white"
-                onclick="showInDeletePopup('@Url.Action("Delete","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Mod')">
+                onclick="deletePopup('@Url.Action("Delete","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Mod')">
             Delete
         </button>
     }

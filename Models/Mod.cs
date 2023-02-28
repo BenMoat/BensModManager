@@ -24,6 +24,11 @@ namespace BensModManager.Models
         [Required]
         public string ModType { get; set; }
 
+        [Required]
         public bool Obsolete { get; set; }
+
+        public string FileLink { get; set; }
+
+        public string Notes { get; set; }
 	}
 }

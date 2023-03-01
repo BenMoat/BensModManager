@@ -91,7 +91,38 @@ namespace BensModManager.Controllers
                 //Insert
                 if (id == 0)
                 {
-                    _context.Add(modModel);
+                    foreach (var file in files)
+                    {
+                        var basePath = Path.Combine(Directory.GetCurrentDirectory() + "\\Files\\");
+                        bool basePathExists = System.IO.Directory.Exists(basePath);
+                        if (!basePathExists) Directory.CreateDirectory(basePath);
+                        var fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                        var filePath = Path.Combine(basePath, file.FileName);
+                        var extension = Path.GetExtension(file.FileName);
+                        if (!System.IO.File.Exists(filePath))
+                        {
+                            using (var stream = new FileStream(filePath, FileMode.Create))
+                            {
+                                await file.CopyToAsync(stream);
+                            }
+                            modModel = new Mod
+                            {
+                                ModName = modModel.ModName,
+                                Price = modModel.Price,
+                                ModType = modModel.ModType,
+                                Obsolete = modModel.Obsolete,
+                                Notes = modModel.Notes,
+                                FileName = fileName,
+                                FileType = file.ContentType,
+                                FileExtension = extension,
+                                FilePath = filePath
+                            };
+                            _context.Mod.Update(modModel);
+                            _context.SaveChanges();
+                        }
+                    }
+
+                    _context.Update(modModel);
                     await _context.SaveChangesAsync();
                 }
                 //Update
@@ -130,6 +161,7 @@ namespace BensModManager.Controllers
                                 _context.SaveChanges();
                             }
                         }
+
                         _context.Update(modModel);
                         await _context.SaveChangesAsync();
                     }

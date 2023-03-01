@@ -88,8 +88,7 @@ namespace BensModManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Insert
-                if (id == 0)
+                try
                 {
                     foreach (var file in files)
                     {
@@ -107,6 +106,7 @@ namespace BensModManager.Controllers
                             }
                             modModel = new Mod
                             {
+                                ID = id,
                                 ModName = modModel.ModName,
                                 Price = modModel.Price,
                                 ModType = modModel.ModType,
@@ -125,57 +125,15 @@ namespace BensModManager.Controllers
                     _context.Update(modModel);
                     await _context.SaveChangesAsync();
                 }
-                //Update
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    try
-                    {
-                        foreach (var file in files)
-                        {
-                            var basePath = Path.Combine(Directory.GetCurrentDirectory() + "\\Files\\");
-                            bool basePathExists = System.IO.Directory.Exists(basePath);
-                            if (!basePathExists) Directory.CreateDirectory(basePath);
-                            var fileName = Path.GetFileNameWithoutExtension(file.FileName);
-                            var filePath = Path.Combine(basePath, file.FileName);
-                            var extension = Path.GetExtension(file.FileName);
-                            if (!System.IO.File.Exists(filePath))
-                            {
-                                using (var stream = new FileStream(filePath, FileMode.Create))
-                                {
-                                    await file.CopyToAsync(stream);
-                                }
-                                modModel = new Mod
-                                {
-                                    ID = id,
-                                    ModName = modModel.ModName,
-                                    Price = modModel.Price,
-                                    ModType = modModel.ModType,
-                                    Obsolete = modModel.Obsolete,
-                                    Notes = modModel.Notes,
-                                    FileName = fileName,
-                                    FileType = file.ContentType,
-                                    FileExtension = extension,
-                                    FilePath = filePath
-                                };
-                                _context.Mod.Update(modModel);
-                                _context.SaveChanges();
-                            }
-                        }
-
-                        _context.Update(modModel);
-                        await _context.SaveChangesAsync();
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        if (!ModModelExists(modModel.ID))
-                        { return NotFound(); }
-                        else
-                        { throw; }
-                    }
+                    if (!ModModelExists(modModel.ID))
+                    { return NotFound(); }
+                    else
+                    { throw; }
                 }
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mod.ToList()) });
             }
-            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", modModel) });
+            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mod.ToList()) });
         }
 
         // GET: Mods/Invoice

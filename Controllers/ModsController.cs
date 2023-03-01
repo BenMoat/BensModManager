@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using BensModManager.Data;
 using BensModManager.Models;
 using static BensModManager.Helper;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.IO;
 #endregion
 
 namespace BensModManager.Controllers
@@ -81,7 +84,7 @@ namespace BensModManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, [Bind("ID,ModName,Price,ModType,Obsolete,FileLink,Notes")] Mod modModel)
+        public async Task<IActionResult> AddOrEdit(int id, List<IFormFile> files, [Bind("ID,ModName,Price,ModType,Obsolete,Notes,FileName,FileExtension,FilePath")] Mod modModel)
         {
             if (ModelState.IsValid)
             {
@@ -96,6 +99,37 @@ namespace BensModManager.Controllers
                 {
                     try
                     {
+                        foreach (var file in files)
+                        {
+                            var basePath = Path.Combine(Directory.GetCurrentDirectory() + "\\Files\\");
+                            bool basePathExists = System.IO.Directory.Exists(basePath);
+                            if (!basePathExists) Directory.CreateDirectory(basePath);
+                            var fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                            var filePath = Path.Combine(basePath, file.FileName);
+                            var extension = Path.GetExtension(file.FileName);
+                            if (!System.IO.File.Exists(filePath))
+                            {
+                                using (var stream = new FileStream(filePath, FileMode.Create))
+                                {
+                                    await file.CopyToAsync(stream);
+                                }
+                                modModel = new Mod
+                                {
+                                    ID = id,
+                                    ModName = modModel.ModName,
+                                    Price = modModel.Price,
+                                    ModType = modModel.ModType,
+                                    Obsolete = modModel.Obsolete,
+                                    Notes = modModel.Notes,
+                                    FileName = fileName,
+                                    FileType = file.ContentType,
+                                    FileExtension = extension,
+                                    FilePath = filePath
+                                };
+                                _context.Mod.Update(modModel);
+                                _context.SaveChanges();
+                            }
+                        }
                         _context.Update(modModel);
                         await _context.SaveChangesAsync();
                     }

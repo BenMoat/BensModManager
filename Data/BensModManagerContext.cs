@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BensModManager.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BensModManager.Data
 {
@@ -8,6 +9,6 @@ namespace BensModManager.Data
 			: base(options)
 		{
 		}
-		public DbSet<Models.Mod> Mod { get; set; }
+		public DbSet<Mod> Mod { get; set; }
 	}
 }

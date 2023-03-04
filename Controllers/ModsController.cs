@@ -85,7 +85,6 @@ namespace BensModManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit(int id, List<IFormFile> files, Mod modModel)
         {
-            
             foreach (var file in files)
             {
                 var basePath = Path.Combine(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\");

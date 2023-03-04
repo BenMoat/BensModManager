@@ -5,22 +5,78 @@
 }
 
 <form asp-action="Invoice" asp-route-id="@Model.ID"
-      class="row g-3">
+      class="row g-3"
+      enctype="multipart/form-data"
+      onsubmit="return jQueryAjaxPost();">
     <input type="hidden" asp-for="ID" />
 
     <h3 class="text-center text-white"><b>@Model.ModName</b></h3>
 
+    <div class="form-floating mb-3">
+        <input asp-for="FileName" type="text"
+               class="form-control bg-dark text-light"
+               readonly>
+        <label asp-for="FileName"
+               class="text-light">
+        </label>
+    </div>
+
+    <div class="col">
+        <div class="form-floating mb-3">
+            <input asp-for="FileType" type="text"
+                   class="form-control bg-dark text-light"
+                   readonly>
+            <label asp-for="FileType"
+                   class="text-light">
+            </label>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="form-floating mb-3">
+            <input asp-for="FileExtension" type="url"
+                   class="form-control bg-dark text-light"
+                   readonly>
+            <label asp-for="FileExtension"
+                   class="text-light">
+            </label>
+        </div>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="FilePath" type="url"
+               class="form-control bg-dark text-light"
+               readonly>
+        <label asp-for="FilePath"
+               class="text-light">
+        </label>
+    </div>
+
     <iframe src="~/files/@(Model.FileName)@(Model.FileExtension)"
-            width="500" height="300" frameborder="0" scrolling="no"></iframe>
+            width="500" height="300" frameborder="0" scrolling="no">
+    </iframe>
 
+    <div class="align-content-center">
+        <label class="text-light">Replace Invoice: </label>
+        <input type="file" name="files" id="uploadBtn" onClick="hello()" class="btn btn-warning" />
+    </div>
 
+    <button type="submit" id="submitBtn"
+            class="btn btn-success text-white"
+            onclick="validation()">
+        Submit
+    </button>
 
-    <button type="button" class="btn btn-default btn-outline-light"
+    <button type="button" class="btn btn-outline-light"
             onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=@Model.ID},Context.Request.Scheme)','Update Mod')">
-        Back
+        &#8592; Back
     </button>
 </form>
 
 <script>
-
+    //Display the Submit button when a new document has been selected
+    document.getElementById("submitBtn").style.display = 'none';
+    document.getElementsByName('files')[0].addEventListener('change', function () {
+        document.getElementById("submitBtn").style.display = 'block';
+    });
 </script>

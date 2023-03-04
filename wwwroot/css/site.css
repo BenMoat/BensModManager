@@ -141,8 +141,15 @@ tr:not(#headers):hover {
 .btn-success {
     color: #fff;
     background-color: transparent;
-    border-color: #198754;
+    border-color: #22bf76;
 }
+
+    .btn-success:hover {
+        color: #fff;
+        background-color: #22bf76;
+        border-color: #22bf76;
+    }
+
 
 #deleteBtn {
     margin-top: 25px;

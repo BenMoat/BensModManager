@@ -9,8 +9,6 @@ namespace BensModManager.Models
 {
 	public class Mod
 	{
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         [Display(Name = "Mod Name")]

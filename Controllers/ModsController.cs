@@ -31,7 +31,6 @@ namespace BensModManager.Controllers
         }
         #endregion
 
-
         //GET: Mods
         public async Task<IActionResult> Index
             (
@@ -64,8 +63,7 @@ namespace BensModManager.Controllers
             return View(await PaginatedList<Mod>.CreateAsync(mods.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
-        // GET: Mods/AddOrEdit(Insert)
-        // GET: Mods/AddOrEdit/(Update)
+        //GET: Mod by ID
         [NoDirectAccess]
         public async Task<IActionResult> AddOrEdit(int id = 0)
         {
@@ -82,61 +80,51 @@ namespace BensModManager.Controllers
             }
         }
 
+        //POST: Added or Updateed Mod
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, List<IFormFile> files, [Bind("ID,ModName,Price,ModType,Obsolete,Notes,FileName,FileExtension,FilePath")] Mod modModel)
+        public async Task<IActionResult> AddOrEdit(int id, List<IFormFile> files, Mod modModel)
         {
-            if (ModelState.IsValid)
+            
+            foreach (var file in files)
             {
-                try
+                var basePath = Path.Combine(Directory.GetCurrentDirectory() + "\\Files\\");
+                bool basePathExists = System.IO.Directory.Exists(basePath);
+                if (!basePathExists) Directory.CreateDirectory(basePath);
+                var fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                var filePath = Path.Combine(basePath, file.FileName);
+                var extension = Path.GetExtension(file.FileName);
+                if (!System.IO.File.Exists(filePath))
                 {
-                    foreach (var file in files)
+                    using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        var basePath = Path.Combine(Directory.GetCurrentDirectory() + "\\Files\\");
-                        bool basePathExists = System.IO.Directory.Exists(basePath);
-                        if (!basePathExists) Directory.CreateDirectory(basePath);
-                        var fileName = Path.GetFileNameWithoutExtension(file.FileName);
-                        var filePath = Path.Combine(basePath, file.FileName);
-                        var extension = Path.GetExtension(file.FileName);
-                        if (!System.IO.File.Exists(filePath))
-                        {
-                            using (var stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                await file.CopyToAsync(stream);
-                            }
-                            modModel = new Mod
-                            {
-                                ID = id,
-                                ModName = modModel.ModName,
-                                Price = modModel.Price,
-                                ModType = modModel.ModType,
-                                Obsolete = modModel.Obsolete,
-                                Notes = modModel.Notes,
-                                FileName = fileName,
-                                FileType = file.ContentType,
-                                FileExtension = extension,
-                                FilePath = filePath
-                            };
-                            _context.Mod.Update(modModel);
-                            _context.SaveChanges();
-                        }
+                        await file.CopyToAsync(stream);
                     }
-
-                    _context.Update(modModel);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ModModelExists(modModel.ID))
-                    { return NotFound(); }
-                    else
-                    { throw; }
+                    modModel = new Mod
+                    {
+                        ID = id,
+                        ModName = modModel.ModName,
+                        Price = modModel.Price,
+                        ModType = modModel.ModType,
+                        Obsolete = modModel.Obsolete,
+                        Notes = modModel.Notes,
+                        FileName = fileName,
+                        FileType = file.ContentType,
+                        FileExtension = extension,
+                        FilePath = filePath
+                    };
+                    _context.Mod.Update(modModel);
+                    _context.SaveChanges();
                 }
             }
+
+            _context.Update(modModel);
+            await _context.SaveChangesAsync();
+
             return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mod.ToList()) });
         }
 
-        // GET: Mods/Invoice
+        //GET: Mod Invoice
         public async Task<IActionResult> Invoice(int? id)
         {
             if (id == null)
@@ -154,7 +142,7 @@ namespace BensModManager.Controllers
             return View(modModel);
         }
 
-        // GET: Mods/Delete
+        //GET: Mod to Delete
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -172,7 +160,7 @@ namespace BensModManager.Controllers
             return View(modModel);
         }
 
-        // POST: Mods/Delete
+        //POST: Delete a Mod
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -181,11 +169,6 @@ namespace BensModManager.Controllers
             _context.Mod.Remove(modModel);
             await _context.SaveChangesAsync();
             return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mod.ToList()) });
-        }
-
-        private bool ModModelExists(int id)
-        {
-            return _context.Mod.Any(e => e.ID == id);
         }
     }
 }

@@ -10,8 +10,13 @@
 
     <h3 class="text-center text-white"><b>@Model.ModName</b></h3>
 
-    <iframe src="https://onedrive.live.com/embed?cid=411E96E81FA6FA62&resid=411E96E81FA6FA62%21144018&authkey=AMviBvTWlFSpKZk&em=2" 
+    <iframe src=@Model.FilePath
     width="500" height="300" frameborder="0" scrolling="no"></iframe>
+
+    <iframe src="../Files/Invoice.jpg"
+            width="500" height="300" frameborder="0" scrolling="no"></iframe>
+
+
 
     <button type="button" class="btn btn-default btn-outline-light"
             onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=@Model.ID},Context.Request.Scheme)','Update Mod')">

@@ -4,7 +4,7 @@
     Layout = null;
 }
 
-<form asp-action="AddOrEdit" asp-route-id="@Model.ID" runat="server" 
+<form asp-action="AddOrEdit" asp-route-id="@Model.ID" runat="server"
       class="needs-validation row g-3" novalidate
       onclick="validation()"
       enctype="multipart/form-data"
@@ -69,11 +69,31 @@
         </div>
     </div>
 
+    <!--Retain file if one is already selected-->
+    <input hidden asp-for="FileName" type="text">
+    <input hidden asp-for="FileExtension" type="text">
+    <input hidden asp-for="FilePath" type="text">
+    <input hidden asp-for="FileType" type="text">
 
-    <input type="file" name="files" />
+    @if (Model.FileName == null)
+    {
+            <div class="col">
+        <div class="form-floating mb-3">
+        <input type="file" name="files" class="text-light" />
+        </div>
+        </div>
+    }
 
+    @if (Model.FileName != null)
+    {
+        <button type="button"
+                class="btn btn-default btn-info text-white"
+                onclick="invoicePopup('@Url.Action("Invoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Mod Invoice')">
+            View Invoice
+        </button>
+    }
 
-     <button type="submit"
+    <button type="submit"
             class="btn btn-default btn-outline-light"
             onclick="validation()">
         Submit
@@ -83,19 +103,12 @@
     @if (Model.ID != 0)
     {
         <button type="button"
-                class="btn btn-default btn-info text-white"
-                onclick="invoicePopup('@Url.Action("Invoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Mod Invoice')">
-            View Invoice
-        </button>
-
-        <button type="button"
                 class="btn btn-default btn-danger text-white"
                 onclick="deletePopup('@Url.Action("Delete","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Mod')">
             Delete
         </button>
     }
 </form>
-
 
 <script>
     //Apply jQuery maskMoney to Price

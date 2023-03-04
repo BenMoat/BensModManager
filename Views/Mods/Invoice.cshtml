@@ -4,11 +4,16 @@
     Layout = null;
 }
 
-<form asp-action="Invoice" asp-route-id="@Model.ID"
+<form asp-action="AddOrEdit" asp-route-id="@Model.ID"
       class="row g-3"
       enctype="multipart/form-data"
-      onsubmit="return jQueryAjaxPost();">
+      onsubmit="return jQueryAjaxPost(this);">
     <input type="hidden" asp-for="ID" />
+    <input hidden asp-for="ModName" type="text">
+    <input hidden asp-for="Price" type="text">
+    <input hidden asp-for="ModType" type="text">
+    <input hidden asp-for="Obsolete" type="checkbox">
+    <input hidden asp-for="Notes" type="text">
 
     <h3 class="text-center text-white"><b>@Model.ModName</b></h3>
 
@@ -57,13 +62,12 @@
     </iframe>
 
     <div class="align-content-center">
-        <label class="text-light">Replace Invoice: </label>
-        <input type="file" name="files" id="uploadBtn" onClick="hello()" class="btn btn-warning" />
+        <label class="text-light">Replace Invoice: &nbsp</label>
+        <input type="file" name="files" class="btn btn-warning" />
     </div>
 
     <button type="submit" id="submitBtn"
-            class="btn btn-success text-white"
-            onclick="validation()">
+            class="btn btn-success text-white">
         Submit
     </button>
 

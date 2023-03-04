@@ -83,6 +83,7 @@
   <ItemGroup>
     <Folder Include="Files\" />
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\files\" />
     <Folder Include="wwwroot\lib\jquery\dist\bindings\" />
   </ItemGroup>
 

@@ -10,10 +10,7 @@
 
     <h3 class="text-center text-white"><b>@Model.ModName</b></h3>
 
-    <iframe src=@Model.FilePath
-    width="500" height="300" frameborder="0" scrolling="no"></iframe>
-
-    <iframe src="../Files/Invoice.jpg"
+    <iframe src="~/files/@(Model.FileName)@(Model.FileExtension)"
             width="500" height="300" frameborder="0" scrolling="no"></iframe>
 
 
@@ -23,3 +20,7 @@
         Back
     </button>
 </form>
+
+<script>
+
+</script>

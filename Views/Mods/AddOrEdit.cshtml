@@ -58,6 +58,16 @@
         </div>
     </div>
 
+    <div class="form-floating mb-3">
+        <textarea asp-for="Notes" rows="3"
+               class="form-control bg-dark text-light"
+               placeholder="Notes">
+        </textarea>
+        <label asp-for="Notes"
+               class="text-light">
+        </label>
+    </div>
+
     <div class="col">
         <div class="form-check">
             <input asp-for="Obsolete" type="checkbox"

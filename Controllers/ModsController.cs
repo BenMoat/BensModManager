@@ -93,6 +93,7 @@ namespace BensModManager.Controllers
                 var fileName = Path.GetFileNameWithoutExtension(file.FileName);
                 var filePath = Path.Combine(basePath, file.FileName);
                 var extension = Path.GetExtension(file.FileName);
+
                 if (!System.IO.File.Exists(filePath))
                 {
                     using (var stream = new FileStream(filePath, FileMode.Create))
@@ -165,6 +166,11 @@ namespace BensModManager.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var modModel = await _context.Mod.FindAsync(id);
+            if (modModel == null) return null;
+            if (System.IO.File.Exists(modModel.FilePath))
+            {
+                System.IO.File.Delete(modModel.FilePath);
+            }
             _context.Mod.Remove(modModel);
             await _context.SaveChangesAsync();
             return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mod.ToList()) });

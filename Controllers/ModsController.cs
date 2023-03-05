@@ -148,8 +148,8 @@ namespace BensModManager.Controllers
             return View(modModel);
         }
 
-        //GET: Mod to Delete
-        public async Task<IActionResult> Delete(int? id)
+        //GET: Load DeleteInvoice Popup
+        public async Task<IActionResult> DeleteInvoice(int? id)
         {
             if (id == null)
             {
@@ -158,24 +158,55 @@ namespace BensModManager.Controllers
 
             var modModel = await _context.Mod
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (modModel == null)
-            {
-                return NotFound();
-            }
 
             return View(modModel);
         }
 
-        //POST: Delete a Mod
-        [HttpPost, ActionName("Delete")]
+        //POST: Delete selected Mod
+        [HttpPost, ActionName("DeleteInvoice")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteInvoiceConfirmed(int id)
         {
             var modModel = await _context.Mod.FindAsync(id);
             if (modModel == null) return null;
             if (System.IO.File.Exists(modModel.FilePath))
             {
-                System.IO.File.Delete(modModel.FilePath);
+                modModel.FileExtension = null;
+                modModel.FileName= null;
+                modModel.FileType= null;
+            }
+            System.IO.File.Delete(modModel.FilePath);
+            modModel.FilePath = null;
+
+            _context.Mod.Update(modModel);
+            await _context.SaveChangesAsync();
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mod.ToList()) });
+        }
+
+        //GET: Load DeleteMod Popup
+        public async Task<IActionResult> DeleteMod(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var modModel = await _context.Mod
+                .FirstOrDefaultAsync(m => m.ID == id);
+
+            return View(modModel);
+        }
+
+        //POST: Delete selected Mod
+        [HttpPost, ActionName("DeleteMod")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteModConfirmed(int id)
+        {
+            var modModel = await _context.Mod.FindAsync(id);
+            if (modModel == null) return null;
+            if (System.IO.File.Exists(modModel.FilePath))
+            {
+                System.IO.File.Delete(modModel.FileName);
             }
             _context.Mod.Remove(modModel);
             await _context.SaveChangesAsync();

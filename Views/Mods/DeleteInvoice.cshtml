@@ -1,0 +1,18 @@
+﻿@model BensModManager.Models.Mod
+
+@{ Layout = null; }
+
+<form asp-action="DeleteInvoice" asp-route-id="@Model.ID"
+      class="row g-3"
+      onsubmit="return jQueryAjaxPost(this);">
+    <input type="hidden" asp-for="ID" />
+
+    <h3 class="text-center text-white">Are you sure you want to delete the <b>@Model.ModName</b> invoice?</h3>
+
+    <button type="submit" class="btn btn-danger text-white">Delete</button>
+
+    <button type="button" class="btn btn-default btn-outline-light" 
+        onclick="modPopup('@Url.Action("Invoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Mod Invoice')">
+        Cancel
+    </button>
+</form>

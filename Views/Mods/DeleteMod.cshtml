@@ -2,7 +2,7 @@
 
 @{ Layout = null; }
 
-<form asp-action="Delete" asp-route-id="@Model.ID"
+<form asp-action="DeleteMod" asp-route-id="@Model.ID"
       class="row g-3"
       onsubmit="return jQueryAjaxDelete(this);">
     <input type="hidden" asp-for="ID" />

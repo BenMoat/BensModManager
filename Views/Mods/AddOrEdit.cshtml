@@ -104,7 +104,7 @@
     {
         <button type="button"
                 class="btn btn-default btn-danger text-white"
-                onclick="deletePopup('@Url.Action("Delete","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Mod')">
+                onclick="deletePopup('@Url.Action("DeleteMod","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Mod')">
             Delete
         </button>
     }

@@ -66,10 +66,18 @@
         <input type="file" name="files" class="btn btn-warning" />
     </div>
 
+    <button type="button"
+            class="btn btn-default btn-danger text-white"
+            onclick="deletePopup('@Url.Action("DeleteInvoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Invoice')">
+        Delete
+    </button>
+
     <button type="submit" id="submitBtn"
             class="btn btn-success text-white">
         Submit
     </button>
+
+   
 
     <button type="button" class="btn btn-outline-light"
             onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=@Model.ID},Context.Request.Scheme)','Update Mod')">

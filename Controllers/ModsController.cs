@@ -80,13 +80,19 @@ namespace BensModManager.Controllers
             }
         }
 
-        //POST: Added or Updateed Mod
+        //POST: Added or Updated Mod
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit(int id, List<IFormFile> files, Mod modModel)
         {
             foreach (var file in files)
             {
+
+                if (System.IO.File.Exists((modModel.FilePath)))
+                {
+                    System.IO.File.Delete(modModel.FilePath);
+                }
+
                 var basePath = Path.Combine(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\");
                 bool basePathExists = System.IO.Directory.Exists(basePath);
                 if (!basePathExists) Directory.CreateDirectory(basePath);

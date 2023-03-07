@@ -23,7 +23,6 @@ new TomSelect('#searchModType', {
     diacritics: true
 });
 
-//Set up and initialise the record popup function. 
 modPopup = (url, title) => {
     $.ajax({
         type: 'GET',
@@ -36,6 +35,12 @@ modPopup = (url, title) => {
             $('.modal-dialog').draggable({
                 handle: ".modal-header"
             });
+            if (!$(".modal.in").length) {
+                $(".modal-dialog").css({
+                    top: 0,
+                    left: 0
+                });
+            }
 
             //Load Mod Type dropdown
             var ModTypeCurrentValue = document.getElementById("ModTypeValue").value;
@@ -63,9 +68,6 @@ invoicePopup = (url, title) => {
             $('#form-modal .modal-body').html(res);
             $('#form-modal .modal-title').html(title);
             $('#form-modal').modal('show');
-            $('.modal-dialog').draggable({
-                handle: ".modal-header"
-            });
         }
     });
 }

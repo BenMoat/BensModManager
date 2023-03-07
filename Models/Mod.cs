@@ -42,6 +42,5 @@ namespace BensModManager.Models
 
         [Display(Name = "File Path")]
         public string FilePath { get; set; }
-
 	}
 }

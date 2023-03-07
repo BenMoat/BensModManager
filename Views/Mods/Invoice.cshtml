@@ -10,7 +10,7 @@
       onsubmit="return jQueryAjaxPost(this);">
     <input type="hidden" asp-for="ID" />
     <input hidden asp-for="ModName" type="text">
-    <input hidden asp-for="Price" type="text">
+    <input hidden asp-for="Price" type="text" id="price">
     <input hidden asp-for="ModType" type="text">
     <input hidden asp-for="Obsolete" type="checkbox">
     <input hidden asp-for="Notes" type="text">
@@ -77,8 +77,6 @@
         Submit
     </button>
 
-   
-
     <button type="button" class="btn btn-outline-light"
             onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=@Model.ID},Context.Request.Scheme)','Update Mod')">
         &#8592; Back
@@ -86,6 +84,10 @@
 </form>
 
 <script>
+    //Remove currency symbol from Price on Submit
+    var input = document.getElementById('price')
+    input.value = input.value.replace("£", "");
+
     //Display the Submit button when a new document has been selected
     document.getElementById("submitBtn").style.display = 'none';
     document.getElementsByName('files')[0].addEventListener('change', function () {

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection;
 #endregion
 
 namespace BensModManager.Models
@@ -15,6 +16,7 @@ namespace BensModManager.Models
 		[Required]
         public string ModName { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         [DataType(DataType.Currency)]
 		[Required]
         [Column(TypeName = "decimal(18, 2)")]

@@ -33,7 +33,8 @@
             </button>
         </div>
         <div class="col-2">
-            <a onclick="modPopup('@Url.Action("AddOrEdit","Mods",null,Context.Request.Scheme)','New Mod')" class="btn btn-success text-white">New Mod</a>
+            <a onclick="modPopup('@Url.Action("AddOrEdit","Mods",null,Context.Request.Scheme)','New Mod')"
+               class="btn btn-success text-white">New Mod</a>
         </div>
 
         @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
@@ -41,8 +42,8 @@
             <div class="col">
                 <a id="fullListBtn"
                    class="form-control btn btn-info text-white"
-                   asp-action="Index">
-                   Back to Full List
+               asp-action="Index">
+                    Back to Full List
                 </a>
             </div>
         }
@@ -68,7 +69,8 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=item.ID},Context.Request.Scheme)','Update Mod')" class="focusAnchor">
+                <tr onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=item.ID},Context.Request.Scheme)','Update Mod')"
+                    class="focusAnchor">
                     <td>
                         @Html.DisplayFor(modelItem => item.ModName)
                     </td>
@@ -79,17 +81,18 @@
                         @Html.DisplayFor(modelItem => item.ModType)
                     </td>
                 </tr>
-            }       
+            }
         </tbody>
     </table>
 </div>
-@if (Model.Count == 0)
+
+@if (!Model.Any())
 {
     <h2 class="text-light">No Mods Found</h2>
 }
-@if (Model.Count != 0)
+else
 {
-    <h1 id="totalSum" class="text-light">Total: £@Model.Sum(x => x.Price)</h1>
+    <h1 id="totalSum" class="text-light">Total: @string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", @Model.Sum(x => x.Price))</h1>
 }
 
 @{

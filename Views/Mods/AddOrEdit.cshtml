@@ -15,7 +15,8 @@
         <input asp-for="ModName" type="text"
                class="form-control bg-dark text-light"
                placeholder="Mod Name"
-               required>
+               required
+               data-prefix="R$ " >
         <label asp-for="ModName"
                class="text-light">
         </label>
@@ -30,7 +31,8 @@
                    id="price"
                    class="form-control bg-dark text-light"
                    placeholder="Price"
-                   required>
+                   required
+            data-prefix="£">
             <label asp-for="Price"
                    class="text-light">
             </label>
@@ -125,7 +127,7 @@
     $('#price').maskMoney();
 
     //Remove the default '0' from the Price
-    if ($('#price').val() == '0') {
+    if ($('#price').val() == '£0.00') {
         $('#price').val("")
     }
 
@@ -145,6 +147,9 @@
                         event.stopPropagation();
                     }
                     form.classList.add('was-validated');
+                    //Remove currency symbol from Price on Submit
+                    var input = document.getElementById('price')
+                    input.value = input.value.replace("£","");
                 }, true);
             });
         })();

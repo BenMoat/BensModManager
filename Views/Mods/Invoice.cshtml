@@ -4,6 +4,12 @@
     Layout = null;
 }
 
+<style>
+.modal-dialog {
+    max-width: 700px;
+}
+</style>
+
 <form asp-action="AddOrEdit" asp-route-id="@Model.ID"
       class="row g-3"
       id="yo"
@@ -50,24 +56,12 @@
         </label>
     </div>
 
-    @if (Model.FileExtension == ".pdf")
-    {
-        <div class="form-floating mb-3">
-            <iframe src="~/files/@(Model.FileName)@(Model.FileExtension)"
-                    frameborder="0" width="100%" height="500px" align="middle" loading="eager">
-            </iframe>
-        </div>
-    }
+    <div class="form-floating mb-3">
+        <iframe src="~/files/@(Model.FileName)@(Model.FileExtension)#view=FitH" onload="resizeIframe(this)
+                frameborder="0" width="100%" height="600" align="middle" loading="eager">
+        </iframe>
+    </div>
 
-    else if (Model.FileExtension != ".pdf")
-    {
-        <div class="form-floating mb-3">
-            <iframe onload="resizeIframe(this)" id="dynamicIframe"
-                    src="~/files/@(Model.FileName)@(Model.FileExtension)"
-                    frameborder="0">
-            </iframe>
-        </div>
-    }
 
     <div class="align-content-center">
         <label class="text-light">Replace Invoice: &nbsp</label>
@@ -96,7 +90,6 @@
     //Center and change the modal's size dynamically to show the entire image
     async function resizeIframe(iframe) {
         iframe.height = iframe.contentWindow.document.body.scrollHeight + "px";
-        iframe.width = iframe.contentWindow.document.body.scrollWidth + "px";
     };
 
     //Remove currency symbol from Price on Submit

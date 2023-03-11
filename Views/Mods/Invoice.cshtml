@@ -55,11 +55,23 @@
         </label>
     </div>
 
-    <div class="form-floating mb-3">
-        <iframe src="~/files/@(Model.FileName)@(Model.FileExtension)"
-                width="500" height="600" frameborder="0">
-        </iframe>
-    </div>
+    @if (Model.FileExtension == ".pdf")
+    {
+        <div class="form-floating mb-3">
+            <iframe src="~/files/@(Model.FileName)@(Model.FileExtension)"
+                    frameborder="0" width="100%" height="500px">
+            </iframe>
+        </div>
+    }
+
+    else if (Model.FileExtension != ".pdf")
+    {
+        <div class="form-floating mb-3">
+            <iframe onload="resizeIframe(this)" src="~/files/@(Model.FileName)@(Model.FileExtension)"
+                    frameborder="0">
+            </iframe>
+        </div>
+    }
 
     <div class="align-content-center">
         <label class="text-light">Replace Invoice: &nbsp</label>
@@ -81,9 +93,15 @@
             onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=@Model.ID},Context.Request.Scheme)','Update Mod')">
         &#8592; Back
     </button>
+
 </form>
 
 <script>
+    function resizeIframe(iframe) {
+        iframe.height = iframe.contentWindow.document.body.scrollHeight + "px";
+        iframe.width = iframe.contentWindow.document.body.scrollWidth + "px";
+    };
+
     //Remove currency symbol from Price on Submit
     var input = document.getElementById('price')
     input.value = input.value.replace("£", "");

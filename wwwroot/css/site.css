@@ -72,9 +72,20 @@ tr:not(#headers):hover {
         color: white;
     }
 
-
 .modal-header {
         cursor: grab;
+    }
+
+.modal-dialog {
+    display: table;
+   
+
+}
+
+    #dynamicIframe {
+        max-height: 600px;
+        max-width: 900px;
+        border-color: #fff !important;
     }
 
 .btn-success {

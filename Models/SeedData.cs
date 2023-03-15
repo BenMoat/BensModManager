@@ -30,11 +30,10 @@ namespace BensModManager.Models
                         ModType = "Performance",
                         Obsolete = false,
                         Notes = "Blow out filter debris every month",
-                        FileName = "MST Intake Invoice",
-                        FileType = "image/jpg",
-                        FileExtension = ".jpg",
-                        FilePath = "C:\\Users\\Ben Moat\\OneDrive\\Shared\\Documents\\Supra\\BensModManager\\wwwroot\\files\\Mst Intake Invoice.jpg"
-
+                        FileName = "",
+                        FileType = "",
+                        FileExtension = "",
+                        FilePath = ""
                     },
 
                     new Mod
@@ -44,10 +43,10 @@ namespace BensModManager.Models
                         ModType = "Exterior",
                         Obsolete = true,
                         Notes = "Stored in garage with OEM mirror caps",
-                        FileName = "Wing Mirrors",
-                        FileType = "image/png",
-                        FileExtension = ".png",
-                        FilePath = "C:\\Users\\Ben Moat\\OneDrive\\Shared\\Documents\\Supra\\BensModManager\\wwwroot\\files\\Wing Mirrors.png"
+                        FileName = "",
+                        FileType = "",
+                        FileExtension = "",
+                        FilePath = ""
                     },
                     
                     new Mod
@@ -57,10 +56,10 @@ namespace BensModManager.Models
                         ModType = "Interior",
                         Obsolete = false,
                         Notes = "Torque spec: 65Nm",
-                        FileName = "AUTOID Steering Wheel Invoice",
-                        FileType = "application/pdf",
-                        FileExtension = ".pdf",
-                        FilePath = "C:\\Users\\Ben Moat\\OneDrive\\Shared\\Documents\\Supra\\BensModManager\\wwwroot\\files\\AUTOID Steering Wheel Invoice.pdf"
+                        FileName = "",
+                        FileType = "",
+                        FileExtension = "",
+                        FilePath = ""
                     }
                 );
                 context.SaveChanges();

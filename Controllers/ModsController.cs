@@ -10,8 +10,6 @@ using static BensModManager.Helper;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.IO;
-using LovePdf.Core;
-using LovePdf.Model.Task;
 #endregion
 
 namespace BensModManager.Controllers
@@ -103,22 +101,6 @@ namespace BensModManager.Controllers
                 var filePath = Path.Combine(basePath, file.FileName);
                 var extension = Path.GetExtension(file.FileName);
 
-/*                // Authenticate
-                var api = new LovePdfApi("PUBLIC_KEY", "SECRET_KEY");
-
-                // Choose your processing tool and create a new task
-                var taskCompress = api.CreateTask<CompressTask>();
-
-                // Add files to task for upload
-                var file1 = taskCompress.AddFile(filePath);
-                var file2 = taskCompress.AddFile(filePath);
-                var file3 = taskCompress.AddFile(filePath);
-
-                // Execute the task
-                taskCompress.Process();
-
-                // Download the packaged files
-                taskCompress.DownloadFile();*/
 
                 if (!System.IO.File.Exists(filePath))
                 {

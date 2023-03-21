@@ -10,6 +10,7 @@ using static BensModManager.Helper;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.Rendering;
 #endregion
 
 namespace BensModManager.Controllers
@@ -61,6 +62,17 @@ namespace BensModManager.Controllers
 
             var pageSize = 20;
             return View(await PaginatedList<Mod>.CreateAsync(mods.AsNoTracking(), pageNumber ?? 1, pageSize));
+        }
+
+        public string[] ModTypes (Mod mod)
+        {
+            IQueryable<string> modTypeQuery = from m in _context.Mod
+                                            orderby m.ModType
+                                            select m.ModType;
+
+            string[] modTypes = modTypeQuery.Distinct().ToArray();
+
+            return modTypes;
         }
 
         //GET: Mod by ID

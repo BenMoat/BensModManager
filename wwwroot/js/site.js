@@ -1,16 +1,25 @@
 ﻿//Set array of mod types
-let ModTypes = [
+let ModTypesOld = [
     { value: "Performance", name: "Performance" },
     { value: "Interior", name: "Interior" },
     { value: "Exterior", name: "Exterior" }
 ];
+
+$(document).ready(function () {
+    var url = "/Mods/ModTypes";
+    $.get(url, null, function (data) {
+        console.log(data);
+    });
+});
+
+console.log(data);
 
 //Retain user search selections
 let ModTypeSelection = document.getElementById("searchModType").getAttribute("value");
 
 //Load Mod Type dropdown
 new TomSelect('#searchModType', {
-    options: [ModTypes],
+    options: [data],
     items: [ModTypeSelection],
     placeholder: 'Mod Type',
     labelField: 'name',

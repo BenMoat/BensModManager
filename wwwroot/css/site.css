@@ -55,9 +55,6 @@ tr:not(#headers):hover {
 /**Main Search bar**/
 #inlineSearch {
     padding-bottom: 25px;
-    width: 100%;
-    margin: 0 auto;
-    align-items: center;
 }
 
     #inlineSearch .col {
@@ -72,9 +69,33 @@ tr:not(#headers):hover {
         color: white;
     }
 
-.modal-header {
-        cursor: grab;
+/**Tom Select dropdown**/
+.ts-wrapper.form-control,
+.ts-wrapper.form-select {
+    height: 55px !important;
+}
+
+.ts-dropdown,
+.option.active {
+    background-color: #212529 !important;
+    color: #fff !important;
+}
+
+    .option.active:hover {
+        background-color: #2c3034 !important;
     }
+
+    .ts-control ::placeholder {
+        color: #fff !important;
+    }
+
+    .ts-control > .item {
+        color: #fff !important;
+    }
+
+.modal-header {
+    cursor: grab;
+}
 
 .btn-success {
     color: #fff;

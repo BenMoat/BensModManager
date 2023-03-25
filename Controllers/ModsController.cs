@@ -37,6 +37,7 @@ namespace BensModManager.Controllers
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["ModNameSortParam"] = String.IsNullOrEmpty(sortOrder) ? "modNameDescending" : "";
+            ViewData["PriceSortParam"] = String.IsNullOrEmpty(sortOrder) ? "priceDescending" : "";
 
             if (modName != null)
             {
@@ -67,6 +68,9 @@ namespace BensModManager.Controllers
             {
                 case "modNameDescending":
                     mods = mods.OrderByDescending(s => s.ModName);
+                    break;
+                case "priceDescending":
+                    mods = mods.OrderByDescending(s => s.Price);
                     break;
                 default:
                     mods = mods.OrderBy(s => s.ModName);

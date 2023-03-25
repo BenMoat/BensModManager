@@ -40,7 +40,7 @@
                    class="form-control btn btn-success text-white">New Mod</a>
             </div>
 
-            @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
+            @if (@ViewData["CurrentFilter"] != null)
             {
                 <div class="col col-md-2">
                     <a class="form-control btn btn-info text-white"
@@ -65,7 +65,7 @@
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["ModNameSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Mod Name</a>
                 </th>
                 <th scope="col" class="col-2">
-                    Price
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Price</a>
                 </th>
                 <th scope="col" class="col-3">
                     Mod Type

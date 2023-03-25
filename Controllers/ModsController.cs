@@ -33,25 +33,44 @@ namespace BensModManager.Controllers
         #endregion
 
         //GET: Mods
-        public async Task<IActionResult> Index ( string ModName,string ModType, string sortOrder, int? pageNumber )
+        public async Task<IActionResult> Index ( string modName, string modType, string currentFilter, string sortOrder, int? pageNumber )
         {
-            ViewData["ModName"] = ModName;
-            ViewData["ModType"] = ModType;
             ViewData["CurrentSort"] = sortOrder;
+            ViewData["ModNameSortParam"] = String.IsNullOrEmpty(sortOrder) ? "modNameDescending" : "";
+
+            if (modName != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                modName = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = modName;
 
             var mods = from s in _context.Mod
-                       orderby s.ModName
                        select s;
 
             //Search criteria
-            if (!String.IsNullOrEmpty(ModName))
+            if (!String.IsNullOrEmpty(modName))
             {
-                mods = (IOrderedQueryable<Mod>)mods.Where(s => s.ModName.Contains(ModName));
+                mods = mods.Where(s => s.ModName.Contains(modName));
             }
 
-            if (!String.IsNullOrEmpty(ModType))
+/*            if (!String.IsNullOrEmpty(modType))
             {
-                mods = (IOrderedQueryable<Mod>)mods.Where(s => s.ModType.Contains(ModType));
+                mods = (IOrderedQueryable<Mod>)mods.Where(s => s.ModType.Contains(modType));
+            }
+*/
+            switch (sortOrder)
+            {
+                case "modNameDescending":
+                    mods = mods.OrderByDescending(s => s.ModName);
+                    break;
+                default:
+                    mods = mods.OrderBy(s => s.ModName);
+                    break;
             }
 
             var pageSize = 20;

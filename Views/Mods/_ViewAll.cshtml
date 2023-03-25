@@ -9,15 +9,14 @@
         <div class="row justify-content-md-center">
             <div class="col col-md-4">
                 <input type="text"
-                       for="ModName"
                        name="ModName"
                        id="searchModName"
                        class="form-control bg-dark text-light"
                        placeholder="Mod Name"
-                       value="@ViewData["ModName"]" />
+                       value="@ViewData["CurrentFilter"]" />
             </div>
 
-            <div class="col col-md-3">
+@*            <div class="col col-md-3">
                 <select for="ModType"
                         id="searchModType"
                         name="ModType"
@@ -25,7 +24,7 @@
                         value="@ViewData["ModType"]">
                 </select>
                 <option selected disabled value=""></option>
-            </div>
+            </div>*@
 
             <div class="col col-lg-1">
                 <button type="submit"
@@ -50,7 +49,6 @@
                     </a>
                 </div>
             }
-
         </div>
     </div>
 </form>
@@ -64,7 +62,7 @@
         <thead>
             <tr id="headers" class="align-middle">
                 <th scope="col" class="col-7">
-                    Mod Name
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ModNameSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Mod Name</a>
                 </th>
                 <th scope="col" class="col-2">
                     Price
@@ -74,6 +72,7 @@
                 </th>
             </tr>
         </thead>
+
         <tbody>
             @foreach (var item in Model)
             {

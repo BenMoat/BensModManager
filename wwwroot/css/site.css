@@ -18,6 +18,15 @@ td {
     box-shadow: inset 0 0 0 2px;
 }
 
+.form-floating.mb-3::before {
+    background: #212529 !important;
+    z-index: -2;
+}
+
+.form-floating>label {
+    left: unset  !important;
+}
+
 tr:not(#headers):hover {
     background-size: 100% 100%;
     transform: scale(1.08,1.0);

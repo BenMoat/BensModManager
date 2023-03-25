@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\lib\**" />
+    <Content Remove="wwwroot\lib\**" />
+    <EmbeddedResource Remove="wwwroot\lib\**" />
+    <None Remove="wwwroot\lib\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="C:\Users\Ben Moat\.nuget\packages\bootstrap\5.1.2\contentFiles\any\any\wwwroot\css\bootstrap-grid.css" />
     <Content Remove="C:\Users\Ben Moat\.nuget\packages\bootstrap\5.1.2\contentFiles\any\any\wwwroot\css\bootstrap-grid.css.map" />
     <Content Remove="C:\Users\Ben Moat\.nuget\packages\bootstrap\5.1.2\contentFiles\any\any\wwwroot\css\bootstrap-grid.min.css" />
@@ -51,7 +58,6 @@
     <Content Remove="C:\Users\Ben Moat\.nuget\packages\bootstrap\5.1.2\contentFiles\any\any\wwwroot\js\bootstrap.min.js" />
     <Content Remove="C:\Users\Ben Moat\.nuget\packages\bootstrap\5.1.2\contentFiles\any\any\wwwroot\js\bootstrap.min.js.map" />
     <Content Remove="web.config" />
-    <Content Remove="wwwroot\lib\jquery\dist\jquery.inputmask.min.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -81,7 +87,6 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\files\" />
-    <Folder Include="wwwroot\lib\jquery\dist\bindings\" />
   </ItemGroup>
 
 </Project>

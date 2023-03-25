@@ -59,11 +59,11 @@ namespace BensModManager.Controllers
                 mods = mods.Where(s => s.ModName.Contains(modName));
             }
 
-/*            if (!String.IsNullOrEmpty(modType))
+            if (!String.IsNullOrEmpty(modType))
             {
-                mods = (IOrderedQueryable<Mod>)mods.Where(s => s.ModType.Contains(modType));
+                mods = mods.Where(s => s.ModType.Contains(modType));
             }
-*/
+
             switch (sortOrder)
             {
                 case "modNameDescending":

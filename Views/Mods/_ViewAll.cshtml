@@ -16,15 +16,15 @@
                        value="@ViewData["CurrentFilter"]" />
             </div>
 
-@*            <div class="col col-md-3">
+            <div class="col col-md-3">
                 <select for="ModType"
                         id="searchModType"
                         name="ModType"
                         class="form-select bg-dark text-light"
-                        value="@ViewData["ModType"]">
+                        value="@ViewData["CurrentFilter"]">
                 </select>
                 <option selected disabled value=""></option>
-            </div>*@
+            </div>
 
             <div class="col col-lg-1">
                 <button type="submit"
@@ -53,8 +53,6 @@
     </div>
 </form>
 
-
-
 <form asp-action="ModTypes" method="get">
 </form>
 <div id="tableAJAX">
@@ -66,13 +64,13 @@
                 </th>
                 <th scope="col" class="col-2">
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Price</a>
+
                 </th>
                 <th scope="col" class="col-3">
                     Mod Type
                 </th>
             </tr>
         </thead>
-
         <tbody>
             @foreach (var item in Model)
             {
@@ -111,14 +109,14 @@ else
     <a asp-action="Index"
        asp-route-sortOrder="@ViewData["CurrentSort"]"
        asp-route-pageNumber="@(Model.PageIndex - 1)"
-       asp-route-currentFilter="@ViewData["ModName"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
        class="btn btn-default btn-outline-light @prevDisabled">
         Previous
     </a>
     <a asp-action="Index"
        asp-route-sortOrder="@ViewData["CurrentSort"]"
        asp-route-pageNumber="@(Model.PageIndex + 1)"
-       asp-route-currentFilter="@ViewData["ModName"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
        class="btn btn-default btn-outline-light @nextDisabled">
         Next
     </a>

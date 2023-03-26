@@ -35,16 +35,9 @@ namespace BensModManager.Controllers
         //GET: Mods
         public async Task<IActionResult> Index ( string modName, string modType, string sortOrder, int? pageNumber )
         {
-
-            //Set the various sort parameters
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["ModNameSortParam"] = String.IsNullOrEmpty(sortOrder) ? "modNameDescending" : "";
-            ViewData["PriceSortParam"] = sortOrder == "priceAscending" ? "priceDescending" : "priceAscending";
-            ViewData["ModTypeSortParam"] = String.IsNullOrEmpty(sortOrder) ? "modTypeDescending" : "";
-
+            //Set the search parameters
             ViewData["ModName"] = modName;
             ViewData["ModType"] = modType;
-          
 
             var mods = from s in _context.Mod
                        select s;
@@ -52,7 +45,7 @@ namespace BensModManager.Controllers
             //Search criteria
             if (!String.IsNullOrEmpty(modName))
             {
-                mods = mods.Where(s => s.ModName.Contains(modName));
+                mods = mods.Where(s => s.ModName.Contains(modName.TrimEnd()));
             }
 
             if (!String.IsNullOrEmpty(modType))
@@ -60,6 +53,14 @@ namespace BensModManager.Controllers
                 mods = mods.Where(s => s.ModType.Contains(modType));
             }
 
+            #region Column Sorting
+            //Set the various sort parameters
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["ModNameSortParam"] = String.IsNullOrEmpty(sortOrder) ? "modNameDescending" : "";
+            ViewData["PriceSortParam"] = sortOrder == "priceAscending" ? "priceDescending" : "priceAscending";
+            ViewData["ModTypeSortParam"] = sortOrder == "modTypeAscending" ? "modTypeDescending" : "modTypeAscending";
+
+            //Switch between the sort orders
             switch (sortOrder)
             {
                 case "modNameDescending":
@@ -71,13 +72,18 @@ namespace BensModManager.Controllers
                 case "priceDescending":
                     mods = mods.OrderByDescending(s => s.Price);
                     break;
+                case "modTypeAscending":
+                    mods = mods.OrderBy(s => s.ModType);
+                    break;
                 case "modTypeDescending":
                     mods = mods.OrderByDescending(s => s.ModType);
                     break;
+                
                 default:
                     mods = mods.OrderBy(s => s.ModName);
                     break;
             }
+            #endregion
 
             var pageSize = 20;
             return View(await PaginatedList<Mod>.CreateAsync(mods.AsNoTracking(), pageNumber ?? 1, pageSize));

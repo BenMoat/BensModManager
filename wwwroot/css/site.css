@@ -27,6 +27,17 @@ td {
     left: unset  !important;
 }
 
+a#sortColumns {
+    color: #fff;
+    text-decoration: none;
+}
+
+thead {
+    border-color: #fff;
+    border-style: solid;
+    border-width: 0;
+}
+
 tr:not(#headers):hover {
     background-size: 100% 100%;
     transform: scale(1.08,1.0);
@@ -40,7 +51,7 @@ tr:not(#headers):hover {
     cursor: pointer;
 }
 
-/*Custom browser scroll bar to match the darker theme**/
+/**Custom browser scroll bar to match the darker theme**/
 ::-webkit-scrollbar {
     height: 12px;
     width: 7px;

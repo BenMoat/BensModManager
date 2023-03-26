@@ -18,6 +18,14 @@ td {
     box-shadow: inset 0 0 0 2px;
 }
 
+#containsPDF {
+    color: #22bf76;
+}
+
+#noPDF {
+    color: #bb2d3b;
+}
+
 .form-floating.mb-3::before {
     background: #212529 !important;
     z-index: -2;

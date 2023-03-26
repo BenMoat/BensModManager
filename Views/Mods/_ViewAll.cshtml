@@ -88,9 +88,20 @@
             {
                 <tr onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=item.ID},Context.Request.Scheme)','Update Mod')"
                     class="focusAnchor">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ModName)
-                    </td>
+
+                    @if (item.FileName != null)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModName)&nbsp;<i id="containsPDF" class="fas fa-file-pdf"></i>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModName)&nbsp;<i id="noPDF" class="fas fa-file-pdf"></i>
+                        </td>
+                    }
+
                     <td>
                         @Html.DisplayFor(modelItem => item.Price)
                     </td>
@@ -133,3 +144,7 @@ else
         Next
     </a>
 </div>
+
+<script>
+
+</script>

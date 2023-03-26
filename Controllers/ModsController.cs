@@ -61,32 +61,32 @@ namespace BensModManager.Controllers
             ViewData["ModTypeSortParam"] = sortOrder == "modTypeAscending" ? "modTypeDescending" : "modTypeAscending";
 
             //Switch between the sort orders
-            switch (sortOrder)
+            mods = sortOrder switch
             {
-                case "modNameDescending":
-                    mods = mods.OrderByDescending(s => s.ModName);
-                    break;
-                case "priceAscending":
-                    mods = mods.OrderBy(s => s.Price);
-                    break;
-                case "priceDescending":
-                    mods = mods.OrderByDescending(s => s.Price);
-                    break;
-                case "modTypeAscending":
-                    mods = mods.OrderBy(s => s.ModType);
-                    break;
-                case "modTypeDescending":
-                    mods = mods.OrderByDescending(s => s.ModType);
-                    break;
-                
-                default:
-                    mods = mods.OrderBy(s => s.ModName);
-                    break;
-            }
+                "modNameDescending" => mods.OrderByDescending(s => s.ModName),
+                "priceAscending" => mods.OrderBy(s => s.Price),
+                "priceDescending" => mods.OrderByDescending(s => s.Price),
+                "modTypeAscending" => mods.OrderBy(s => s.ModType),
+                "modTypeDescending" => mods.OrderByDescending(s => s.ModType),
+                _ => mods.OrderBy(s => s.ModName),
+            };
             #endregion
 
             var pageSize = 20;
             return View(await PaginatedList<Mod>.CreateAsync(mods.AsNoTracking(), pageNumber ?? 1, pageSize));
+        }
+        
+       //GET: Total Price of all Mods
+        public string TotalPrice()
+        {
+            var mods = from s in _context.Mod
+                             select s;
+
+            decimal totalPrice = mods.Sum(x => x.Price);
+
+            var result = string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", totalPrice);
+
+            return result;
         }
 
         //GET: Mod by ID

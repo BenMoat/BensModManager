@@ -1,4 +1,13 @@
-﻿//Set array of mod types
+﻿//Get the static total price
+var getPrice = $.ajax({
+    url: "/Mods/TotalPrice",
+    type: 'GET',
+    success: function (data) {
+        $('#totalPriceStatic').append(data);
+    }
+});
+
+//Set array of mod types
 let ModTypesOld = [
     { value: "Performance", name: "Performance" },
     { value: "Interior", name: "Interior" },
@@ -99,7 +108,17 @@ jQueryAjaxPost = form => {
             success: function (res) {
                 $('#form-modal').modal('hide');
                 $("#tableAJAX").load(location.href + " #tableAJAX");
-                $("#totalSum").load(location.href + " #totalSum");
+                $("#totalPrice").load(location.href + " #totalPrice");
+
+                $.ajax({
+                    url: "/Mods/TotalPrice",
+                    type: 'GET',
+                    success: function (data) {
+                        $('#totalPriceStatic').empty(data);
+                        $('#totalPriceStatic').append(data);
+
+                    }
+                })
             },
             error: function (err) {
                 console.log(err)
@@ -123,7 +142,17 @@ jQueryAjaxDelete = form => {
             success: function (res) {
                 $('#form-modal').modal('hide');
                 $("#tableAJAX").load(location.href + " #tableAJAX");
-                $("#totalSum").load(location.href + " #totalSum");
+                $("#totalPrice").load(location.href + " #totalPrice");
+
+                $.ajax({
+                    url: "/Mods/TotalPrice",
+                    type: 'GET',
+                    success: function (data) {
+                        $('#totalPriceStatic').empty(data);
+                        $('#totalPriceStatic').append(data);
+
+                    }
+                })
             },
             error: function (err) {
                 console.log(err)

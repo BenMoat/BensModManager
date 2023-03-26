@@ -92,13 +92,13 @@
                     @if (item.FileName != null)
                     {
                         <td>
-                            @Html.DisplayFor(modelItem => item.ModName)&nbsp;<i id="containsPDF" class="fas fa-file-pdf"></i>
+                            @Html.DisplayFor(modelItem => item.ModName)&nbsp;&nbsp;<i id="containsPDF" class="fas fa-file-pdf"></i>
                         </td>
                     }
                     else
                     {
                         <td>
-                            @Html.DisplayFor(modelItem => item.ModName)&nbsp;<i id="noPDF" class="fas fa-file-pdf"></i>
+                            @Html.DisplayFor(modelItem => item.ModName)&nbsp;&nbsp;<i id="noPDF" class="fas fa-file-pdf"></i>
                         </td>
                     }
 
@@ -109,6 +109,7 @@
                         @Html.DisplayFor(modelItem => item.ModType)
                     </td>
                 </tr>
+
             }
         </tbody>
     </table>
@@ -120,8 +121,14 @@
 }
 else
 {
-    <h1 id="totalSum" class="text-light">Total: @string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", @Model.Sum(x => x.Price))</h1>
+    @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
+    {
+        <h1 id="totalPrice" class="text-light">@string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", @Model.Sum(x => x.Price)) of </h1>
+    }
+    <h1 id="totalPriceStatic" class="text-light"></h1>
 }
+
+
 
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
@@ -144,7 +151,3 @@ else
         Next
     </a>
 </div>
-
-<script>
-
-</script>

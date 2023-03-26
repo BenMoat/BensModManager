@@ -14,7 +14,7 @@ let ModTypesOld = [
     { value: "Exterior", name: "Exterior" }
 ];
 
-//Retain user search selections
+//Retain user search selection
 let ModTypeSelection = document.getElementById("searchModType").getAttribute("value");
 
 //Load Mod Type dropdown
@@ -150,7 +150,6 @@ jQueryAjaxDelete = form => {
                     success: function (data) {
                         $('#totalPriceStatic').empty(data);
                         $('#totalPriceStatic').append(data);
-
                     }
                 })
             },

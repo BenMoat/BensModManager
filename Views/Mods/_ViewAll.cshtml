@@ -123,12 +123,12 @@ else
 {
     @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
     {
-        <h1 id="totalPrice" class="text-light">@string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", @Model.Sum(x => x.Price)) of </h1>
+        <h2 id="totalPrice" style="display: inline" class="text-light">@string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", @Model.Sum(x => x.Price)) of </h2>
+        <h2 id="totalPriceStatic" style="display: inline" class="text-light"></h2>
+
     }
-    <h1 id="totalPriceStatic" class="text-light"></h1>
+    <h2 id="totalPriceStatic" class="text-light"></h2>
 }
-
-
 
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";

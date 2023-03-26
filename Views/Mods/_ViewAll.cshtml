@@ -13,7 +13,7 @@
                        id="searchModName"
                        class="form-control bg-dark text-light"
                        placeholder="Mod Name"
-                       value="@ViewData["CurrentFilter"]" />
+                       value="@ViewData["ModName"]" />
             </div>
 
             <div class="col col-md-3">
@@ -21,7 +21,7 @@
                         id="searchModType"
                         name="ModType"
                         class="form-select bg-dark text-light"
-                        value="@ViewData["CurrentFilter"]">
+                        value="@ViewData["ModType"]">
                 </select>
                 <option selected disabled value=""></option>
             </div>
@@ -40,7 +40,7 @@
                    class="form-control btn btn-success text-white">New Mod</a>
             </div>
 
-            @if (@ViewData["CurrentFilter"] != null)
+            @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
             {
                 <div class="col col-md-2">
                     <a class="form-control btn btn-info text-white"
@@ -60,14 +60,13 @@
         <thead>
             <tr id="headers" class="align-middle">
                 <th scope="col" class="col-7">
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ModNameSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Mod Name</a>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ModNameSortParam"]" asp-route-modName="@ViewData["ModName"]" asp-route-modType="@ViewData["ModType"]">Mod Name</a>
                 </th>
                 <th scope="col" class="col-2">
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Price</a>
-
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParam"]" asp-route-modName="@ViewData["ModName"]" asp-route-modType="@ViewData["ModType"]">Price</a>
                 </th>
                 <th scope="col" class="col-3">
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ModTypeSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Mod Type</a>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ModTypeSortParam"]" asp-route-modName="@ViewData["ModName"]" asp-route-modType="@ViewData["ModType"]">Mod Type</a>
                 </th>
             </tr>
         </thead>

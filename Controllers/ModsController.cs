@@ -33,23 +33,18 @@ namespace BensModManager.Controllers
         #endregion
 
         //GET: Mods
-        public async Task<IActionResult> Index ( string modName, string modType, string currentFilter, string sortOrder, int? pageNumber )
+        public async Task<IActionResult> Index ( string modName, string modType, string sortOrder, int? pageNumber )
         {
+
+            //Set the various sort parameters
             ViewData["CurrentSort"] = sortOrder;
             ViewData["ModNameSortParam"] = String.IsNullOrEmpty(sortOrder) ? "modNameDescending" : "";
-            ViewData["PriceSortParam"] = String.IsNullOrEmpty(sortOrder) ? "priceDescending" : "";
+            ViewData["PriceSortParam"] = sortOrder == "priceAscending" ? "priceDescending" : "priceAscending";
             ViewData["ModTypeSortParam"] = String.IsNullOrEmpty(sortOrder) ? "modTypeDescending" : "";
 
-            if (modName != null)
-            {
-                pageNumber = 1;
-            }
-            else
-            {
-                modName = currentFilter;
-            }
-
-            ViewData["CurrentFilter"] = modName;
+            ViewData["ModName"] = modName;
+            ViewData["ModType"] = modType;
+          
 
             var mods = from s in _context.Mod
                        select s;
@@ -69,6 +64,9 @@ namespace BensModManager.Controllers
             {
                 case "modNameDescending":
                     mods = mods.OrderByDescending(s => s.ModName);
+                    break;
+                case "priceAscending":
+                    mods = mods.OrderBy(s => s.Price);
                     break;
                 case "priceDescending":
                     mods = mods.OrderByDescending(s => s.Price);

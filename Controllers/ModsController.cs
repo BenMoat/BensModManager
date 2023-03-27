@@ -25,7 +25,9 @@ namespace BensModManager.Controllers
         {
             return View();
         }
+        #endregion
 
+        #region Db Class
         public ModsController(BensModManagerContext context)
         {
             _context = context;
@@ -72,11 +74,11 @@ namespace BensModManager.Controllers
             };
             #endregion
 
-            var pageSize = 20;
+            var pageSize = 18;
             return View(await PaginatedList<Mod>.CreateAsync(mods.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
         
-       //GET: Total Price of all Mods
+        //GET: Total Price of all Mods
         public string TotalPrice()
         {
             var mods = from s in _context.Mod

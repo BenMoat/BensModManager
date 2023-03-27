@@ -1,7 +1,7 @@
 ﻿@model PaginatedList<BensModManager.Models.Mod>
 
 <div class="title-container text-center text-light">
-    <h1 class="mods-header offcanvas-header text-light">Mods</h1>
+    <h1 class="mods-header offcanvas-header">Mods</h1>
 </div>
 
 <form asp-action="Index" method="get">
@@ -11,7 +11,7 @@
                 <input type="text"
                        name="ModName"
                        id="searchModName"
-                       class="form-control bg-dark text-light"
+                       class="form-control bg-dark"
                        placeholder="Mod Name"
                        value="@ViewData["ModName"]" />
             </div>
@@ -20,7 +20,7 @@
                 <select for="ModType"
                         id="searchModType"
                         name="ModType"
-                        class="form-select bg-dark text-light"
+                        class="form-select bg-dark"
                         value="@ViewData["ModType"]">
                 </select>
                 <option selected disabled value=""></option>
@@ -29,7 +29,7 @@
             <div class="col col-lg-1">
                 <button type="submit"
                         id="searchBtn"
-                        class="form-control btn btn-success text-white"
+                        class="form-control btn btn-success"
                         value="Search">
                     <i class="fas fa-search"></i>
                 </button>
@@ -37,13 +37,13 @@
 
             <div class="col col-md-2">
                 <a onclick="modPopup('@Url.Action("AddOrEdit","Mods",null,Context.Request.Scheme)','New Mod')"
-                   class="form-control btn btn-success text-white">New Mod</a>
+                   class="form-control btn btn-success">New Mod</a>
             </div>
 
             @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
             {
                 <div class="col col-md-2">
-                    <a class="form-control btn btn-info text-white"
+                    <a class="form-control btn btn-info"
                    asp-action="Index">
                         Back to Full List
                     </a>
@@ -117,17 +117,20 @@
 
 @if (!Model.Any())
 {
-    <h2 class="text-light">No Mods Found</h2>
+    <h2>No Mods Found</h2>
 }
 else
 {
     @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
     {
-        <h2 id="totalPrice" style="display: inline" class="text-light">@string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", @Model.Sum(x => x.Price)) of </h2>
-        <h2 id="totalPriceStatic" style="display: inline" class="text-light"></h2>
-
+        <h2 id="totalPrice" style="display: inline">
+            @string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", @Model.Sum(x => x.Price)) of </h2>
+        <h2 id="totalPriceStatic" style="display: inline"></h2>
     }
-    <h2 id="totalPriceStatic" class="text-light"></h2>
+    else
+    {
+        <h2 id="totalPriceStatic">Total: </h2>
+    }
 }
 
 @{

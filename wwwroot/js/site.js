@@ -53,7 +53,7 @@ modPopup = (url, title) => {
 
             //Load Mod Type dropdown
             var ModTypeCurrentValue = document.getElementById("ModTypeValue").value;
-            new TomSelect('#select-ModType', {
+            new TomSelect('#selectModType', {
                 options: [ModTypesOld],
                 items: [ModTypeCurrentValue],
                 placeholder: 'Mod Type',

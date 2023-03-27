@@ -8,36 +8,35 @@
     <div class="container" id="inlineSearch">
         <div class="row justify-content-md-center">
             <div class="col col-md-4">
-                <input type="text"
+                <input id="searchModName" class="form-control bg-dark"
+                       type="text"
                        name="ModName"
-                       id="searchModName"
-                       class="form-control bg-dark"
                        placeholder="Mod Name"
                        value="@ViewData["ModName"]" />
             </div>
 
             <div class="col col-md-3">
-                <select for="ModType"
-                        id="searchModType"
+                <select id="searchModType" class="form-select bg-dark"
+                        for="ModType"
                         name="ModType"
-                        class="form-select bg-dark"
+                        title="Type or select the mod type"
                         value="@ViewData["ModType"]">
                 </select>
                 <option selected disabled value=""></option>
             </div>
 
             <div class="col col-lg-1">
-                <button type="submit"
-                        id="searchBtn"
-                        class="form-control btn btn-success"
+                <button id="searchBtn" class="form-control btn btn-success"
+                        type="submit"
+                        title="Search"
                         value="Search">
                     <i class="fas fa-search"></i>
                 </button>
             </div>
 
             <div class="col col-md-2">
-                <a onclick="modPopup('@Url.Action("AddOrEdit","Mods",null,Context.Request.Scheme)','New Mod')"
-                   class="form-control btn btn-success">New Mod</a>
+                <a class="form-control btn btn-success" 
+                onclick="modPopup('@Url.Action("AddOrEdit","Mods",null,Context.Request.Scheme)','New Mod')">New Mod</a>
             </div>
 
             @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
@@ -86,8 +85,7 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=item.ID},Context.Request.Scheme)','Update Mod')"
-                    class="focusAnchor">
+                <tr class="focusAnchor" onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=item.ID},Context.Request.Scheme)','Update Mod')">
 
                     @if (item.FileName != null)
                     {
@@ -109,7 +107,6 @@
                         @Html.DisplayFor(modelItem => item.ModType)
                     </td>
                 </tr>
-
             }
         </tbody>
     </table>

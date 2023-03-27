@@ -22,7 +22,7 @@ body {
     color: #fff;
 }
 
-    input {
+    input, textarea{
         color: #fff !important;
         cursor: text !important;
     }
@@ -162,10 +162,15 @@ td {
     }
 
 .btn-danger {
-    color: #dc3545;
+    color: #fff;
     background-color: transparent;
     border-color: #dc3545;
 }
+    .btn-danger:hover {
+        color: #fff;
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
 /*END: Buttons*/
 
 /*Sticky footer styles*/

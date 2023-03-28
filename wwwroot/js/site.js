@@ -51,6 +51,22 @@ modPopup = (url, title) => {
                 });
             }
 
+            //Automatically resize the notes field to show all content
+            $('.modal').on('shown.bs.modal', function () {
+                $(this).find('textarea').each(function () {
+                    this.style.height = 'auto';
+
+                    this.style.height = (this.scrollHeight) + 'px';
+                });
+            })
+
+            //Dynamically change the size of the text area upon addition or removal of a line
+            $('textarea').on('input', function () {
+                this.style.height = 'auto';
+
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+
             //Load Mod Type dropdown
             var ModTypeCurrentValue = document.getElementById("ModTypeValue").value;
             new TomSelect('#selectModType', {

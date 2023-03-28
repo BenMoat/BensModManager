@@ -135,6 +135,12 @@ td {
     margin-bottom: 5%;
     background-color: #2c3034;
 }
+
+textarea {
+    overflow: hidden;
+    scroll-behavior: unset;
+}
+
 /*END: Mods modal*/
 
 /*START: Buttons*/

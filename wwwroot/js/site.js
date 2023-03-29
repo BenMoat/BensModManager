@@ -7,23 +7,27 @@ var getPrice = $.ajax({
     }
 });
 
-//Set array of mod types
-let ModTypesOld = [
-    { value: "Performance", name: "Performance" },
-    { value: "Interior", name: "Interior" },
-    { value: "Exterior", name: "Exterior" }
-];
+//Get mod types
+var ModTypes;
+$.ajax({
+    url: "/Mods/ModTypes",
+    type: 'GET',
+async: false,
+    success: function (data) {
+        ModTypes = data;
+    }
+});
 
 //Retain user search selection
 let ModTypeSelection = document.getElementById("searchModType").getAttribute("value");
 
 //Load Mod Type dropdown
 new TomSelect('#searchModType', {
-    options: [ModTypesOld],
+    options: [ModTypes],
     items: [ModTypeSelection],
     placeholder: 'Mod Type',
-    labelField: 'name',
-    searchField: ['name'],
+    labelField: 'value',
+    searchField: ['value'],
     openOnFocus: true,
     highlight: false,
     hideSelected: true,
@@ -66,13 +70,14 @@ modPopup = (url, title) => {
             });
 
             //Load Mod Type dropdown
+
             var ModTypeCurrentValue = document.getElementById("ModTypeValue").value;
             new TomSelect('#selectModType', {
-                options: [ModTypesOld],
+                options: [ModTypes],
                 items: [ModTypeCurrentValue],
                 placeholder: 'Mod Type',
-                labelField: 'name',
-                searchField: ['name'],
+                labelField: 'value',
+                searchField: ['value'],
                 openOnFocus: true,
                 highlight: false,
                 hideSelected: true,

@@ -17,6 +17,15 @@ body {
     background-color: #2c3034;
 }
 
+.modsHeader {
+    display: block;
+    margin-top: 4%;
+    margin-bottom: 4%;
+    padding-top: .3em;
+    padding-bottom: .3em;
+    background-color: #2c3034;
+}
+
 /*START:Global overrides*/
 * {
     color: #fff;
@@ -129,16 +138,10 @@ td {
     cursor: grab;
 }
 
-.mods-header {
-    display: block;
-    margin-top: 5%;
-    margin-bottom: 5%;
-    background-color: #2c3034;
-}
-
 #dynamicNotes {
     overflow: hidden;
     scroll-behavior: unset;
+    resize: none;
 }
 
 /*END: Mods modal*/

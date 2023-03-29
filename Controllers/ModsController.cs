@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Specialized;
+using System.Globalization;
 #endregion
 
 namespace BensModManager.Controllers
@@ -89,6 +91,18 @@ namespace BensModManager.Controllers
             var result = string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", totalPrice);
 
             return result;
+        }
+
+        //GET: ModTypes
+        public IEnumerable<SelectListItem> ModTypes()
+        {
+            var modTypes = _context.Mod.Select(u => new SelectListItem
+            {
+                Text = u.ModType,
+                Value = u.ModType
+            });
+
+            return modTypes;
         }
 
         //GET: Mod by ID

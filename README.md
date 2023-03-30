@@ -1,30 +1,38 @@
-[![GitHub release](https://img.shields.io/badge/version-1.0.0-blue)]()
+[![GitHub release](https://img.shields.io/badge/version-1.1.0-blue)]()
 
 <h1 align="center">
- <b>Ben's Mod Manager · Version 1</b>
+ <b>Ben's Mod Manager · Version 1.1</b>
 </h1>
 
-## Features:
-### Local File System:
-#### Invoices for each record are housed in a solution-local folder called 'files'. 
-* For security purposes, this folder is [.gitignore](https://github.com/BenMoat/BensModManager/blob/master/.gitignore#L12)'d: 
-  * If you have cloned the solution or deleted the folder, it will be [automatically created/recreated](https://github.com/BenMoat/BensModManager/blob/master/Controllers/ModsController.cs#L96-#L98) when running the solution and adding a file. 
-* When replacing or deleting an invoice from a record, the file system will do the housekeeping:
-  * If a record is deleted, [so is the invoice](https://github.com/BenMoat/BensModManager/blob/master/Controllers/ModsController.cs#L91-#L94) that is attached to it. 
-  * If a record's invoice needs to be replaced - _because getting things right on the first try isn't my forte_ - the original invoice will be deleted and replaced with the newly added one. 
-* In a later release, the file system should also be able to detect if a file is manually deleted and update the affected record accordingly. 
-Right now, the iframe to display a nonexistent file embeds the 404 page - [a great 404 page though](https://imgur.com/a/V1lxjfJ). 🏎️☀️
+## Features
+### Sorting:
+Columns can be asynchronously sorted by the [mod name, price or mod type](https://github.com/BenMoat/BensModManager/blob/master/Controllers/ModsController.cs#L61-#L76):
+* Upon load, the table is sorted by the mod name in ascending order. 
+  * Selecting a column header will sort it by ascending order at first, clicking it a second time will sort it by descending order and vice versa. 
+    ![image](https://user-images.githubusercontent.com/43743754/228944337-a6a9d2d6-8dc4-46f1-85ac-d476f0de0ff6.png)
 
+### Red and green PDF symbols:
+* Added Font Awesome PDF symbols to each record to make it easier to tell if a mod as the invoice attached to it or not.
+  * A Green PDF symbol means a file is attached to the mod. 
+  * A Red PDF symbol  means there is _no_ file attached to the mod. 
+    ![image](https://user-images.githubusercontent.com/43743754/228944088-4dd03b61-544d-43b3-8c0c-8b9994dfb698.png)
 
+## Fixes & Improvements
+### The total price calculation:
+This now remains static at the total price of _all_ mods, not the queried mods. 
+* When querying a mod, a second price will be displayed to show the total price of the queried mods _on top_  of the total price of mods. 
+    ![image](https://user-images.githubusercontent.com/43743754/228947398-f646db60-609d-4151-9335-3f0239430c79.png)
+   _(here is how money I ~wasted~ spent on interior carbon parts)_ 
 
-### The ability to embed a _local_ file on the website:
-#### By default, a brower's security policy will not allow a third-party site to request to open a local "file:///". 
-* To get around this, the 'files' folder is stored in the _wwwroot_ folder. By concatenating the file and extension, prefixed with the "_~/files/_" directory, you can [call the file straight from the site domain](https://github.com/BenMoat/BensModManager/blob/master/Views/Mods/Invoice.cshtml#L60), instead of using the file:/// prefix. 
-  * For example:
-  This: `file:///C:/Users/JoeBloggs/Documents/Mods/Upload%20Image%20Test.pdf`
-  Turns to this: `https://localhost:5001/Files/Upload%20Image%20Test.pdf`
+### Replaced the local array of mod types in the site.js file with an AJAX call to the [controller](https://github.com/BenMoat/BensModManager/blob/master/Controllers/ModsController.cs#L97-L106):
+![image](https://user-images.githubusercontent.com/43743754/228950225-2c8a8406-a791-4da1-9ab1-0f55e3673866.png)
 
-### Asynchronous total price calculation:
-#### Just incase looking at the Price column isn't already painful enough 💸
-* The [total price](https://github.com/BenMoat/BensModManager/blob/master/Views/Mods/_ViewAll.cshtml#L92) of the modifications is governed by the parameters set for it. 
-  * The site will load by default with the full list of modifications. The price will change depending on what you are searching for. For example, filtering the modifications by Performance will automatically show how much money you have spent on performance parts. This also works for the plain text search either independently or in tandem with other search parameters. 
+### Other fixes & improvements:
+* Fixed a TomSelect source mapping issue when trying to launch the web app in Debug mode. 
+* The mod notes' height now [animates](https://github.com/BenMoat/BensModManager/blob/master/wwwroot/js/site.js#L60-#L62) to the height of the content inside of it. 
+* Globalised the site's font colour and reduced the HTML noise from repetitive class references. 
+* Reorganised the site.css file to make it easier to read. 
+* Replaced all local libraries with CDNs. 
+
+### [View all changes](https://github.com/BenMoat/BensModManager/pull/1/commits)
+### [Version 1.0.0 Release Notes](https://github.com/BenMoat/BensModManager/releases/tag/v1.0.0)

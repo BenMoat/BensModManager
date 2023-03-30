@@ -37,7 +37,7 @@ namespace BensModManager.Controllers
         #endregion
 
         //GET: Mods
-        public async Task<IActionResult> Index ( string modName, string modType, string sortOrder, int? pageNumber )
+        public async Task<IActionResult> Index(string modName, string modType, string sortOrder, int? pageNumber)
         {
             //Set the search parameters
             ViewData["ModName"] = modName;
@@ -79,12 +79,12 @@ namespace BensModManager.Controllers
             var pageSize = 18;
             return View(await PaginatedList<Mod>.CreateAsync(mods.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
-        
+
         //GET: Total Price of all Mods
         public string TotalPrice()
         {
             var mods = from s in _context.Mod
-                             select s;
+                       select s;
 
             decimal totalPrice = mods.Sum(x => x.Price);
 
@@ -100,7 +100,7 @@ namespace BensModManager.Controllers
             {
                 Text = u.ModType,
                 Value = u.ModType
-            });
+            }).Distinct();
 
             return modTypes;
         }
@@ -216,8 +216,8 @@ namespace BensModManager.Controllers
             if (System.IO.File.Exists(modModel.FilePath))
             {
                 modModel.FileExtension = null;
-                modModel.FileName= null;
-                modModel.FileType= null;
+                modModel.FileName = null;
+                modModel.FileType = null;
             }
             System.IO.File.Delete(modModel.FilePath);
             modModel.FilePath = null;

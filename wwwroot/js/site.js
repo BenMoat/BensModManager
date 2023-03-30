@@ -12,7 +12,7 @@ var ModTypes;
 $.ajax({
     url: "/Mods/ModTypes",
     type: 'GET',
-async: false,
+    async: false,
     success: function (data) {
         ModTypes = data;
     }

@@ -1,81 +1,105 @@
 ﻿@model PaginatedList<BensModManager.Models.Mod>
 
 <div class="title-container text-center text-light">
-    <h1 class="mods-header offcanvas-header text-light">Mods</h1>
+    <h1 class="modsHeader">Mods</h1>
 </div>
 
 <form asp-action="Index" method="get">
-    <div id="inlineSearch" class="row">
-        <div class="col">
-            <input type="text"
-                   for="ModName"
-                   name="ModName"
-                   id="searchModName"
-                   class="form-control bg-dark text-light"
-                   placeholder="Mod Name"
-                   value="@ViewData["ModName"]" />
-        </div>
-        <div class="col">
-            <select for="ModType"
-                    id="searchModType"
-                    name="ModType"
-                    class="form-floating"
-                    value="@ViewData["ModType"]">
-            </select>
-        </div>
-
-        <div class="col-2">
-            <button type="submit"
-                    id="searchBtn"
-                    class="form-control btn btn-success text-white"
-                    value="Search">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-        <div class="col-2">
-            <a onclick="modPopup('@Url.Action("AddOrEdit","Mods",null,Context.Request.Scheme)','New Mod')"
-               class="btn btn-success text-white">New Mod</a>
-        </div>
-
-        @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
-        {
-            <div class="col">
-                <a id="fullListBtn"
-                   class="form-control btn btn-info text-white"
-               asp-action="Index">
-                    Back to Full List
-                </a>
+    <div class="container" id="inlineSearch">
+        <div class="row justify-content-md-center">
+            <div class="col col-md-4">
+                <input id="searchModName" class="form-control bg-dark"
+                       type="text"
+                       name="ModName"
+                       placeholder="Mod Name"
+                       value="@ViewData["ModName"]" />
             </div>
-        }
+
+            <div class="col col-md-3">
+                <select id="searchModType" class="form-select bg-dark"
+                        for="ModType"
+                        name="ModType"
+                        title="Type or select the mod type"
+                        value="@ViewData["ModType"]">
+                </select>
+                <option selected disabled value=""></option>
+            </div>
+
+            <div class="col col-lg-1">
+                <button id="searchBtn" class="form-control btn btn-success"
+                        type="submit"
+                        title="Search"
+                        value="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+            <div class="col col-md-2">
+                <a class="form-control btn btn-success" 
+                onclick="modPopup('@Url.Action("AddOrEdit","Mods",null,Context.Request.Scheme)','New Mod')">New Mod</a>
+            </div>
+
+            @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
+            {
+                <div class="col col-md-2">
+                    <a class="form-control btn btn-info"
+                   asp-action="Index">
+                        Back to Full List
+                    </a>
+                </div>
+            }
+        </div>
     </div>
 </form>
 
-<form asp-action="ModTypes" method="get">
-
-    </form>
 <div id="tableAJAX">
     <table class="table table-dark table-striped table-hover">
         <thead>
             <tr id="headers" class="align-middle">
                 <th scope="col" class="col-7">
-                    Mod Name
+                    <a id="sortColumns" asp-action="Index" asp-route-sortOrder="@ViewData["ModNameSortParam"]"
+                       asp-route-modName="@ViewData["ModName"]"
+                       asp-route-modType="@ViewData["ModType"]">
+                        Mod Name
+                        <i class="fas fa-sort"></i>
+                    </a>
                 </th>
                 <th scope="col" class="col-2">
-                    Price
+                    <a id="sortColumns" asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParam"]"
+                       asp-route-modName="@ViewData["ModName"]"
+                       asp-route-modType="@ViewData["ModType"]">
+                        Price
+                        <i class="fas fa-sort"></i>
+                    </a>
                 </th>
                 <th scope="col" class="col-3">
-                    Mod Type
+                    <a id="sortColumns" asp-action="Index" asp-route-sortOrder="@ViewData["ModTypeSortParam"]"
+                       asp-route-modName="@ViewData["ModName"]"
+                       asp-route-modType="@ViewData["ModType"]">
+                        Mod Type
+                        <i class="fas fa-sort"></i>
+                    </a>
                 </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=item.ID},Context.Request.Scheme)','Update Mod')"
-                    class="focusAnchor">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ModName)
-                    </td>
+                <tr class="focusAnchor" onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=item.ID},Context.Request.Scheme)','Update Mod')">
+
+                    @if (item.FileName != null)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModName)&nbsp;&nbsp;<i id="containsPDF" class="fas fa-file-pdf"></i>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModName)&nbsp;&nbsp;<i id="noPDF" class="fas fa-file-pdf"></i>
+                        </td>
+                    }
+
                     <td>
                         @Html.DisplayFor(modelItem => item.Price)
                     </td>
@@ -90,11 +114,20 @@
 
 @if (!Model.Any())
 {
-    <h2 class="text-light">No Mods Found</h2>
+    <h2>No Mods Found</h2>
 }
 else
 {
-    <h1 id="totalSum" class="text-light">Total: @string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", @Model.Sum(x => x.Price))</h1>
+    @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
+    {
+        <h2 id="totalPrice" style="display: inline">
+            @string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", @Model.Sum(x => x.Price)) of </h2>
+        <h2 id="totalPriceStatic" style="display: inline"></h2>
+    }
+    else
+    {
+        <h2 id="totalPriceStatic">Total: </h2>
+    }
 }
 
 @{
@@ -106,14 +139,14 @@ else
     <a asp-action="Index"
        asp-route-sortOrder="@ViewData["CurrentSort"]"
        asp-route-pageNumber="@(Model.PageIndex - 1)"
-       asp-route-currentFilter="@ViewData["ModName"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
        class="btn btn-default btn-outline-light @prevDisabled">
         Previous
     </a>
     <a asp-action="Index"
        asp-route-sortOrder="@ViewData["CurrentSort"]"
        asp-route-pageNumber="@(Model.PageIndex + 1)"
-       asp-route-currentFilter="@ViewData["ModName"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
        class="btn btn-default btn-outline-light @nextDisabled">
         Next
     </a>

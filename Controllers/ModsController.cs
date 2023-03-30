@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Specialized;
+using System.Globalization;
 #endregion
 
 namespace BensModManager.Controllers
@@ -25,7 +27,9 @@ namespace BensModManager.Controllers
         {
             return View();
         }
+        #endregion
 
+        #region Db Class
         public ModsController(BensModManagerContext context)
         {
             _context = context;
@@ -33,29 +37,72 @@ namespace BensModManager.Controllers
         #endregion
 
         //GET: Mods
-        public async Task<IActionResult> Index ( string ModName,string ModType, string sortOrder, int? pageNumber )
+        public async Task<IActionResult> Index(string modName, string modType, string sortOrder, int? pageNumber)
         {
-            ViewData["ModName"] = ModName;
-            ViewData["ModType"] = ModType;
-            ViewData["CurrentSort"] = sortOrder;
+            //Set the search parameters
+            ViewData["ModName"] = modName;
+            ViewData["ModType"] = modType;
 
             var mods = from s in _context.Mod
-                       orderby s.ModName
                        select s;
 
             //Search criteria
-            if (!String.IsNullOrEmpty(ModName))
+            if (!String.IsNullOrEmpty(modName))
             {
-                mods = (IOrderedQueryable<Mod>)mods.Where(s => s.ModName.Contains(ModName));
+                mods = mods.Where(s => s.ModName.Contains(modName.TrimEnd()));
             }
 
-            if (!String.IsNullOrEmpty(ModType))
+            if (!String.IsNullOrEmpty(modType))
             {
-                mods = (IOrderedQueryable<Mod>)mods.Where(s => s.ModType.Contains(ModType));
+                mods = mods.Where(s => s.ModType.Contains(modType));
             }
 
-            var pageSize = 20;
+            #region Column Sorting
+            //Set the various sort parameters
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["ModNameSortParam"] = String.IsNullOrEmpty(sortOrder) ? "modNameDescending" : "";
+            ViewData["PriceSortParam"] = sortOrder == "priceAscending" ? "priceDescending" : "priceAscending";
+            ViewData["ModTypeSortParam"] = sortOrder == "modTypeAscending" ? "modTypeDescending" : "modTypeAscending";
+
+            //Switch between the sort orders
+            mods = sortOrder switch
+            {
+                "modNameDescending" => mods.OrderByDescending(s => s.ModName),
+                "priceAscending" => mods.OrderBy(s => s.Price),
+                "priceDescending" => mods.OrderByDescending(s => s.Price),
+                "modTypeAscending" => mods.OrderBy(s => s.ModType),
+                "modTypeDescending" => mods.OrderByDescending(s => s.ModType),
+                _ => mods.OrderBy(s => s.ModName),
+            };
+            #endregion
+
+            var pageSize = 18;
             return View(await PaginatedList<Mod>.CreateAsync(mods.AsNoTracking(), pageNumber ?? 1, pageSize));
+        }
+
+        //GET: Total Price of all Mods
+        public string TotalPrice()
+        {
+            var mods = from s in _context.Mod
+                       select s;
+
+            decimal totalPrice = mods.Sum(x => x.Price);
+
+            var result = string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", totalPrice);
+
+            return result;
+        }
+
+        //GET: ModTypes
+        public IEnumerable<SelectListItem> ModTypes()
+        {
+            var modTypes = _context.Mod.Select(u => new SelectListItem
+            {
+                Text = u.ModType,
+                Value = u.ModType
+            }).Distinct();
+
+            return modTypes;
         }
 
         //GET: Mod by ID
@@ -169,8 +216,8 @@ namespace BensModManager.Controllers
             if (System.IO.File.Exists(modModel.FilePath))
             {
                 modModel.FileExtension = null;
-                modModel.FileName= null;
-                modModel.FileType= null;
+                modModel.FileName = null;
+                modModel.FileType = null;
             }
             System.IO.File.Delete(modModel.FilePath);
             modModel.FilePath = null;

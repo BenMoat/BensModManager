@@ -13,13 +13,11 @@
 
     <div class="form-floating mb-3">
         <input asp-for="ModName" type="text"
-               class="form-control bg-dark text-light"
+               class="form-control bg-dark"
                placeholder="Mod Name"
                required
-               data-prefix="R$ " >
-        <label asp-for="ModName"
-               class="text-light">
-        </label>
+               data-prefix="R$ ">
+        <label asp-for="ModName"></label>
         <div class="invalid-feedback">
             Please input the name of the mod.
         </div>
@@ -29,13 +27,11 @@
         <div class="form-floating mb-3">
             <input asp-for="Price" type="text"
                    id="price"
-                   class="form-control bg-dark text-light"
+                   class="form-control bg-dark"
                    placeholder="Price"
                    required
-            data-prefix="£">
-            <label asp-for="Price"
-                   class="text-light">
-            </label>
+                   data-prefix="£">
+            <label asp-for="Price"></label>
             <div class="invalid-feedback">
                 Please input the financial mistake.
             </div>
@@ -45,8 +41,8 @@
     <div class="col">
         <div class="form-floating mb-3">
             <select asp-for="ModType"
-                    id="select-ModType"
-                    class="form-floating"
+                    id="selectModType"
+                    class="form-select bg-dark"
                     placeholder="Mod Type"
                     list="list-language"
                     required>
@@ -61,21 +57,19 @@
     </div>
 
     <div class="form-floating mb-3">
-        <textarea asp-for="Notes" rows="3"
-               class="form-control bg-dark text-light"
-               placeholder="Notes">
+        <textarea asp-for="Notes" rows="1" id="dynamicNotes"
+                  class="form-control bg-dark"
+                  placeholder="Notes">
         </textarea>
-        <label asp-for="Notes"
-               class="text-light">
-        </label>
+        <label asp-for="Notes"></label>
     </div>
 
     <div class="col">
         <div class="form-check">
             <input asp-for="Obsolete" type="checkbox"
-                   class="text-light form-check-input">
+                   class="form-check-input">
             <label asp-for="Obsolete"
-                   class="text-light form-check-label">
+                   class="form-check-label">
                 Obsolete
             </label>
         </div>
@@ -89,24 +83,26 @@
 
     @if (Model.FileName == null)
     {
-            <div class="col">
-        <div class="form-floating mb-3">
-        <input type="file" name="files" class="text-light" />
-        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="file" name="files" />
+            </div>
         </div>
     }
 
     @if (Model.FileName != null)
     {
         <button type="button"
-                class="btn btn-default btn-info text-white"
+                title="View the invoice attached to this mod"
+                class="btn btn-default btn-info"
                 onclick="invoicePopup('@Url.Action("Invoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Mod Invoice')">
             View Invoice
         </button>
     }
 
     <button type="submit"
-            class="btn btn-success text-white"
+            title="Submit this mod to the database"
+            class="btn btn-success"
             onclick="validation()">
         Submit
     </button>
@@ -115,7 +111,8 @@
     @if (Model.ID != 0)
     {
         <button type="button"
-                class="btn btn-default btn-danger text-white"
+                title="Permanently delete this mod"
+                class="btn btn-default btn-danger"
                 onclick="deletePopup('@Url.Action("DeleteMod","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Mod')">
             Delete
         </button>
@@ -149,7 +146,7 @@
                     form.classList.add('was-validated');
                     //Remove currency symbol from Price on Submit
                     var input = document.getElementById('price')
-                    input.value = input.value.replace("£","");
+                    input.value = input.value.replace("£", "");
                 }, true);
             });
         })();

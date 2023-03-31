@@ -174,8 +174,7 @@ namespace BensModManager.Controllers
                     var taskImageToPDF = api.CreateTask<ImageToPdfTask>();
                     // Add files to task for upload
 
-                    //var file1 = taskImageToPDF.AddFile("C:\\Users\\Ben Moat\\OneDrive\\Shared\\Documents\\50nice.png");
-                    var file1 = taskImageToPDF.AddFile(filePath);
+                    var appendFile = taskImageToPDF.AddFile(filePath);
 
                     // Execute the task
                     taskImageToPDF.Process();
@@ -185,7 +184,7 @@ namespace BensModManager.Controllers
                     _context.Mod.Update(modModel);
                     _context.SaveChanges();
 
-
+                    System.IO.File.Delete(filePath);
                     
                 }
             }

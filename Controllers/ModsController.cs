@@ -13,6 +13,8 @@ using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Specialized;
 using System.Globalization;
+using LovePdf.Core;
+using LovePdf.Model.Task;
 #endregion
 
 namespace BensModManager.Controllers
@@ -39,6 +41,7 @@ namespace BensModManager.Controllers
         //GET: Mods
         public async Task<IActionResult> Index(string modName, string modType, string sortOrder, int? pageNumber)
         {
+
             //Set the search parameters
             ViewData["ModName"] = modName;
             ViewData["ModType"] = modType;
@@ -150,6 +153,7 @@ namespace BensModManager.Controllers
                     {
                         await file.CopyToAsync(stream);
                     }
+
                     modModel = new Mod
                     {
                         ID = id,
@@ -159,12 +163,30 @@ namespace BensModManager.Controllers
                         Obsolete = modModel.Obsolete,
                         Notes = modModel.Notes,
                         FileName = fileName,
-                        FileType = file.ContentType,
-                        FileExtension = extension,
+                        FileType = "application/pdf",
+                        FileExtension = ".pdf",
                         FilePath = filePath
                     };
+
+                    var api = new LovePdfApi("project_public_e15b9c1cb6f1d73301d35515617747cf_1jHbd7594f28632061e1ebdfefc7ba33e1b6b", "secret_key_c0a5fd6f4f7af5960a58623a45f5cc45_NDGv7acdbe5dbcd2b4b049f7155ade5900c2a");
+
+                    // Create a new task
+                    var taskImageToPDF = api.CreateTask<ImageToPdfTask>();
+                    // Add files to task for upload
+
+                    //var file1 = taskImageToPDF.AddFile("C:\\Users\\Ben Moat\\OneDrive\\Shared\\Documents\\50nice.png");
+                    var file1 = taskImageToPDF.AddFile(filePath);
+
+                    // Execute the task
+                    taskImageToPDF.Process();
+                    // Download the package files
+                    taskImageToPDF.DownloadFile(basePath);
+
                     _context.Mod.Update(modModel);
                     _context.SaveChanges();
+
+
+                    
                 }
             }
 

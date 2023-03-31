@@ -15,6 +15,7 @@ using System.Collections.Specialized;
 using System.Globalization;
 using LovePdf.Core;
 using LovePdf.Model.Task;
+using Microsoft.AspNetCore.Http.HttpResults;
 #endregion
 
 namespace BensModManager.Controllers
@@ -130,6 +131,7 @@ namespace BensModManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit(int id, List<IFormFile> files, Mod modModel)
         {
+            var api = new LovePdfApi("project_public_e15b9c1cb6f1d73301d35515617747cf_1jHbd7594f28632061e1ebdfefc7ba33e1b6b", "secret_key_c0a5fd6f4f7af5960a58623a45f5cc45_NDGv7acdbe5dbcd2b4b049f7155ade5900c2a");
 
             foreach (var file in files)
             {
@@ -165,27 +167,22 @@ namespace BensModManager.Controllers
                         FileName = fileName,
                         FileType = "application/pdf",
                         FileExtension = ".pdf",
-                        FilePath = filePath
-                    };
+                        FilePath = filePath.Replace(extension, ".pdf")
+                };
 
-                    var api = new LovePdfApi("project_public_e15b9c1cb6f1d73301d35515617747cf_1jHbd7594f28632061e1ebdfefc7ba33e1b6b", "secret_key_c0a5fd6f4f7af5960a58623a45f5cc45_NDGv7acdbe5dbcd2b4b049f7155ade5900c2a");
-
-                    // Create a new task
+                    //Convert file to a PDF, update the database and delete the original
                     var taskImageToPDF = api.CreateTask<ImageToPdfTask>();
-                    // Add files to task for upload
 
                     var appendFile = taskImageToPDF.AddFile(filePath);
 
-                    // Execute the task
                     taskImageToPDF.Process();
-                    // Download the package files
                     taskImageToPDF.DownloadFile(basePath);
 
                     _context.Mod.Update(modModel);
                     _context.SaveChanges();
 
                     System.IO.File.Delete(filePath);
-                    
+
                 }
             }
 
@@ -269,10 +266,12 @@ namespace BensModManager.Controllers
         {
             var modModel = await _context.Mod.FindAsync(id);
             if (modModel == null) return null;
+
             if (System.IO.File.Exists(modModel.FilePath))
             {
-                System.IO.File.Delete(modModel.FileName);
+                System.IO.File.Delete(modModel.FilePath);
             }
+
             _context.Mod.Remove(modModel);
             await _context.SaveChangesAsync();
             return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mod.ToList()) });

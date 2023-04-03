@@ -16,6 +16,7 @@ using System.Globalization;
 using LovePdf.Core;
 using LovePdf.Model.Task;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.Diagnostics;
 #endregion
 
 namespace BensModManager.Controllers
@@ -80,7 +81,7 @@ namespace BensModManager.Controllers
             };
             #endregion
 
-            var pageSize = 18;
+            var pageSize = 20;
             return View(await PaginatedList<Mod>.CreateAsync(mods.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
@@ -131,16 +132,11 @@ namespace BensModManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit(int id, List<IFormFile> files, Mod modModel)
         {
+
             var api = new LovePdfApi("project_public_e15b9c1cb6f1d73301d35515617747cf_1jHbd7594f28632061e1ebdfefc7ba33e1b6b", "secret_key_c0a5fd6f4f7af5960a58623a45f5cc45_NDGv7acdbe5dbcd2b4b049f7155ade5900c2a");
 
             foreach (var file in files)
             {
-
-                if (System.IO.File.Exists((modModel.FilePath)))
-                {
-                    System.IO.File.Delete(modModel.FilePath);
-                }
-
                 var basePath = Path.Combine(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\");
                 bool basePathExists = System.IO.Directory.Exists(basePath);
                 if (!basePathExists) Directory.CreateDirectory(basePath);
@@ -168,7 +164,7 @@ namespace BensModManager.Controllers
                         FileType = "application/pdf",
                         FileExtension = ".pdf",
                         FilePath = filePath.Replace(extension, ".pdf")
-                };
+                    };
 
                     //Convert file to a PDF, update the database and delete the original
                     var taskImageToPDF = api.CreateTask<ImageToPdfTask>();
@@ -177,14 +173,39 @@ namespace BensModManager.Controllers
 
                     taskImageToPDF.Process();
                     taskImageToPDF.DownloadFile(basePath);
-
-                    _context.Mod.Update(modModel);
-                    _context.SaveChanges();
-
                     System.IO.File.Delete(filePath);
-
+                    if (files.Count > 1)
+                    {
+                        System.IO.File.Move(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + fileName + ".pdf", Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + fileName + "-unmerged.pdf");
+                    }
                 }
+                await _context.SaveChangesAsync();
+
             }
+
+
+
+            // Create a new task
+            var taskMerge = api.CreateTask<MergeTask>();
+
+            if (files.Count > 1)
+            {
+
+                for (int i = 0; i < files.Count; i++)
+                {
+                    var merge = taskMerge.AddFile(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + files[i].FileName.Replace(".png", "-unmerged.pdf"));
+                }
+
+                // Execute the task
+                taskMerge.Process();
+
+                // Download the package files
+                var mergedPath = Path.Combine(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\");
+                taskMerge.DownloadFile(mergedPath);
+
+                System.IO.File.Move(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\merged.pdf", Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + files[^1].FileName.Replace(".png", ".pdf"));
+            }
+
 
             _context.Update(modModel);
             await _context.SaveChangesAsync();

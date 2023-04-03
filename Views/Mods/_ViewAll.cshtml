@@ -90,13 +90,13 @@
                     @if (item.FileName != null)
                     {
                         <td>
-                            @Html.DisplayFor(modelItem => item.ModName)&nbsp;&nbsp;<i id="containsPDF" class="fas fa-file-pdf"></i>
+                            @Html.DisplayFor(modelItem => item.ModName)&nbsp;&nbsp;<i id="containsPDF" title="PDF attached" class="fas fa-file-pdf"></i>
                         </td>
                     }
                     else
                     {
                         <td>
-                            @Html.DisplayFor(modelItem => item.ModName)&nbsp;&nbsp;<i id="noPDF" class="fas fa-file-pdf"></i>
+                            @Html.DisplayFor(modelItem => item.ModName)&nbsp;&nbsp;<i id="noPDF" title="No PDF attached" class="fas fa-file-pdf"></i>
                         </td>
                     }
 

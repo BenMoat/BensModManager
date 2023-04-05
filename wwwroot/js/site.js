@@ -137,7 +137,7 @@ jQueryAjaxPost = form => {
                         //Refresh the total price
                         $('#totalPriceStatic').empty(data);
                         $('#totalPriceStatic').append(data);
-                        
+
                     }
                 })
             },

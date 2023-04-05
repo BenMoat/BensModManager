@@ -44,6 +44,8 @@ namespace BensModManager.Controllers
         public async Task<IActionResult> Index(string modName, string modType, string sortOrder, int? pageNumber)
         {
 
+            
+
             //Set the search parameters
             ViewData["ModName"] = modName;
             ViewData["ModType"] = modType;
@@ -109,7 +111,7 @@ namespace BensModManager.Controllers
 
             return modTypes;
         }
-
+        
         //GET: Mod by ID
         [NoDirectAccess]
         public async Task<IActionResult> AddOrEdit(int id = 0)
@@ -132,7 +134,6 @@ namespace BensModManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit(int id, List<IFormFile> files, Mod modModel)
         {
-
             var api = new LovePdfApi("project_public_e15b9c1cb6f1d73301d35515617747cf_1jHbd7594f28632061e1ebdfefc7ba33e1b6b", "secret_key_c0a5fd6f4f7af5960a58623a45f5cc45_NDGv7acdbe5dbcd2b4b049f7155ade5900c2a");
 
             foreach (var file in files)
@@ -143,7 +144,6 @@ namespace BensModManager.Controllers
                 var fileName = Path.GetFileNameWithoutExtension(file.FileName);
                 var filePath = Path.Combine(basePath, file.FileName);
                 var extension = Path.GetExtension(file.FileName);
-
 
                 if (!System.IO.File.Exists(filePath))
                 {
@@ -179,13 +179,12 @@ namespace BensModManager.Controllers
                         System.IO.File.Move(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + fileName + ".pdf", Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + fileName + "-unmerged.pdf");
                     }
                 }
+
                 await _context.SaveChangesAsync();
 
             }
 
-
-
-            // Create a new task
+            //Create a new task
             var taskMerge = api.CreateTask<MergeTask>();
 
             if (files.Count > 1)
@@ -196,10 +195,10 @@ namespace BensModManager.Controllers
                     var merge = taskMerge.AddFile(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + files[i].FileName.Replace(".png", "-unmerged.pdf"));
                 }
 
-                // Execute the task
+                //Execute the task
                 taskMerge.Process();
 
-                // Download the package files
+                //Download the package files
                 var mergedPath = Path.Combine(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\");
                 taskMerge.DownloadFile(mergedPath);
 

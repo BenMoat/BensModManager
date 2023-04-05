@@ -118,6 +118,7 @@ deletePopup = (url, title) => {
 
 jQueryAjaxPost = form => {
     try {
+        $('#loader-wrapper').show();
         $.ajax({
             type: 'POST',
             url: form.action,
@@ -133,9 +134,10 @@ jQueryAjaxPost = form => {
                     url: "/Mods/TotalPrice",
                     type: 'GET',
                     success: function (data) {
+                        //Refresh the total price
                         $('#totalPriceStatic').empty(data);
                         $('#totalPriceStatic').append(data);
-
+                        
                     }
                 })
             },
@@ -148,6 +150,7 @@ jQueryAjaxPost = form => {
     } catch (ex) {
         console.log(ex)
     }
+    $('#loader-wrapper').hide();
 }
 
 jQueryAjaxDelete = form => {

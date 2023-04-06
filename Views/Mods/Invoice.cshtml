@@ -41,12 +41,9 @@ iframe {
         </div>
     </div>
 
-    <div id="dialog" title="Basic dialog">
-        <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
-    </div>
-
     <div class="col">
         <div class="form-floating mb-3">
+                <div id="tooltipText"></div>
             <input asp-for="FilePath" type="url"
                    id="copyFilePath"
                    class="form-control bg-dark text-light"
@@ -87,21 +84,32 @@ iframe {
 </form>
 
 <script>
-    $(function () {
-        $("#dialog").dialog();
+    $("#tooltipText").hide();
+    $("#copyFilePath").focusout(function () {
+        $("#tooltipText").hide();
+    })
+
+    .focusin(function () {
+        $('#tooltipText').text('Click to copy');
+        $("#tooltipText").fadeIn(400);
     });
 
-    $('#copyFilePath').mouseout(function () {
+   $('#copyFilePath').mouseout(function () {   
         $('#copyFilePath').blur();
+
         document.getSelection().removeAllRanges();
     });
-
+    
     $('#copyFilePath').mouseover(function () {
         $(this).focus();
         $(this).select();
     });
+
     $('#copyFilePath').click(function () {
-        document.execCommand('copy');    
+        document.execCommand('copy');
+
+        $('#tooltipText').text('Copied!').delay(1000);
+        $('#tooltipText').fadeOut(400);
     });
 
     //Remove currency symbol from Price on Submit

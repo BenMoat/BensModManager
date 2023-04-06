@@ -247,12 +247,23 @@ td {
 }
 /*END: Mods modal*/
 
-/*START: Buttons*/
-.btn-success {
-    color: #fff;
-    background-color: transparent;
-    border-color: #22bf76;
+/*START: Invoice modal*/
+#tooltipText {
+    position: absolute;
+    background-color: #2c3034;
+    padding: 2px;
+    text-align: center;
+    left: 35%;
+    opacity: 1;
 }
+
+    /*END: Invoice modal*/
+    /*START: Buttons*/
+    .btn-success {
+        color: #fff;
+        background-color: transparent;
+        border-color: #22bf76;
+    }
 
     .btn-success:hover {
         color: #fff;

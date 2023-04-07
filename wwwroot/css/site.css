@@ -62,7 +62,7 @@ body {
 /*START:Tom Select dropdown*/
 .ts-wrapper.form-control,
 .ts-wrapper.form-select {
-    height: 55px !important;
+    height: 55px;
 }
 
 .ts-control {
@@ -137,6 +137,46 @@ td {
 .modal-header {
     cursor: grab;
 }
+
+#obsoleteLabel {
+    vertical-align: central !important;
+    margin-top: 6%;
+}
+
+.checkbox-wrapper input {
+    position: absolute;
+    opacity: 0;
+}
+
+    .checkbox-wrapper input:checked + label svg path {
+        stroke-dashoffset: 0;
+    }
+
+    .checkbox-wrapper input + label {
+        display: block;
+        border: 1px solid #fff;
+        width: 55px;
+        height: 55px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all .2s ease;
+    }
+
+        .checkbox-wrapper input + label svg {
+            pointer-events: none;
+            padding: 15%;
+        }
+
+            .checkbox-wrapper input + label svg path {
+                fill: none;
+                stroke: #22bf76;
+                stroke-width: 4px;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+                stroke-dasharray: 90;
+                stroke-dashoffset: 91;
+                transition: all 250ms cubic-bezier(1,0,.37,.91);
+            }
 
 #dynamicNotes {
     overflow: hidden;

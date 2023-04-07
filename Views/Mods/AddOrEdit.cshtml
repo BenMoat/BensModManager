@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <div class="col-5">
+    <div class="col-3">
         <div class="form-floating mb-3">
             <input asp-for="Price" type="text"
                    id="price"
@@ -38,7 +38,7 @@
         </div>
     </div>
 
-    <div class="col">
+    <div class="col-5">
         <div class="form-floating mb-3">
             <select asp-for="ModType"
                     id="selectModType"
@@ -55,6 +55,21 @@
             <input hidden asp-for="ModType" type="text" id="ModTypeValue">
         </div>
     </div>
+    
+    <div class="col-2" id="obsoleteLabel">
+        <a>Obsolete?</a>
+    </div>
+
+    <div class="col-2">
+            <div class="checkbox-wrapper">
+                <input asp-for="Obsolete" type="checkbox" id="check-23" />
+                <label for="check-23" style="--size: 30px">
+                    <svg viewBox="0,0,50,50">
+                        <path d="M5 30 L 20 45 L 45 5"></path>
+                    </svg>
+                </label>
+            </div>
+    </div>
 
     <div class="form-floating mb-3">
         <textarea asp-for="Notes" rows="1" id="dynamicNotes"
@@ -62,17 +77,6 @@
                   placeholder="Notes">
         </textarea>
         <label asp-for="Notes"></label>
-    </div>
-
-    <div class="col">
-        <div class="form-check">
-            <input asp-for="Obsolete" type="checkbox"
-                   class="form-check-input">
-            <label asp-for="Obsolete"
-                   class="form-check-label">
-                Obsolete
-            </label>
-        </div>
     </div>
 
     <!--Retain file if one is already selected-->
@@ -85,7 +89,7 @@
     {
         <div class="col">
             <div class="form-floating mb-3">
-                <input type="file" name="files" multiple />
+                <input type="file" name="files" multiple accept=".png, .jpeg, .pdf"/>
             </div>
         </div>
     }

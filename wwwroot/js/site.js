@@ -7,6 +7,15 @@ var getPrice = $.ajax({
     }
 });
 
+//Get the static amount of all mods
+var getPrice = $.ajax({
+    url: "/Mods/TotalMods",
+    type: 'GET',
+    success: function (data) {
+        $('#totalModsStatic').append(data);
+    }
+});
+
 //Get mod types
 var ModTypes;
 $.ajax({
@@ -137,9 +146,18 @@ jQueryAjaxPost = form => {
                         //Refresh the total price
                         $('#totalPriceStatic').empty(data);
                         $('#totalPriceStatic').append(data);
-
                     }
-                })
+                });
+
+                $.ajax({
+                    url: "/Mods/TotalMods",
+                    type: 'GET',
+                    success: function (data) {
+                        //Refresh the total price
+                        $('#totalModsStatic').empty(data);
+                        $('#totalModsStatic').append(data);
+                    }
+                });
             },
             error: function (err) {
                 console.log(err)
@@ -173,7 +191,17 @@ jQueryAjaxDelete = form => {
                         $('#totalPriceStatic').empty(data);
                         $('#totalPriceStatic').append(data);
                     }
-                })
+                });
+
+                $.ajax({
+                    url: "/Mods/TotalMods",
+                    type: 'GET',
+                    success: function (data) {
+                        //Refresh the total price
+                        $('#totalModsStatic').empty(data);
+                        $('#totalModsStatic').append(data);
+                    }
+                });
             },
             error: function (err) {
                 console.log(err)

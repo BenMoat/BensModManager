@@ -41,7 +41,7 @@ namespace BensModManager.Controllers
         #endregion
 
         //GET: Mods
-        public async Task<IActionResult> Index(string modName, string modType, string sortOrder, int? pageNumber)
+        public async Task<IActionResult> Index(string modName, string modType, Boolean obsolete, string sortOrder, int? pageNumber)
         {
 
             
@@ -49,6 +49,7 @@ namespace BensModManager.Controllers
             //Set the search parameters
             ViewData["ModName"] = modName;
             ViewData["ModType"] = modType;
+            ViewData["Obsolete"] = obsolete;
 
             var mods = from s in _context.Mod
                        select s;
@@ -63,7 +64,17 @@ namespace BensModManager.Controllers
             {
                 mods = mods.Where(s => s.ModType.Contains(modType));
             }
+            /*
+                        if (obsolete == false)
+                        {
+                            mods = mods.Where(s => s.Obsolete.Equals(obsolete));
+                        }
 
+                        if (obsolete == true)
+                        {
+                            mods = mods.Where(s => s.Obsolete.Equals(obsolete));
+                        }
+            */
             #region Column Sorting
             //Set the various sort parameters
             ViewData["CurrentSort"] = sortOrder;
@@ -96,6 +107,16 @@ namespace BensModManager.Controllers
             decimal totalPrice = mods.Sum(x => x.Price);
 
             var result = string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", totalPrice);
+
+            return result;
+        }
+
+        public int TotalMods()
+        {
+            var mods = from s in _context.Mod
+                       select s;
+
+            var result = mods.Count();
 
             return result;
         }

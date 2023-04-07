@@ -25,6 +25,17 @@
                 <option selected disabled value=""></option>
             </div>
 
+@*            <div class="col-2">
+                <div class="checkbox-wrapper">
+                    <input for="Obsolete" type="checkbox" id="check-23" name="Obsolete" value="@ViewData["Obsolete"]"/>
+                    <label for="check-23" style="--size: 30px">
+                        <svg viewBox="0,0,50,50">
+                            <path d="M5 30 L 20 45 L 45 5"></path>
+                        </svg>
+                    </label>
+                </div>
+            </div>*@
+
             <div class="col col-lg-1">
                 <button id="searchBtn" class="form-control btn btn-success"
                         type="submit"
@@ -57,7 +68,7 @@
         <thead>
             <tr id="headers" class="align-middle">
                 <th scope="col" class="col-7">
-                    <a id="sortColumns" asp-action="Index" asp-route-sortOrder="@ViewData["ModNameSortParam"]"
+                    <a class="sortColumns" asp-action="Index" asp-route-sortOrder="@ViewData["ModNameSortParam"]"
                        asp-route-modName="@ViewData["ModName"]"
                        asp-route-modType="@ViewData["ModType"]">
                         Mod Name
@@ -65,7 +76,7 @@
                     </a>
                 </th>
                 <th scope="col" class="col-2">
-                    <a id="sortColumns" asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParam"]"
+                    <a class="sortColumns" asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParam"]"
                        asp-route-modName="@ViewData["ModName"]"
                        asp-route-modType="@ViewData["ModType"]">
                         Price
@@ -73,7 +84,7 @@
                     </a>
                 </th>
                 <th scope="col" class="col-3">
-                    <a id="sortColumns" asp-action="Index" asp-route-sortOrder="@ViewData["ModTypeSortParam"]"
+                    <a class="sortColumns" asp-action="Index" asp-route-sortOrder="@ViewData["ModTypeSortParam"]"
                        asp-route-modName="@ViewData["ModName"]"
                        asp-route-modType="@ViewData["ModType"]">
                         Mod Type
@@ -85,28 +96,56 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr class="focusAnchor" onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=item.ID},Context.Request.Scheme)','Update Mod')">
+                @if (item.Obsolete == false)
+                {
+                    <tr class="focusAnchor" title="Click to open mod" onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=item.ID},Context.Request.Scheme)','Update Mod')">
 
-                    @if (item.FileName != null)
-                    {
+                        @if (item.FileName != null)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModName)&nbsp;&nbsp;<i id="containsPDF" title="PDF attached" class="fas fa-file-pdf"></i>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModName)&nbsp;&nbsp;<i id="noPDF" title="No PDF attached" class="fas fa-file-pdf"></i>
+                            </td>
+                        }
                         <td>
-                            @Html.DisplayFor(modelItem => item.ModName)&nbsp;&nbsp;<i id="containsPDF" title="PDF attached" class="fas fa-file-pdf"></i>
+                            @Html.DisplayFor(modelItem => item.Price)
                         </td>
-                    }
-                    else
-                    {
                         <td>
-                            @Html.DisplayFor(modelItem => item.ModName)&nbsp;&nbsp;<i id="noPDF" title="No PDF attached" class="fas fa-file-pdf"></i>
+                            @Html.DisplayFor(modelItem => item.ModType)
                         </td>
-                    }
+                    </tr>
+                }
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ModType)
-                    </td>
-                </tr>
+                //Show the obsolete mods as grey and crossed out
+                @if (item.Obsolete == true)
+                {
+                    <tr class="focusAnchor" id="obsoleteMod" title="Click to open mod" onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=item.ID},Context.Request.Scheme)','Update Mod')">
+
+                        @if (item.FileName != null)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModName)&nbsp;&nbsp;<i id="containsPDF" title="PDF attached" class="fas fa-file-pdf"></i>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModName)&nbsp;&nbsp;<i id="noPDF" title="No PDF attached" class="fas fa-file-pdf"></i>
+                            </td>
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModType)
+                        </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>
@@ -120,12 +159,17 @@ else
 {
     @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
     {
+        <h2 style="display: inline; float: right;">&nbsp;mods</h2>
+        <h2 id="totalModsStatic" style="display: inline; float: right;"></h2>
+        <h2 id="totalMods" style="display: inline; float: right">@Model.Count out of&nbsp;</h2>
         <h2 id="totalPrice" style="display: inline">
             @string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", @Model.Sum(x => x.Price)) of </h2>
         <h2 id="totalPriceStatic" style="display: inline"></h2>
     }
     else
     {
+        <h2 style="display: inline; float: right;">&nbsp;Mods</h2>
+        <h2 id="totalModsStatic" style="display: inline; float: right;"></h2>
         <h2 id="totalPriceStatic">Total: </h2>
     }
 }

@@ -5,13 +5,13 @@
 }
 
 <style>
-.modal-dialog {
-    max-width: 700px;
-}
+    .modal-dialog {
+        max-width: 700px;
+    }
 
-iframe {
-    width: 100%;
-}
+    iframe {
+        width: 100%;
+    }
 </style>
 
 <form asp-action="AddOrEdit" asp-route-id="@Model.ID"
@@ -43,7 +43,7 @@ iframe {
 
     <div class="col">
         <div class="form-floating mb-3">
-                <div id="tooltipText"></div>
+            <div id="tooltipText"></div>
             <input asp-for="FilePath" type="url"
                    id="copyFilePath"
                    class="form-control bg-dark text-light"
@@ -55,7 +55,7 @@ iframe {
     </div>
 
     <div class="form-floating mb-3">
-        <iframe src="~/files/@(Model.FileName)@(Model.FileExtension)#view=FitH"
+        <iframe src="~/files/@(Model.FileName)@(Model.FileExtension)"
                 frameborder="0" height="600" align="middle" loading="eager">
         </iframe>
     </div>
@@ -66,13 +66,13 @@ iframe {
     </div>
 
     <button type="button"
-            class="btn btn-default btn-danger text-white"
+            class="btn btn-default btn-danger"
             onclick="deletePopup('@Url.Action("DeleteInvoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Invoice')">
         Delete Invoice
     </button>
 
     <button type="submit" id="submitBtn"
-            class="btn btn-success text-white">
+            class="btn btn-success">
         Submit
     </button>
 
@@ -84,22 +84,23 @@ iframe {
 </form>
 
 <script>
+    //Copy the full file path of the selected document
     $("#tooltipText").hide();
     $("#copyFilePath").focusout(function () {
         $("#tooltipText").hide();
     })
 
-    .focusin(function () {
-        $('#tooltipText').text('Click to copy');
-        $("#tooltipText").fadeIn(400);
-    });
+        .focusin(function () {
+            $('#tooltipText').text('Click to copy');
+            $("#tooltipText").fadeIn(400);
+        });
 
-   $('#copyFilePath').mouseout(function () {   
+    $('#copyFilePath').mouseout(function () {
         $('#copyFilePath').blur();
 
         document.getSelection().removeAllRanges();
     });
-    
+
     $('#copyFilePath').mouseover(function () {
         $(this).focus();
         $(this).select();

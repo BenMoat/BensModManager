@@ -65,18 +65,23 @@
         <input type="file" name="files" class="btn btn-warning" multiple accept=".png, .jpeg, .pdf" />
     </div>
 
-    <button type="button"
+    <button type="button" title="Delete this invoice from the file system"
             class="btn btn-default btn-danger"
             onclick="deletePopup('@Url.Action("DeleteInvoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Invoice')">
         Delete Invoice
     </button>
 
-    <button type="submit" id="submitBtn"
+    <button type="submit" title="Add this new invoice to the mod" id="submitBtn"
             class="btn btn-success">
-        Submit
+        Submit New Invoice
     </button>
 
-    <button type="button" class="btn btn-outline-light"
+    <div id="loader-wrapper" style="display: none;">
+        <div id="loader"></div>
+        <h3 id="loaderCaption">processing mod...</h3>
+    </div>
+
+    <button type="button" title="Return to the previous screen" class="btn btn-outline-light"
             onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=@Model.ID},Context.Request.Scheme)','Update Mod')">
         &#8592; Back
     </button>

@@ -124,7 +124,7 @@
                 //Show the obsolete mods as grey and crossed out
                 @if (item.Obsolete == true)
                 {
-                    <tr class="focusAnchor" id="obsoleteMod" title="Click to open mod" onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=item.ID},Context.Request.Scheme)','Update Mod')">
+                    <tr class="focusAnchor" id="obsoleteMod" title="Click to open obsolete mod" onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=item.ID},Context.Request.Scheme)','Update Mod')">
 
                         @if (item.FileName != null)
                         {
@@ -159,18 +159,12 @@ else
 {
     @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
     {
-        <h2 style="display: inline; float: right;">&nbsp;mods</h2>
-        <h2 id="totalModsStatic" style="display: inline; float: right;"></h2>
-        <h2 id="totalMods" style="display: inline; float: right">@Model.Count out of&nbsp;</h2>
-        <h2 id="totalPrice" style="display: inline">
-            @string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", @Model.Sum(x => x.Price)) of </h2>
-        <h2 id="totalPriceStatic" style="display: inline"></h2>
+        <h2 id="modsFloat">&nbsp;Mods</h2><h2 id="totalModsStatic"></h2><h2 id="totalMods">@Model.Count out of&nbsp;</h2>
+        <h2 id="totalPrice">@string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", @Model.Sum(x => x.Price)) of&nbsp;</h2><h2 id="totalPriceStatic"></h2>
     }
     else
     {
-        <h2 style="display: inline; float: right;">&nbsp;Mods</h2>
-        <h2 id="totalModsStatic" style="display: inline; float: right;"></h2>
-        <h2 id="totalPriceStatic">Total: </h2>
+        <h2 id="modsFloat">&nbsp;Mods</h2><h2 id="totalModsStatic"></h2><h2 id="totalPriceStatic">Total: </h2>
     }
 }
 

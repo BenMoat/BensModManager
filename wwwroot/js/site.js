@@ -67,10 +67,13 @@ modPopup = (url, title) => {
             //Automatically resize the notes field to show all content
             $('.modal').on('shown.bs.modal', function () {
                 $(this).find('#dynamicNotes').each(function () {
+                    $('#dynamicNotes').css({
+                        overflow: 'hidden'
+                    });
                     this.style.transition = 'all .5s';
                     this.style.height = (this.scrollHeight) + 'px';
                 });
-            })
+            });
 
             //Dynamically change the size of the text area upon addition or removal of a line
             $('#dynamicNotes').on('input', function () {
@@ -78,8 +81,23 @@ modPopup = (url, title) => {
                 this.style.height = (this.scrollHeight) + 'px';
             });
 
-            //Load Mod Type dropdown
+            //Display the scrollbar if the textarea exceeds the maximum height
+            $('#dynamicNotes').on('input', function () {
+                var maxHeight = '500px';
 
+                if (this.style.height >= maxHeight) {
+                    $('#dynamicNotes').css({
+                        overflow: 'visible'
+                    })
+                }
+                else if (this.style.height < maxHeight) {
+                    $('#dynamicNotes').css({
+                        overflow: 'hidden'
+                    })
+                }
+            });
+
+            //Load Mod Type dropdown
             var ModTypeCurrentValue = document.getElementById("ModTypeValue").value;
             new TomSelect('#selectModType', {
                 options: [ModTypes],

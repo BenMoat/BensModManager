@@ -40,6 +40,7 @@ body {
 /*START:Main Search bar*/
 #inlineSearch {
     padding-bottom: 25px;
+    line-height: 50px; /* <-- adjust this */
 }
 
     #inlineSearch .col {
@@ -136,6 +137,20 @@ td {
         background: #212529 !important;
         z-index: -2;
     }
+
+#totalPrice,
+totalPriceStatic {
+    display: inline;
+    float: left;
+}
+
+#modsFloat,
+#totalMods,
+#totalModsStatic {
+    display: inline;
+    float: right;
+}
+
 /*END: Mods table*/
 
 /*START: Mod modal*/
@@ -184,9 +199,9 @@ td {
             }
 
 #dynamicNotes {
-    overflow: hidden;
     scroll-behavior: unset;
     resize: none;
+    max-height: 500px;
 }
 
 #loader-wrapper {
@@ -339,7 +354,7 @@ td {
     }
 /*END: Buttons*/
 
-/*Sticky footer styles*/
+/*Footer*/
 .footer {
     position: absolute;
     bottom: 0;

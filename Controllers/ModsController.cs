@@ -44,7 +44,7 @@ namespace BensModManager.Controllers
         public async Task<IActionResult> Index(string modName, string modType, Boolean obsolete, string sortOrder, int? pageNumber)
         {
 
-            
+
 
             //Set the search parameters
             ViewData["ModName"] = modName;
@@ -132,7 +132,7 @@ namespace BensModManager.Controllers
 
             return modTypes;
         }
-        
+
         //GET: Mod by ID
         [NoDirectAccess]
         public async Task<IActionResult> AddOrEdit(int id = 0)
@@ -159,12 +159,18 @@ namespace BensModManager.Controllers
 
             foreach (var file in files)
             {
+                //If an invoice is replaced, delete the original file
+                if (System.IO.File.Exists((modModel.FilePath)))
+                {
+                    System.IO.File.Delete(modModel.FilePath);
+                }
+
                 var basePath = Path.Combine(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\");
-                bool basePathExists = System.IO.Directory.Exists(basePath);
+                bool basePathExists = Directory.Exists(basePath);
                 if (!basePathExists) Directory.CreateDirectory(basePath);
                 var fileName = Path.GetFileNameWithoutExtension(file.FileName);
                 var filePath = Path.Combine(basePath, file.FileName);
-                var extension = Path.GetExtension(file.FileName);
+                var originalExtension = Path.GetExtension(file.FileName);
 
                 if (!System.IO.File.Exists(filePath))
                 {
@@ -184,17 +190,22 @@ namespace BensModManager.Controllers
                         FileName = fileName,
                         FileType = "application/pdf",
                         FileExtension = ".pdf",
-                        FilePath = filePath.Replace(extension, ".pdf")
+                        FilePath = filePath.Replace(originalExtension, ".pdf")
                     };
 
-                    //Convert file to a PDF, update the database and delete the original
-                    var taskImageToPDF = api.CreateTask<ImageToPdfTask>();
+                    if (originalExtension != ".pdf")
+                    {
+                        //Convert file to a PDF, update the database and delete the original
+                        var taskImageToPDF = api.CreateTask<ImageToPdfTask>();
 
-                    var appendFile = taskImageToPDF.AddFile(filePath);
+                        var appendFile = taskImageToPDF.AddFile(filePath);
 
-                    taskImageToPDF.Process();
-                    taskImageToPDF.DownloadFile(basePath);
-                    System.IO.File.Delete(filePath);
+                        taskImageToPDF.Process();
+                        taskImageToPDF.DownloadFile(basePath);
+
+                        System.IO.File.Delete(filePath);
+                    }
+
                     if (files.Count > 1)
                     {
                         System.IO.File.Move(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + fileName + ".pdf", Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + fileName + "-unmerged.pdf");
@@ -202,30 +213,37 @@ namespace BensModManager.Controllers
                 }
 
                 await _context.SaveChangesAsync();
-
             }
 
-            //Create a new task
+            //Initialise the API merge call
             var taskMerge = api.CreateTask<MergeTask>();
 
             if (files.Count > 1)
             {
-
                 for (int i = 0; i < files.Count; i++)
                 {
-                    var merge = taskMerge.AddFile(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + files[i].FileName.Replace(".png", "-unmerged.pdf"));
+                    //Append '-unmerged.pdf' to each file
+                    string unmergedExtension = Path.GetExtension(files[i].FileName);
+                    taskMerge.AddFile(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + files[i].FileName.Replace(unmergedExtension, "-unmerged.pdf"));
                 }
 
-                //Execute the task
+                //Download the merged PDFs
                 taskMerge.Process();
-
-                //Download the package files
                 var mergedPath = Path.Combine(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\");
                 taskMerge.DownloadFile(mergedPath);
 
-                System.IO.File.Move(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\merged.pdf", Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + files[^1].FileName.Replace(".png", ".pdf"));
-            }
+                /*Change the name of the merged PDF to the last name of the uploaded PDF in the array to match the saved file path in the database
+                It's a bit hacky but you cannot change the name of the merged file in flight using this PDF library*/
+                string extension = Path.GetExtension(files[^1].FileName);
+                System.IO.File.Move(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\merged.pdf", Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + files[^1].FileName.Replace(extension, ".pdf"));
 
+                //Delete the unmerged files after creating merged PDF
+                string[] filePaths = Directory.GetFiles(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\", "*-unmerged.pdf");
+                foreach (string filePath in filePaths)
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
 
             _context.Update(modModel);
             await _context.SaveChangesAsync();

@@ -41,15 +41,12 @@ namespace BensModManager.Controllers
         #endregion
 
         //GET: Mods
-        public async Task<IActionResult> Index(string modName, string modType, Boolean obsolete, string sortOrder, int? pageNumber)
+        public async Task<IActionResult> Index(string modName, string modType, string excludeObsolete, string sortOrder, int? pageNumber)
         {
-
-
-
             //Set the search parameters
             ViewData["ModName"] = modName;
             ViewData["ModType"] = modType;
-            ViewData["Obsolete"] = obsolete;
+            ViewData["ExcludeObsolete"] = excludeObsolete;
 
             var mods = from s in _context.Mod
                        select s;
@@ -64,17 +61,12 @@ namespace BensModManager.Controllers
             {
                 mods = mods.Where(s => s.ModType.Contains(modType));
             }
-            /*
-                        if (obsolete == false)
-                        {
-                            mods = mods.Where(s => s.Obsolete.Equals(obsolete));
-                        }
 
-                        if (obsolete == true)
-                        {
-                            mods = mods.Where(s => s.Obsolete.Equals(obsolete));
-                        }
-            */
+            if (excludeObsolete == "on")
+            {
+                mods = mods.Where(s => s.Obsolete.Equals(false));
+            }
+
             #region Column Sorting
             //Set the various sort parameters
             ViewData["CurrentSort"] = sortOrder;
@@ -98,7 +90,7 @@ namespace BensModManager.Controllers
             return View(await PaginatedList<Mod>.CreateAsync(mods.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
-        //GET: Total Price of all Mods
+        //GET: Total price of all mods
         public string TotalPrice()
         {
             var mods = from s in _context.Mod
@@ -111,6 +103,7 @@ namespace BensModManager.Controllers
             return result;
         }
 
+        //GET: Total amount of mods
         public int TotalMods()
         {
             var mods = from s in _context.Mod
@@ -121,7 +114,7 @@ namespace BensModManager.Controllers
             return result;
         }
 
-        //GET: ModTypes
+        //GET: Mod types
         public IEnumerable<SelectListItem> ModTypes()
         {
             var modTypes = _context.Mod.Select(u => new SelectListItem
@@ -193,6 +186,7 @@ namespace BensModManager.Controllers
                         FilePath = filePath.Replace(originalExtension, ".pdf")
                     };
 
+                    #region Convert to PDF and Rename
                     if (originalExtension != ".pdf")
                     {
                         //Convert file to a PDF, update the database and delete the original
@@ -210,11 +204,13 @@ namespace BensModManager.Controllers
                     {
                         System.IO.File.Move(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + fileName + ".pdf", Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + fileName + "-unmerged.pdf");
                     }
+                    #endregion
                 }
 
                 await _context.SaveChangesAsync();
             }
 
+            #region Merge the PDF Files
             //Initialise the API merge call
             var taskMerge = api.CreateTask<MergeTask>();
 
@@ -244,6 +240,7 @@ namespace BensModManager.Controllers
                     System.IO.File.Delete(filePath);
                 }
             }
+            #endregion
 
             _context.Update(modModel);
             await _context.SaveChangesAsync();
@@ -251,7 +248,7 @@ namespace BensModManager.Controllers
             return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mod.ToList()) });
         }
 
-        //GET: Mod Invoice
+        //GET: Mod invoice
         public async Task<IActionResult> Invoice(int? id)
         {
             if (id == null)
@@ -259,8 +256,8 @@ namespace BensModManager.Controllers
                 return NotFound();
             }
 
-            var modModel = await _context.Mod
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var modModel = await _context.Mod.FirstOrDefaultAsync(m => m.ID == id);
+
             if (modModel == null)
             {
                 return NotFound();
@@ -269,7 +266,7 @@ namespace BensModManager.Controllers
             return View(modModel);
         }
 
-        //GET: Load DeleteInvoice Popup
+        //GET: Load DeleteInvoice popup
         public async Task<IActionResult> DeleteInvoice(int? id)
         {
             if (id == null)
@@ -283,7 +280,7 @@ namespace BensModManager.Controllers
             return View(modModel);
         }
 
-        //POST: Delete selected Mod
+        //POST: Delete selected invoice
         [HttpPost, ActionName("DeleteInvoice")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteInvoiceConfirmed(int id)
@@ -304,7 +301,7 @@ namespace BensModManager.Controllers
             return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mod.ToList()) });
         }
 
-        //GET: Load DeleteMod Popup
+        //GET: Load DeleteMod popup
         public async Task<IActionResult> DeleteMod(int? id)
         {
             if (id == null)
@@ -318,7 +315,7 @@ namespace BensModManager.Controllers
             return View(modModel);
         }
 
-        //POST: Delete selected Mod
+        //POST: Delete selected mod
         [HttpPost, ActionName("DeleteMod")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteModConfirmed(int id)

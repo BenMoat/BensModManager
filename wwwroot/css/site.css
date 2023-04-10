@@ -58,8 +58,11 @@ body {
     #searchModType {
         color: #fff;
     }
-/*END:Main Search bar*/
 
+#obsoleteSearchlabel {
+   margin-right: -45px !important;
+}
+/*END:Main Search bar*/
 /*START:Tom Select dropdown*/
 .ts-wrapper.form-control,
 .ts-wrapper.form-select {
@@ -195,7 +198,7 @@ totalPriceStatic {
                 stroke-linejoin: round;
                 stroke-dasharray: 90;
                 stroke-dashoffset: 91;
-                transition: all 250ms cubic-bezier(1,0,.37,.91);
+               transition: all 250ms cubic-bezier(1,0,.37,.91);
             }
 
 #dynamicNotes {

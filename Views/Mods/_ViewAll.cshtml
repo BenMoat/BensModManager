@@ -7,7 +7,7 @@
 <form asp-action="Index" method="get">
     <div class="container" id="inlineSearch">
         <div class="row justify-content-md-center">
-            <div class="col col-md-4">
+            <div class="col col-md-3">
                 <input id="searchModName" class="form-control bg-dark"
                        type="text"
                        name="ModName"
@@ -15,7 +15,7 @@
                        value="@ViewData["ModName"]" />
             </div>
 
-            <div class="col col-md-3">
+            <div class="col col-md-2">
                 <select id="searchModType" class="form-select bg-dark"
                         for="ModType"
                         name="ModType"
@@ -25,19 +25,25 @@
                 <option selected disabled value=""></option>
             </div>
 
-@*            <div class="col-2">
+            <div class="col col-sm-2" id="obsoleteSearchlabel">
+                <p>Exclude obsolete mods</p>
+            </div>
+
+            <div class=" col col-sm-1">
                 <div class="checkbox-wrapper">
-                    <input for="Obsolete" type="checkbox" id="check-23" name="Obsolete" value="@ViewData["Obsolete"]"/>
-                    <label for="check-23" style="--size: 30px">
+                    <input for="ExcludeObsolete" type="checkbox" id="obCheckSearch"
+                           name="ExcludeObsolete" value="@ViewData["ExcludeObsolete"]"
+                           checked />
+                    <label for="obCheckSearch">
                         <svg viewBox="0,0,50,50">
                             <path d="M5 30 L 20 45 L 45 5"></path>
                         </svg>
                     </label>
                 </div>
-            </div>*@
+            </div>
 
-            <div class="col col-lg-1">
-                <button id="searchBtn" class="form-control btn btn-success"
+            <div class="col col-md-1">
+                <button class="form-control btn btn-success"
                         type="submit"
                         title="Search"
                         value="Search">
@@ -45,12 +51,12 @@
                 </button>
             </div>
 
-            <div class="col col-md-2">
+            <div class="col col-md-1">
                 <a class="form-control btn btn-success" 
                 onclick="modPopup('@Url.Action("AddOrEdit","Mods",null,Context.Request.Scheme)','New Mod')">New Mod</a>
             </div>
 
-            @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
+            @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null || @ViewData["ExcludeObsolete"] != null)
             {
                 <div class="col col-md-2">
                     <a class="form-control btn btn-info"
@@ -157,7 +163,7 @@
 }
 else
 {
-    @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
+    @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null || @ViewData["ExcludeObsolete"] != null)
     {
         <h2 id="modsFloat">&nbsp;Mods</h2><h2 id="totalModsStatic"></h2><h2 id="totalMods">@Model.Count out of&nbsp;</h2>
         <h2 id="totalPrice">@string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", @Model.Sum(x => x.Price)) of&nbsp;</h2><h2 id="totalPriceStatic"></h2>

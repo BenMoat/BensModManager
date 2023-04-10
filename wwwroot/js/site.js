@@ -1,4 +1,14 @@
-﻿//Get the static total price
+﻿$(function () {
+    var retainSelection = localStorage.input === 'true' ? true : false;
+    $('input').prop('checked', retainSelection);
+});
+
+$('input').on('change', function () {
+    localStorage.input = $(this).is(':checked');
+    console.log($(this).is(':checked'));
+});
+
+//Get the static total price
 var getPrice = $.ajax({
     url: "/Mods/TotalPrice",
     type: 'GET',

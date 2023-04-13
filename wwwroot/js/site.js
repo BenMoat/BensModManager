@@ -1,4 +1,5 @@
-﻿$(function () {
+﻿//Retain the Exclude obsolete mods selection 
+$(function () {
     var retainSelection = localStorage.input === 'true' ? true : false;
     $('input').prop('checked', retainSelection);
 });
@@ -60,10 +61,13 @@ modPopup = (url, title) => {
         type: 'GET',
         url: url,
         success: function (res) {
+            $("#invoiceModal").modal('hide');
+            $("#deleteModal").modal('hide');
+
             //Display popup content
-            $('#form-modal .modal-body').html(res);
-            $('#form-modal .modal-title').html(title);
-            $('#form-modal').modal('show');
+            $('#addOrEditModal .modal-body').html(res);
+            $('#addOrEditModal .modal-title').html(title);
+            $('#addOrEditModal').modal('show');
             $('.modal-dialog').draggable({
                 handle: ".modal-header"
             });
@@ -80,7 +84,7 @@ modPopup = (url, title) => {
                     $('#dynamicNotes').css({
                         overflow: 'hidden'
                     });
-                    this.style.transition = 'all .5s';
+                    this.style.transition = 'all .4s';
                     this.style.height = (this.scrollHeight) + 'px';
                 });
             });
@@ -129,10 +133,11 @@ invoicePopup = (url, title) => {
         type: 'GET',
         url: url,
         success: function (res) {
+            $("#addOrEditModal").modal('hide');
             //Display popup content
-            $('#form-modal .modal-body').html(res);
-            $('#form-modal .modal-title').html(title);
-            $('#form-modal').modal('show');
+            $('#invoiceModal .modal-body').html(res);
+            $('#invoiceModal .modal-title').html(title);
+            $('#invoiceModal').modal('show');
         }
     });
 }
@@ -142,10 +147,12 @@ deletePopup = (url, title) => {
         type: 'GET',
         url: url,
         success: function (res) {
+            $("#addOrEditModal").modal('hide');
+            $("#invoiceModal").modal('hide');
             //Display popup content
-            $('#form-modal .modal-body').html(res);
-            $('#form-modal .modal-title').html(title);
-            $('#form-modal').modal('show');
+            $('#deleteModal .modal-body').html(res);
+            $('#deleteModal .modal-title').html(title);
+            $('#deleteModal').modal('show');
             $('.modal-dialog').draggable({
                 handle: ".modal-header"
             });
@@ -163,7 +170,8 @@ jQueryAjaxPost = form => {
             contentType: false,
             processData: false,
             success: function (res) {
-                $('#form-modal').modal('hide');
+                $('#addOrEditModal').modal('hide');
+                $('#deleteModal').modal('hide');
                 $("#tableAJAX").load(location.href + " #tableAJAX");
                 $("#totalPrice").load(location.href + " #totalPrice");
 
@@ -208,7 +216,8 @@ jQueryAjaxDelete = form => {
             contentType: false,
             processData: false,
             success: function (res) {
-                $('#form-modal').modal('hide');
+                $('#addOrEditModal').modal('hide');
+                $('#deleteModal').modal('hide');
                 $("#tableAJAX").load(location.href + " #tableAJAX");
                 $("#totalPrice").load(location.href + " #totalPrice");
 

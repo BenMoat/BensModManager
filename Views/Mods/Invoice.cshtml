@@ -4,16 +4,6 @@
     Layout = null;
 }
 
-<style>
-    .modal-dialog {
-        max-width: 700px;
-    }
-
-    iframe {
-        width: 100%;
-    }
-</style>
-
 <form asp-action="AddOrEdit" asp-route-id="@Model.ID"
       class="row g-3"
       id="yo"
@@ -56,7 +46,7 @@
 
     <div class="form-floating mb-3">
         <iframe src="~/files/@(Model.FileName)@(Model.FileExtension)"
-                frameborder="0" height="600" align="middle" loading="eager">
+                frameborder="0" height="600" align="middle" loading="eager" width="100%">
         </iframe>
     </div>
 

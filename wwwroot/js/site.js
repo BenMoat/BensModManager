@@ -134,10 +134,13 @@ invoicePopup = (url, title) => {
         url: url,
         success: function (res) {
             $("#addOrEditModal").modal('hide');
-            //Display popup content
+            $("#deleteModal").modal('hide');
+
             $('#invoiceModal .modal-body').html(res);
             $('#invoiceModal .modal-title').html(title);
             $('#invoiceModal').modal('show');
+
+            $('#invoiceWidth .modal-dialog ').css('max-width', '700px');  
         }
     });
 }
@@ -149,13 +152,11 @@ deletePopup = (url, title) => {
         success: function (res) {
             $("#addOrEditModal").modal('hide');
             $("#invoiceModal").modal('hide');
+
             //Display popup content
             $('#deleteModal .modal-body').html(res);
             $('#deleteModal .modal-title').html(title);
             $('#deleteModal').modal('show');
-            $('.modal-dialog').draggable({
-                handle: ".modal-header"
-            });
         }
     });
 }
@@ -171,7 +172,9 @@ jQueryAjaxPost = form => {
             processData: false,
             success: function (res) {
                 $('#addOrEditModal').modal('hide');
+                $("#invoiceModal").modal('hide');
                 $('#deleteModal').modal('hide');
+
                 $("#tableAJAX").load(location.href + " #tableAJAX");
                 $("#totalPrice").load(location.href + " #totalPrice");
 
@@ -217,6 +220,7 @@ jQueryAjaxDelete = form => {
             processData: false,
             success: function (res) {
                 $('#addOrEditModal').modal('hide');
+                $('#invoiceModal').modal('hide');
                 $('#deleteModal').modal('hide');
                 $("#tableAJAX").load(location.href + " #tableAJAX");
                 $("#totalPrice").load(location.href + " #totalPrice");

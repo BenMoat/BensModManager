@@ -12,7 +12,7 @@
     <button type="submit" title="Delete this invoice from the file system" class="btn btn-danger text-white">Delete</button>
 
     <button type="button" title="Return to the previous screen" class="btn btn-default btn-outline-light" 
-        onclick="modPopup('@Url.Action("Invoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Mod Invoice')">
+        onclick="invoicePopup('@Url.Action("Invoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Mod Invoice')">
         &#8592; Back
     </button>
 </form>

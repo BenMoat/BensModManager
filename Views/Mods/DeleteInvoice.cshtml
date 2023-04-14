@@ -9,10 +9,12 @@
 
     <h3 class="text-center text-white">Are you sure you want to delete the <b>@Model.ModName</b> invoice?</h3>
 
-    <button type="submit" title="Delete this invoice from the file system" class="btn btn-danger text-white">Delete</button>
+    <div class="btn-group gap-2">
+        <button type="button" title="Return to the previous screen" class="btn btn-default btn-outline-light"
+                onclick="invoicePopup('@Url.Action("Invoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Mod Invoice')">
+            &#8592; Back
+        </button>
 
-    <button type="button" title="Return to the previous screen" class="btn btn-default btn-outline-light" 
-        onclick="invoicePopup('@Url.Action("Invoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Mod Invoice')">
-        &#8592; Back
-    </button>
+    <button type="submit" title="Delete this invoice from the file system" class="btn btn-danger text-white">Delete</button>
+    </div>
 </form>

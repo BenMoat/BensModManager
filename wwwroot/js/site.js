@@ -38,7 +38,7 @@ $.ajax({
     }
 });
 
-//Retain user search selection
+//Retain mod type selection
 let ModTypeSelection = document.getElementById("searchModType").getAttribute("value");
 
 //Load Mod Type dropdown

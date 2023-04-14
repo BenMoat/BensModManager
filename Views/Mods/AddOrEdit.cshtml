@@ -94,37 +94,54 @@
         </div>
     }
 
+    <!--If this record contains a PDF, append the Invoice button-->
     @if (Model.FileName != null)
     {
-        <button type="button"
-                title="View the invoice attached to this mod"
-                class="btn btn-default btn-info"
-                onclick="invoicePopup('@Url.Action("Invoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Mod Invoice')">
-            View Invoice
-        </button>
+        <div class="btn-group">
+            <button type="button"
+                    title="View the invoice attached to this mod"
+                    class="btn btn-default btn-info"
+                    onclick="invoicePopup('@Url.Action("Invoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Mod Invoice')">
+                View Invoice
+            </button>
+        </div>
     }
-
-    <button type="submit"
-            title="Submit this mod to the database"
-            class="btn btn-success"
-            onclick="validation();">
-        Submit
-    </button>
 
     <div id="loader-wrapper" style="display: none;">
         <div id="loader"></div>
         <h3 id="loaderCaption">processing mod...</h3>
     </div>
 
-    <!--If this is an existing record, append the Delete and View Invoice button-->
+    @if (Model.ID == 0)
+    {
+        <div class="btn-group">
+            <button type="submit"
+                    title="Submit this mod to the database"
+                    class="btn btn-success"
+                    onclick="validation();">
+                Submit
+            </button>
+        </div>
+    }
+
+    <!--If this is an existing record, append the Delete button-->
     @if (Model.ID != 0)
     {
-        <button type="button"
-                title="Permanently delete this mod"
-                class="btn btn-default btn-danger"
-                onclick="deletePopup('@Url.Action("DeleteMod","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Mod')">
-            Delete
-        </button>
+        <div class="btn-group gap-2">
+            <button type="button"
+                    title="Permanently delete this mod"
+                    class="btn btn-default btn-danger"
+                    onclick="deletePopup('@Url.Action("DeleteMod","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Mod')">
+                Delete
+            </button>
+
+            <button type="submit"
+                    title="Submit this mod to the database"
+                    class="btn btn-success"
+                    onclick="validation();">
+                Submit
+            </button>
+        </div>
     }
 </form>
 

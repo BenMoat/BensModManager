@@ -7,14 +7,24 @@ body {
     margin-bottom: 60px;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+/*Global Overrides*/
+h2, 
+input,
+a, 
+p, 
+.container {
     color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
 }
 
-.navbar-color {
+.navbar {
+    align-items: center;
     background-color: #2c3034;
+}
+
+.form-select,
+.form-control {
+    color: #fff !important;
+    border-color: #fff;
 }
 
 .modsHeader {
@@ -26,21 +36,10 @@ body {
     background-color: #2c3034;
 }
 
-/*START:Global overrides*/
-* {
-    color: #fff;
-}
-
-    input, textarea{
-        color: #fff !important;
-        cursor: text !important;
-    }
-/*END:Global overrides*/
-
 /*START:Main Search bar*/
 #inlineSearch {
     padding-bottom: 25px;
-    line-height: 50px; /* <-- adjust this */
+    line-height: 50px;
 }
 
     #inlineSearch .col {
@@ -51,16 +50,17 @@ body {
 #searchModName {
     height: 55px;
 }
-    #searchModName::placeholder {
-        color: #fff;
-    }
 
-    #searchModType {
-        color: #fff;
-    }
+#searchModType-ts-control::placeholder {
+    color: #8a9198 !important;
+}
+
+.ts-control {
+    color: #fff;
+}
 
 #obsoleteSearchlabel {
-   margin-right: -45px !important;
+    margin-right: -45px !important;
 }
 /*END:Main Search bar*/
 
@@ -162,9 +162,15 @@ totalPriceStatic {
     cursor: grab;
 }
 
+label,
+#selectModType-ts-control::placeholder {
+    color: #8a9198 !important;
+}
+
 #obsoleteLabel {
     vertical-align: central !important;
     margin-top: 6%;
+    color: #fff;
 }
 
 .checkbox-wrapper input {

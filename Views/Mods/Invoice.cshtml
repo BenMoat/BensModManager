@@ -1,8 +1,6 @@
 ﻿@model BensModManager.Models.Mod
 
-@{
-    Layout = null;
-}
+@{ Layout = null; }
 
 <form asp-action="AddOrEdit" asp-route-id="@Model.ID"
       class="row g-3"
@@ -17,15 +15,14 @@
     <input hidden asp-for="FileType" type="text">
     <input hidden asp-for="FileExtension" type="text">
 
-    <h3 class="text-center text-white"><b>@Model.ModName</b></h3>
+    <h3 class="text-center"><b>@Model.ModName</b></h3>
 
     <div class="col-6">
         <div class="form-floating mb-3">
             <input asp-for="FileName" type="text"
-                   class="form-control bg-dark text-light"
+                   class="form-control"
                    readonly>
-            <label asp-for="FileName"
-                   class="text-light">
+            <label asp-for="FileName">
             </label>
         </div>
     </div>
@@ -35,10 +32,9 @@
             <div id="tooltipText"></div>
             <input asp-for="FilePath" type="url"
                    id="copyFilePath"
-                   class="form-control bg-dark text-light"
+                   class="form-control"
                    readonly>
-            <label asp-for="FilePath"
-                   class="text-light">
+            <label asp-for="FilePath">
             </label>
         </div>
     </div>
@@ -50,15 +46,9 @@
     </div>
 
     <div class="align-content-center">
-        <label class="text-light">Replace Invoice: &nbsp</label>
+        <label>Replace Invoice: &nbsp</label>
         <input type="file" name="files" class="btn btn-warning" multiple accept=".png, .jpg, .pdf" />
     </div>
-@*
-    <div class="input-group">
-        <label class="input-group-text" for="inputGroupFile">Replace Invoice</label>
-        <input type="file" name="files" class="form-control" multiple accept=".png, .jpg, .pdf">
-    </div>*@
-
 
     <div id="loader-wrapper" style="display: none;">
         <div id="loader"></div>

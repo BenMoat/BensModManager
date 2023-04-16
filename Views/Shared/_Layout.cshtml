@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html data-bs-theme="dark" lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,26 +10,26 @@
     <link rel="stylesheet" href="~/css/site.css" runat="server" />
 
 </head>
-<body class="bg-dark">
+<body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-dark border-bottom navbar-color">
+        <nav class="navbar navbar-expand-sm border-bottom navbar-color">
             <div class="container">
                 <a class="navbar-brand" asp-controller="Mods" asp-action="Index">Ben's Mod Manager</a>
             </div>
         </nav>
     </header>
 
-    <div class="container bg-dark">
+    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted align">
-        <div class="container bg-dark text-light">
+        <div class="container">
             &copy;
-            <script>document.write(new Date().getFullYear())</script> · Ben's Mod Manager · <a class="text-light" href="https://github.com/BenMoat/BensModManager/releases/tag/v1.1.0" target="_blank">
-                Version 1.1</a> <i class="fab fa-github text-light" style='font-size:15px'></i>
+            <script>document.write(new Date().getFullYear())</script> · Ben's Mod Manager · <a href="https://github.com/BenMoat/BensModManager/releases/tag/v1.1.0" target="_blank">
+                Version 1.1</a> <i class="fab fa-github" style='font-size:15px'></i>
         </div>
     </footer>
 

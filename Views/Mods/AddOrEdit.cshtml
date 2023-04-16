@@ -13,7 +13,7 @@
 
     <div class="form-floating mb-3">
         <input asp-for="ModName" type="text"
-               class="form-control bg-dark"
+               class="form-control"
                placeholder="Mod Name"
                required
                data-prefix="R$ ">
@@ -27,7 +27,7 @@
         <div class="form-floating mb-3">
             <input asp-for="Price" type="text"
                    id="price"
-                   class="form-control bg-dark"
+                   class="form-control"
                    placeholder="Price"
                    required
                    data-prefix="£">
@@ -42,7 +42,7 @@
         <div class="form-floating mb-3">
             <select asp-for="ModType"
                     id="selectModType"
-                    class="form-select bg-dark"
+                    class="form-select"
                     placeholder="Mod Type"
                     list="list-language"
                     required>
@@ -73,7 +73,7 @@
 
     <div class="form-floating mb-3">
         <textarea asp-for="Notes" rows="1" id="dynamicNotes"
-                  class="form-control bg-dark"
+                  class="form-control"
                   placeholder="Notes">
         </textarea>
         <label asp-for="Notes"></label>
@@ -152,7 +152,7 @@
     //Remove the default '0' from the Price
     if ($('#price').val() == '£0.00') {
         $('#price').val("")
-    }
+    };
 
     //Form Validation
     function validation() {

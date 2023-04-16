@@ -8,15 +8,18 @@
       class="row g-3"
       onsubmit="return jQueryAjaxDelete(this);">
     <input type="hidden" asp-for="ID" />
-
-    <h3 class="text-center text-white">Are you sure you want to delete the <b>@Model.ModName</b> mod?</h3>
-
+    <h3 class="text-center">Are you sure you want to delete the <b>@Model.ModName</b> mod?</h3>
     <div class="btn-group gap-2">
-        <button type="button" title="Return to the previous screen" class="btn btn-default btn-outline-light"
+
+        <button type="button" title="Return to the previous screen"
+                class="btn btn-default btn-outline-light"
                 onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=@Model.ID},Context.Request.Scheme)','Update Mod')">
             &#8592; Back
         </button>
 
-        <button type="submit" title="Permanenty delete this mod" class="btn btn-danger text-white">Delete</button>
+        <button type="submit" title="Permanenty delete this mod"
+                class="btn btn-danger">
+            Delete
+        </button>
     </div>
 </form>

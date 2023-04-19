@@ -43,10 +43,12 @@
             </div>
 
             <div class="col col-md-1">
-                <button class="form-control btn btn-success"
+                <button class="form-control btn btn-success" id="searchBtn"
+                        onclick="cleanseURL()"
                         type="submit"
                         title="Search"
-                        value="Search">
+                        value="Search"
+                        disabled>
                     <i class="fas fa-search"></i>
                 </button>
             </div>
@@ -195,3 +197,43 @@ else
         Next
     </a>
 </div>
+
+<script>
+    //Disable the search button if there is no search criteria
+    var modName = document.getElementById('searchModName');
+    var modType = document.getElementById('searchModType');
+    var search = document.getElementById('searchBtn');
+
+    function searchValues() {
+        if (modType.value == "") {
+            search.disabled = true
+        }
+        else if (modName.value == "") {
+            search.disabled = true
+        }
+        if (modType.value != "") {
+            search.disabled = false
+        }
+        else if (modName.value != "") {
+            search.disabled = false
+        }
+    };
+
+    document.addEventListener('input', (event) => {
+        searchValues()
+    });
+
+    window.onload = function () {
+        searchValues()
+    };
+
+    //Only append the populated search parameters to the URL
+    function cleanseURL() {
+        if (modName.value == "") {
+            modName.setAttribute("name", "");
+        }
+        if (modType.value == "") {
+            modType.setAttribute("name", "");
+        }
+    };
+</script>

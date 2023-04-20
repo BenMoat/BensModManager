@@ -4,70 +4,59 @@
     <h1 class="modsHeader">Mods</h1>
 </div>
 
-<form asp-action="Index" method="get">
+<form asp-action="Index" id="obsoleteSearch" method="get">
     <div class="container" id="inlineSearch">
         <div class="row justify-content-md-center">
             <div class="col col-md-3">
                 <input id="searchModName" class="form-control"
-                       type="text"
-                       name="ModName"
+                       type="text" name="ModName"
                        placeholder="Mod Name"
                        value="@ViewData["ModName"]" />
             </div>
 
             <div class="col col-md-2">
                 <select id="searchModType" class="form-select"
-                        for="ModType"
-                        name="ModType"
+                        for="ModType" name="ModType"
                         title="Type or select the mod type"
                         value="@ViewData["ModType"]">
                 </select>
                 <option selected disabled value=""></option>
             </div>
 
-            <div class="col col-sm-2" id="obsoleteSearchlabel">
-                <p>Exclude obsolete mods</p>
-            </div>
-
-            <div class=" col col-sm-1">
-                <div class="checkbox-wrapper">
-                    <input for="ExcludeObsolete" type="checkbox" id="obCheckSearch"
-                           name="ExcludeObsolete" value="@ViewData["ExcludeObsolete"]"
-                           checked />
-                    <label for="obCheckSearch">
-                        <svg viewBox="0,0,50,50">
-                            <path d="M5 30 L 20 45 L 45 5"></path>
-                        </svg>
-                    </label>
-                </div>
-            </div>
-
             <div class="col col-md-1">
                 <button class="form-control btn btn-success" id="searchBtn"
-                        onclick="cleanseURL()"
-                        type="submit"
-                        title="Search"
-                        value="Search"
-                        disabled>
+                        onclick="cleanseURL()" type="submit"
+                        title="Search" value="Search" disabled>
                     <i class="fas fa-search"></i>
                 </button>
             </div>
 
             <div class="col col-md-1">
-                <a class="form-control btn btn-success" 
-                onclick="modPopup('@Url.Action("AddOrEdit","Mods",null,Context.Request.Scheme)','New Mod')">New Mod</a>
+                <a class="form-control btn btn-success"
+                   onclick="modPopup('@Url.Action("AddOrEdit","Mods",null,Context.Request.Scheme)','New Mod')">New Mod</a>
             </div>
 
-            @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null || @ViewData["ExcludeObsolete"] != null)
+            @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null)
             {
-                <div class="col col-md-2">
+                <div class="col col-md-2"> 
                     <a class="form-control btn btn-info"
-                   asp-action="Index">
+                   asp-action="Index" id="resetSearch">
                         Back to Full List
                     </a>
                 </div>
             }
         </div>
+    </div>
+
+    <div class="form-check form-switch form-check-reverse">
+        <label class="form-check-label"
+               for="flexSwitchCheckReverse">
+            Exclude Obsolete Mods
+        </label>
+        <input class="form-check-input" id="obsoleteCheckbox"
+               type="checkbox" for="ExcludeObsolete"
+               onchange="this.form.submit()"
+               name="ExcludeObsolete" value="@ViewData["ExcludeObsolete"]">
     </div>
 </form>
 
@@ -200,31 +189,31 @@ else
 
 <script>
     //Disable the search button if there is no search criteria
-    var modName = document.getElementById('searchModName');
-    var modType = document.getElementById('searchModType');
-    var search = document.getElementById('searchBtn');
+    var modName = document.getElementById("searchModName");
+    var modType = document.getElementById("searchModType");
+    var search = document.getElementById("searchBtn");
 
     function searchValues() {
-        if (modType.value == "") {
-            search.disabled = true
+        if (modType.value === "") {
+            search.disabled = true;
         }
-        else if (modName.value == "") {
-            search.disabled = true
+        else if (modName.value === "") {
+            search.disabled = true;
         }
-        if (modType.value != "") {
-            search.disabled = false
+        if (modType.value !== "") {
+            search.disabled = false;
         }
-        else if (modName.value != "") {
-            search.disabled = false
+        else if (modName.value !== "") {
+            search.disabled = false;
         }
-    };
+    }
 
     document.addEventListener('input', (event) => {
-        searchValues()
+        searchValues();
     });
 
     window.onload = function () {
-        searchValues()
+        searchValues();
     };
 
     //Only append the populated search parameters to the URL
@@ -235,5 +224,5 @@ else
         if (modType.value == "") {
             modType.setAttribute("name", "");
         }
-    };
+    }
 </script>

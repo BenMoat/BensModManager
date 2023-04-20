@@ -1,12 +1,19 @@
 ﻿//Retain the Exclude obsolete mods selection 
-$(function () {
-    var retainSelection = localStorage.input === 'true' ? true : false;
-    $('input').prop('checked', retainSelection);
+$('#obsoleteCheckbox').click(function (e) {
+    if (e.target.checked) {
+        localStorage.setItem('checked', 'true');
+    } else {
+        localStorage.setItem('checked', 'false');
+    }
 });
 
-$('input').on('change', function () {
-    localStorage.input = $(this).is(':checked');
-    console.log($(this).is(':checked'));
+$(document).ready(function () {
+    document.querySelector('#obsoleteCheckbox').checked = (localStorage.getItem('checked') === 'true')
+});
+
+//Default the checkbox to unchecked when resetting search params
+$('#resetSearch').click(function (e) {
+    localStorage.setItem('checked', 'false');
 });
 
 //Get the static total price

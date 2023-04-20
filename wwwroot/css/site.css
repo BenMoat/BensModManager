@@ -13,7 +13,7 @@ input,
 a, 
 p, 
 .container {
-    color: #fff;
+    color: #fff ;
 }
 
 .navbar {
@@ -51,6 +51,11 @@ p,
     height: 55px;
 }
 
+button:disabled {
+    cursor: not-allowed !important;
+    pointer-events: all !important;
+}
+
 #searchModType-ts-control::placeholder {
     color: #8a9198 !important;
 }
@@ -58,11 +63,18 @@ p,
 .ts-control {
     color: #fff;
 }
-
-#obsoleteSearchlabel {
-    margin-right: -45px !important;
-}
 /*END:Main Search bar*/
+
+/*START: AJAX Obsolete switch*/
+.form-check-label {
+    color: #fff !important;
+}
+
+.form-check-input:checked {
+    background-color: #22bf76;
+    border-color: #22bf76;
+}
+/*END: AJAX Obsolete switch*/
 
 /*START:Tom Select dropdown*/
 .ts-wrapper.form-control,

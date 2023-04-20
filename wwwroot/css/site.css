@@ -51,6 +51,10 @@ p,
     height: 55px;
 }
 
+.ts-control {
+    color: #fff;
+}
+
 button:disabled {
     cursor: not-allowed !important;
     pointer-events: all !important;
@@ -60,11 +64,14 @@ button:disabled {
     color: #8a9198 !important;
 }
 
-.ts-control {
-    color: #fff;
+.form-check-reverse > label, 
+.form-check-reverse > input {
+    cursor: pointer !important;
+    pointer-events: all !important;
 }
-/*END:Main Search bar*/
 
+
+/*END:Main Search bar*/
 /*START: AJAX Obsolete switch*/
 .form-check-label {
     color: #fff !important;

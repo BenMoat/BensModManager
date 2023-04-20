@@ -49,13 +49,12 @@
     </div>
 
     <div class="form-check form-switch form-check-reverse">
-        <label class="form-check-label"
-               for="flexSwitchCheckReverse">
+        <label class="form-check-label" for="obsoleteCheckbox">
             Exclude Obsolete Mods
         </label>
         <input class="form-check-input" id="obsoleteCheckbox"
                type="checkbox" for="ExcludeObsolete"
-               onchange="this.form.submit()"
+               onchange="this.form.submit()" onclick="cleanseURL()"
                name="ExcludeObsolete" value="@ViewData["ExcludeObsolete"]">
     </div>
 </form>

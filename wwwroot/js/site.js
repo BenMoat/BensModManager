@@ -1,19 +1,19 @@
 ﻿//Retain the Exclude obsolete mods selection 
 $('#obsoleteCheckbox').click(function (e) {
     if (e.target.checked) {
-        localStorage.setItem('checked', 'true');
+        sessionStorage.setItem('checked', 'true');
     } else {
-        localStorage.setItem('checked', 'false');
+        sessionStorage.setItem('checked', 'false');
     }
 });
 
 $(document).ready(function () {
-    document.querySelector('#obsoleteCheckbox').checked = (localStorage.getItem('checked') === 'true')
+    document.querySelector('#obsoleteCheckbox').checked = (sessionStorage.getItem('checked') === 'true')
 });
 
 //Default the checkbox to unchecked when resetting search params
 $('#resetSearch').click(function (e) {
-    localStorage.setItem('checked', 'false');
+    sessionStorage.setItem('checked', 'false');
 });
 
 //Get the static total price

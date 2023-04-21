@@ -55,6 +55,11 @@ p,
     color: #fff;
 }
 
+#searchModType-ts-control,
+#selectModType-ts-control {
+    color: #fff !important;
+}
+
 button:disabled {
     cursor: not-allowed !important;
     pointer-events: all !important;

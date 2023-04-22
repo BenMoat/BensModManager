@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    <div class="col-2" id="obsoleteLabel">
+    <div id="obsoleteLabel" class="col-2">
         <a>Obsolete?</a>
     </div>
 
@@ -73,8 +73,7 @@
 
     <div class="form-floating mb-3">
         <textarea asp-for="Notes" rows="1" id="dynamicNotes"
-                  class="form-control"
-                  placeholder="Notes">
+                  class="form-control" placeholder="Notes">
         </textarea>
         <label asp-for="Notes"></label>
     </div>
@@ -159,10 +158,10 @@
         (() => {
             'use strict';
 
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            // Apply Bootstrap validation to the form
             const forms = document.querySelectorAll('.needs-validation');
 
-            // Loop over them and prevent submission
+            // Loop over required fields and prevent submission
             Array.prototype.slice.call(forms).forEach((form) => {
                 form.addEventListener('submit', (event) => {
                     if (!form.checkValidity()) {
@@ -171,7 +170,7 @@
                     }
                     form.classList.add('was-validated');
 
-                    //Remove currency symbol from Price on Submit
+                    //Remove currency symbol from Price on form submission
                     var input = document.getElementById('price')
                     input.value = input.value.replace("£", "");
                 }, true);

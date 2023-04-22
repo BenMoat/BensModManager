@@ -24,7 +24,7 @@
             </div>
 
             <div class="col col-md-1">
-                <button class="form-control btn btn-success" id="searchBtn"
+                <button id="searchBtn" class="form-control btn btn-success"
                         onclick="cleanseURL()" type="submit"
                         title="Search" value="Search" disabled>
                     <i class="fas fa-search"></i>
@@ -52,7 +52,7 @@
         <label class="form-check-label" for="obsoleteCheckbox">
             Exclude Obsolete Mods
         </label>
-        <input class="form-check-input" id="obsoleteCheckbox"
+        <input id="obsoleteCheckbox" class="form-check-input"
                type="checkbox" for="ExcludeObsolete"
                onchange="this.form.submit()" onclick="cleanseURL()"
                name="ExcludeObsolete" value="@ViewData["ExcludeObsolete"]">

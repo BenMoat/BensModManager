@@ -74,9 +74,8 @@ button:disabled {
     cursor: pointer !important;
     pointer-events: all !important;
 }
-
-
 /*END:Main Search bar*/
+
 /*START: AJAX Obsolete switch*/
 .form-check-label {
     color: #fff !important;
@@ -178,7 +177,6 @@ totalPriceStatic {
     display: inline;
     float: right;
 }
-
 /*END: Mods table*/
 
 /*START: Mod modal*/

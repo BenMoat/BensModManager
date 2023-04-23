@@ -358,6 +358,10 @@ label,
     left: 35%;
     opacity: 1;
 }
+
+iframe {
+    width: 100%;
+}
 /*END: Invoice modal*/
 
 /*START: Buttons*/

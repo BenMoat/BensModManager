@@ -1,38 +1,46 @@
-[![GitHub release](https://img.shields.io/badge/version-1.1.0-blue)]()
+[![GitHub release](https://img.shields.io/badge/version-2.0.0-blue)]()
 
 <h1 align="center">
- <b>Ben's Mod Manager · Version 1.1</b>
+ <b>Ben's Mod Manager · Version 2.0</b>
 </h1>
 
+⚠️ Major version bump due to the how the file system now works and interacts with the iLovePDF API. 
+
 ## Features
-### Sorting:
-Columns can be asynchronously sorted by the [mod name, price or mod type](https://github.com/BenMoat/BensModManager/blob/master/Controllers/ModsController.cs#L61-#L76):
-* Upon load, the table is sorted by the mod name in ascending order. 
-  * Selecting a column header will sort it by ascending order at first, clicking it a second time will sort it by descending order and vice versa. 
-    ![image](https://user-images.githubusercontent.com/43743754/228944337-a6a9d2d6-8dc4-46f1-85ac-d476f0de0ff6.png)
+### Image to PDF Converter and Merger: 
+A way to upload and merge multiple PDF or images files into one PDF using the [iLovePDF](https://developer.ilovepdf.com/docs/api-reference#introduction) API.
+* Upload one or multiple image files - PNG or JPG. It'll then convert those images to a PDF, and merge those PDFs together. 
+  * [Uploading one image](https://github.com/BenMoat/BensModManager/blob/dev/Controllers/ModsController.cs#L189-L201) file will simply convert the file to a PDF, rename the PDF to the image's name, then delete the original image file(s). 
+  * [Uploading multiple images](https://github.com/BenMoat/BensModManager/blob/dev/Controllers/ModsController.cs#L205) will follow the same process, however, each file name will be appended with _"-unmerged"_ until the loop of converting images to PDFs is complete. 
+* There is logic in place to [ignore this API call](https://github.com/BenMoat/BensModManager/blob/dev/Controllers/ModsController.cs#L190) if the file is already of a PDF format. 
+* Here is the file system in action:
+![UploadImages](https://user-images.githubusercontent.com/43743754/233851736-fd60f808-4908-4337-b903-9e2c1fb2fb8b.gif)
 
-### Red and green PDF symbols:
-* Added Font Awesome PDF symbols to each record to make it easier to tell if a mod as the invoice attached to it or not.
-  * A Green PDF symbol means a file is attached to the mod. 
-  * A Red PDF symbol  means there is _no_ file attached to the mod. 
-    ![image](https://user-images.githubusercontent.com/43743754/228944088-4dd03b61-544d-43b3-8c0c-8b9994dfb698.png)
+### Exclude Obsolete Mods option and Search Parameter:
+* The table now has an asynchronous slider option to exclude obsolete mods. 
+  * It is defaulted to false. 
+  * It uses [Session Storage](https://github.com/BenMoat/BensModManager/blob/dev/wwwroot/js/site.js#LL1-#L17) to retain the slider selection when searching. 
+![ObsoleteMod](https://user-images.githubusercontent.com/43743754/233852313-84badfd8-5fb6-4d24-9d0f-ef03a1f4d5e5.gif)
 
-## Fixes & Improvements
-### The total price calculation:
-This now remains static at the total price of _all_ mods, not the queried mods. 
-* When querying a mod, a second price will be displayed to show the total price of the queried mods _on top_  of the total price of mods. 
-    ![image](https://user-images.githubusercontent.com/43743754/228947398-f646db60-609d-4151-9335-3f0239430c79.png)
-   _(here is how money I ~wasted~ spent on interior carbon parts)_ 
+## Fixes and Improvements
 
-### Replaced the local array of mod types in the site.js file with an AJAX call to the [controller](https://github.com/BenMoat/BensModManager/blob/master/Controllers/ModsController.cs#L97-L106):
-![image](https://user-images.githubusercontent.com/43743754/228950225-2c8a8406-a791-4da1-9ab1-0f55e3673866.png)
+### Total Price _and_ Mod Count:
+* This works in a similar way to calculating the total price of either all mods, or the queried result set of mods. 
+![image](https://user-images.githubusercontent.com/43743754/233852000-813e3708-33ac-4107-8c66-e9b3bee7bdc5.png)
+* This feature also works asynchronously with the Exclude Obsolete Mods parameter. 
+
+### Search URL Cleanser: 
+* Previously, every search parameter would be appended to the URL, regardless of whether that parameter is populated or not. 
+Now, it is [just the populated parameter(s)](https://github.com/BenMoat/BensModManager/blob/dev/Views/Mods/_ViewAll.cshtml#L218-L226) that is appended to the URL query. 
+* This works in tandem with the Exclude Obsolete Mods parameter. 
 
 ### Other fixes & improvements:
-* Fixed a TomSelect source mapping issue when trying to launch the web app in Debug mode. 
-* The mod notes' height now [animates](https://github.com/BenMoat/BensModManager/blob/master/wwwroot/js/site.js#L60-#L62) to the height of the content inside of it. 
-* Globalised the site's font colour and reduced the HTML noise from repetitive class references. 
-* Reorganised the site.css file to make it easier to read. 
-* Replaced all local libraries with CDNs. 
+* [Dynamically actionable search button](https://github.com/BenMoat/BensModManager/blob/dev/Views/Mods/_ViewAll.cshtml#L190-L208): The search button is set as read-only unless it is populated by either the mod name or mod type. 
+* Added a loading animation for whenever a mod is created or updated. 
+  * This animation also applies to processing or replacing an invoice. 
+* Added a ['Click to Copy'](https://github.com/BenMoat/BensModManager/blob/dev/Views/Mods/Invoice.cshtml#L79-L106) function in the Invoice modal for the filepath of where the PDF is saved. 
+* Every Boostrap Modal now has a fade in and out animation. 
+* Added support for Bootstrap's new [dark mode](https://getbootstrap.com/docs/5.3/customize/color-modes/#dark-mode). 
 
-### [View all changes](https://github.com/BenMoat/BensModManager/pull/1/commits)
-### [Version 1.0.0 Release Notes](https://github.com/BenMoat/BensModManager/releases/tag/v1.0.0)
+### [View all changes](https://github.com/BenMoat/BensModManager/pull/3/commits)
+### [Previous Version Release Notes](https://github.com/BenMoat/BensModManager/releases/tag/v1.1.0)

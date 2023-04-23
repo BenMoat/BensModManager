@@ -34,5 +34,5 @@ This now remains static at the total price of _all_ mods, not the queried mods.
 * Reorganised the site.css file to make it easier to read. 
 * Replaced all local libraries with CDNs. 
 
-### [View all changes](https://github.com/BenMoat/BensModManager/pull/4/commits)
+### [View all changes](https://github.com/BenMoat/BensModManager/pull/1/commits)
 ### [Version 1.0.0 Release Notes](https://github.com/BenMoat/BensModManager/releases/tag/v1.0.0)

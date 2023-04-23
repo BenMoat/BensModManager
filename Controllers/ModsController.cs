@@ -13,6 +13,10 @@ using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Specialized;
 using System.Globalization;
+using LovePdf.Core;
+using LovePdf.Model.Task;
+using Microsoft.AspNetCore.Http.HttpResults;
+using System.Diagnostics;
 #endregion
 
 namespace BensModManager.Controllers
@@ -37,11 +41,12 @@ namespace BensModManager.Controllers
         #endregion
 
         //GET: Mods
-        public async Task<IActionResult> Index(string modName, string modType, string sortOrder, int? pageNumber)
+        public async Task<IActionResult> Index(string modName, string modType, string excludeObsolete, string sortOrder, int? pageNumber)
         {
             //Set the search parameters
             ViewData["ModName"] = modName;
             ViewData["ModType"] = modType;
+            ViewData["ExcludeObsolete"] = excludeObsolete;
 
             var mods = from s in _context.Mod
                        select s;
@@ -55,6 +60,11 @@ namespace BensModManager.Controllers
             if (!String.IsNullOrEmpty(modType))
             {
                 mods = mods.Where(s => s.ModType.Contains(modType));
+            }
+
+            if (excludeObsolete == "on")
+            {
+                mods = mods.Where(s => s.Obsolete.Equals(false));
             }
 
             #region Column Sorting
@@ -76,11 +86,11 @@ namespace BensModManager.Controllers
             };
             #endregion
 
-            var pageSize = 18;
+            var pageSize = 20;
             return View(await PaginatedList<Mod>.CreateAsync(mods.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
-        //GET: Total Price of all Mods
+        //GET: Total price of all mods
         public string TotalPrice()
         {
             var mods = from s in _context.Mod
@@ -93,7 +103,18 @@ namespace BensModManager.Controllers
             return result;
         }
 
-        //GET: ModTypes
+        //GET: Total amount of mods
+        public int TotalMods()
+        {
+            var mods = from s in _context.Mod
+                       select s;
+
+            var result = mods.Count();
+
+            return result;
+        }
+
+        //GET: Mod types
         public IEnumerable<SelectListItem> ModTypes()
         {
             var modTypes = _context.Mod.Select(u => new SelectListItem
@@ -127,22 +148,22 @@ namespace BensModManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit(int id, List<IFormFile> files, Mod modModel)
         {
+            var api = new LovePdfApi("project_public_e15b9c1cb6f1d73301d35515617747cf_1jHbd7594f28632061e1ebdfefc7ba33e1b6b", "secret_key_c0a5fd6f4f7af5960a58623a45f5cc45_NDGv7acdbe5dbcd2b4b049f7155ade5900c2a");
 
             foreach (var file in files)
             {
-
+                //If an invoice is replaced, delete the original file
                 if (System.IO.File.Exists((modModel.FilePath)))
                 {
                     System.IO.File.Delete(modModel.FilePath);
                 }
 
                 var basePath = Path.Combine(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\");
-                bool basePathExists = System.IO.Directory.Exists(basePath);
+                bool basePathExists = Directory.Exists(basePath);
                 if (!basePathExists) Directory.CreateDirectory(basePath);
                 var fileName = Path.GetFileNameWithoutExtension(file.FileName);
                 var filePath = Path.Combine(basePath, file.FileName);
-                var extension = Path.GetExtension(file.FileName);
-
+                var originalExtension = Path.GetExtension(file.FileName);
 
                 if (!System.IO.File.Exists(filePath))
                 {
@@ -150,6 +171,7 @@ namespace BensModManager.Controllers
                     {
                         await file.CopyToAsync(stream);
                     }
+
                     modModel = new Mod
                     {
                         ID = id,
@@ -159,14 +181,66 @@ namespace BensModManager.Controllers
                         Obsolete = modModel.Obsolete,
                         Notes = modModel.Notes,
                         FileName = fileName,
-                        FileType = file.ContentType,
-                        FileExtension = extension,
-                        FilePath = filePath
+                        FileType = "application/pdf",
+                        FileExtension = ".pdf",
+                        FilePath = filePath.Replace(originalExtension, ".pdf")
                     };
-                    _context.Mod.Update(modModel);
-                    _context.SaveChanges();
+
+                    #region Convert to PDF and Rename
+                    if (originalExtension != ".pdf")
+                    {
+                        //Convert file to a PDF, update the database and delete the original
+                        var taskImageToPDF = api.CreateTask<ImageToPdfTask>();
+
+                        var appendFile = taskImageToPDF.AddFile(filePath);
+
+                        taskImageToPDF.Process();
+                        taskImageToPDF.DownloadFile(basePath);
+
+                        System.IO.File.Delete(filePath);
+                    }
+
+                    if (files.Count > 1)
+                    {
+                        System.IO.File.Move(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + fileName + ".pdf", Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + fileName + "-unmerged.pdf");
+                    }
+                    #endregion
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
+            #region Merge the PDF Files
+            //Initialise the API merge call
+            var taskMerge = api.CreateTask<MergeTask>();
+
+            if (files.Count > 1)
+            {
+                for (int i = 0; i < files.Count; i++)
+                {
+                    //Append '-unmerged.pdf' to each file
+                    string unmergedExtension = Path.GetExtension(files[i].FileName);
+                    taskMerge.AddFile(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + files[i].FileName.Replace(unmergedExtension, "-unmerged.pdf"));
+                }
+
+                //Download the merged PDFs
+                taskMerge.Process();
+                var mergedPath = Path.Combine(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\");
+                taskMerge.DownloadFile(mergedPath);
+
+                /*Change the name of the merged PDF to the last name of the uploaded PDF in the array to match the saved file path in the database
+                It's a bit hacky but you cannot change the name of the merged file in flight using this PDF library*/
+                string extension = Path.GetExtension(files[^1].FileName);
+                System.IO.File.Move(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\merged.pdf", Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + files[^1].FileName.Replace(extension, ".pdf"));
+
+                //Delete the unmerged files after creating merged PDF
+                string[] filePaths = Directory.GetFiles(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\", "*-unmerged.pdf");
+                foreach (string filePath in filePaths)
+                {
+                    System.IO.File.Delete(filePath);
                 }
             }
+            #endregion
 
             _context.Update(modModel);
             await _context.SaveChangesAsync();
@@ -174,7 +248,7 @@ namespace BensModManager.Controllers
             return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mod.ToList()) });
         }
 
-        //GET: Mod Invoice
+        //GET: Mod invoice
         public async Task<IActionResult> Invoice(int? id)
         {
             if (id == null)
@@ -182,8 +256,8 @@ namespace BensModManager.Controllers
                 return NotFound();
             }
 
-            var modModel = await _context.Mod
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var modModel = await _context.Mod.FirstOrDefaultAsync(m => m.ID == id);
+
             if (modModel == null)
             {
                 return NotFound();
@@ -192,7 +266,7 @@ namespace BensModManager.Controllers
             return View(modModel);
         }
 
-        //GET: Load DeleteInvoice Popup
+        //GET: Load DeleteInvoice popup
         public async Task<IActionResult> DeleteInvoice(int? id)
         {
             if (id == null)
@@ -206,7 +280,7 @@ namespace BensModManager.Controllers
             return View(modModel);
         }
 
-        //POST: Delete selected Mod
+        //POST: Delete selected invoice
         [HttpPost, ActionName("DeleteInvoice")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteInvoiceConfirmed(int id)
@@ -227,7 +301,7 @@ namespace BensModManager.Controllers
             return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mod.ToList()) });
         }
 
-        //GET: Load DeleteMod Popup
+        //GET: Load DeleteMod popup
         public async Task<IActionResult> DeleteMod(int? id)
         {
             if (id == null)
@@ -241,17 +315,19 @@ namespace BensModManager.Controllers
             return View(modModel);
         }
 
-        //POST: Delete selected Mod
+        //POST: Delete selected mod
         [HttpPost, ActionName("DeleteMod")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteModConfirmed(int id)
         {
             var modModel = await _context.Mod.FindAsync(id);
             if (modModel == null) return null;
+
             if (System.IO.File.Exists(modModel.FilePath))
             {
-                System.IO.File.Delete(modModel.FileName);
+                System.IO.File.Delete(modModel.FilePath);
             }
+
             _context.Mod.Remove(modModel);
             await _context.SaveChangesAsync();
             return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mod.ToList()) });

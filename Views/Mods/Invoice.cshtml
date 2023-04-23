@@ -1,22 +1,9 @@
 ﻿@model BensModManager.Models.Mod
 
-@{
-    Layout = null;
-}
-
-<style>
-.modal-dialog {
-    max-width: 700px;
-}
-
-iframe {
-    width: 100%;
-}
-</style>
+@{ Layout = null; }
 
 <form asp-action="AddOrEdit" asp-route-id="@Model.ID"
       class="row g-3"
-      id="yo"
       enctype="multipart/form-data"
       onsubmit="return jQueryAjaxPost(this);">
     <input type="hidden" asp-for="ID" />
@@ -26,71 +13,98 @@ iframe {
     <input hidden asp-for="Obsolete" type="checkbox">
     <input hidden asp-for="Notes" type="text">
     <input hidden asp-for="FileType" type="text">
+    <input hidden asp-for="FileExtension" type="text">
 
-    <h3 class="text-center text-white"><b>@Model.ModName</b></h3>
+    <h3 class="text-center"><b>@Model.ModName</b></h3>
 
-    <div class="col">
+    <div class="col-6">
         <div class="form-floating mb-3">
             <input asp-for="FileName" type="text"
-                   class="form-control bg-dark text-light"
+                   class="form-control"
                    readonly>
-            <label asp-for="FileName"
-                   class="text-light">
+            <label asp-for="FileName">
             </label>
         </div>
     </div>
 
     <div class="col">
         <div class="form-floating mb-3">
-            <input asp-for="FileExtension" type="url"
-                   class="form-control bg-dark text-light"
+            <div id="tooltipText"></div>
+            <input asp-for="FilePath" type="url"
+                   id="copyFilePath"
+                   class="form-control"
                    readonly>
-            <label asp-for="FileExtension"
-                   class="text-light">
+            <label asp-for="FilePath">
             </label>
         </div>
     </div>
 
     <div class="form-floating mb-3">
-        <input asp-for="FilePath" type="url"
-               class="form-control bg-dark text-light"
-               readonly>
-        <label asp-for="FilePath"
-               class="text-light">
-        </label>
-    </div>
-
-    <div class="form-floating mb-3">
-        <iframe src="~/files/@(Model.FileName)@(Model.FileExtension)#view=FitH"
-                frameborder="0" height="600" align="middle" loading="eager">
+        <iframe src="~/files/@(Model.FileName)@(Model.FileExtension)"
+                frameborder="0" height="600" align="middle" loading="eager" width="100%">
         </iframe>
     </div>
 
-
     <div class="align-content-center">
-        <label class="text-light">Replace Invoice: &nbsp</label>
-        <input type="file" name="files" class="btn btn-warning" />
+        <label>Replace Invoice: &nbsp</label>
+        <input type="file" name="files" class="btn btn-warning" multiple accept=".png, .jpg, .pdf" />
     </div>
 
-    <button type="button"
-            class="btn btn-default btn-danger text-white"
-            onclick="deletePopup('@Url.Action("DeleteInvoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Invoice')">
-        Delete Invoice
+    <div id="loader-wrapper" style="display: none;">
+        <div id="loader"></div>
+        <h3 id="loaderCaption">processing mod...</h3>
+    </div>
+
+    <button type="submit" title="Add this new invoice to the mod" id="submitBtn"
+            class="btn btn-success">
+        Submit New Invoice
     </button>
 
-    <button type="submit" id="submitBtn"
-            class="btn btn-success text-white">
-        Submit
-    </button>
+    <div class="btn-group gap-2">
+                <button type="button" title="Return to the previous screen"
+                class="btn btn-outline-light"
+                onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=@Model.ID},Context.Request.Scheme)','Update Mod')">
+            &#8592; Back
+        </button>
 
-    <button type="button" class="btn btn-outline-light"
-            onclick="modPopup('@Url.Action("AddOrEdit","Mods",new {id=@Model.ID},Context.Request.Scheme)','Update Mod')">
-        &#8592; Back
-    </button>
-
+        <button type="button" title="Delete this invoice from the file system"
+                class="btn btn-danger"
+                onclick="deletePopup('@Url.Action("DeleteInvoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Invoice')">
+            Delete Invoice
+        </button>
+    </div>
 </form>
 
 <script>
+    //Copy the full file path of the selected document
+    $("#tooltipText").hide();
+    $("#copyFilePath").focusout(function () {
+        $("#tooltipText").hide();
+    })
+
+        .focusin(function () {
+            $('#tooltipText').text('Click to copy');
+            $("#tooltipText").fadeIn(400);
+        });
+
+    $('#copyFilePath').mouseout(function () {
+        $('#copyFilePath').blur();
+
+        document.getSelection().removeAllRanges();
+    });
+
+    $('#copyFilePath').mouseover(function () {
+        $(this).focus();
+        $(this).select();
+    });
+
+    $('#copyFilePath').click(function () {
+        document.execCommand('copy');
+
+        $('#tooltipText').text('Copied!').delay(1000);
+        $('#tooltipText').fadeOut(400);
+    });
+
     //Remove currency symbol from Price on Submit
     var input = document.getElementById('price')
     input.value = input.value.replace("£", "");

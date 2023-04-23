@@ -13,7 +13,7 @@
 
     <div class="form-floating mb-3">
         <input asp-for="ModName" type="text"
-               class="form-control bg-dark"
+               class="form-control"
                placeholder="Mod Name"
                required
                data-prefix="R$ ">
@@ -23,11 +23,11 @@
         </div>
     </div>
 
-    <div class="col-5">
+    <div class="col-3">
         <div class="form-floating mb-3">
             <input asp-for="Price" type="text"
                    id="price"
-                   class="form-control bg-dark"
+                   class="form-control"
                    placeholder="Price"
                    required
                    data-prefix="£">
@@ -38,11 +38,11 @@
         </div>
     </div>
 
-    <div class="col">
+    <div class="col-5">
         <div class="form-floating mb-3">
             <select asp-for="ModType"
                     id="selectModType"
-                    class="form-select bg-dark"
+                    class="form-select"
                     placeholder="Mod Type"
                     list="list-language"
                     required>
@@ -56,23 +56,26 @@
         </div>
     </div>
 
-    <div class="form-floating mb-3">
-        <textarea asp-for="Notes" rows="1" id="dynamicNotes"
-                  class="form-control bg-dark"
-                  placeholder="Notes">
-        </textarea>
-        <label asp-for="Notes"></label>
+    <div id="obsoleteLabel" class="col-2">
+        <a>Obsolete?</a>
     </div>
 
-    <div class="col">
-        <div class="form-check">
-            <input asp-for="Obsolete" type="checkbox"
-                   class="form-check-input">
-            <label asp-for="Obsolete"
-                   class="form-check-label">
-                Obsolete
+    <div class="col-2">
+        <div class="checkbox-wrapper">
+            <input asp-for="Obsolete" type="checkbox" id="obCheck" />
+            <label for="obCheck" style="--size: 30px">
+                <svg viewBox="0,0,50,50">
+                    <path d="M5 30 L 20 45 L 45 5"></path>
+                </svg>
             </label>
         </div>
+    </div>
+
+    <div class="form-floating mb-3">
+        <textarea asp-for="Notes" rows="1" id="dynamicNotes"
+                  class="form-control" placeholder="Notes">
+        </textarea>
+        <label asp-for="Notes"></label>
     </div>
 
     <!--Retain file if one is already selected-->
@@ -85,37 +88,59 @@
     {
         <div class="col">
             <div class="form-floating mb-3">
-                <input type="file" name="files" />
+                <input type="file" name="files" multiple accept=".png, .jpg, .pdf" />
             </div>
         </div>
     }
 
+    <!--If this record contains a PDF, append the Invoice button-->
     @if (Model.FileName != null)
     {
-        <button type="button"
-                title="View the invoice attached to this mod"
-                class="btn btn-default btn-info"
-                onclick="invoicePopup('@Url.Action("Invoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Mod Invoice')">
-            View Invoice
-        </button>
+        <div class="btn-group">
+            <button type="button"
+                    title="View the invoice attached to this mod"
+                    class="btn btn-default btn-info"
+                    onclick="invoicePopup('@Url.Action("Invoice","Mods",new {id=@Model.ID},Context.Request.Scheme)','Mod Invoice')">
+                View Invoice
+            </button>
+        </div>
     }
 
-    <button type="submit"
-            title="Submit this mod to the database"
-            class="btn btn-success"
-            onclick="validation()">
-        Submit
-    </button>
+    <div id="loader-wrapper" style="display: none;">
+        <div id="loader"></div>
+        <h3 id="loaderCaption">processing mod...</h3>
+    </div>
 
-    <!--If this is an existing record, append the Delete and View Invoice button-->
+    @if (Model.ID == 0)
+    {
+        <div class="btn-group">
+            <button type="submit"
+                    title="Submit this mod to the database"
+                    class="btn btn-success"
+                    onclick="validation();">
+                Submit
+            </button>
+        </div>
+    }
+
+    <!--If this is an existing record, append the Delete button-->
     @if (Model.ID != 0)
     {
-        <button type="button"
-                title="Permanently delete this mod"
-                class="btn btn-default btn-danger"
-                onclick="deletePopup('@Url.Action("DeleteMod","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Mod')">
-            Delete
-        </button>
+        <div class="btn-group gap-2">
+            <button type="button"
+                    title="Permanently delete this mod"
+                    class="btn btn-default btn-danger"
+                    onclick="deletePopup('@Url.Action("DeleteMod","Mods",new {id=@Model.ID},Context.Request.Scheme)','Delete Mod')">
+                Delete
+            </button>
+
+            <button type="submit"
+                    title="Submit this mod to the database"
+                    class="btn btn-success"
+                    onclick="validation();">
+                Submit
+            </button>
+        </div>
     }
 </form>
 
@@ -126,17 +151,17 @@
     //Remove the default '0' from the Price
     if ($('#price').val() == '£0.00') {
         $('#price').val("")
-    }
+    };
 
     //Form Validation
     function validation() {
         (() => {
             'use strict';
 
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            // Apply Bootstrap validation to the form
             const forms = document.querySelectorAll('.needs-validation');
 
-            // Loop over them and prevent submission
+            // Loop over required fields and prevent submission
             Array.prototype.slice.call(forms).forEach((form) => {
                 form.addEventListener('submit', (event) => {
                     if (!form.checkValidity()) {
@@ -144,7 +169,8 @@
                         event.stopPropagation();
                     }
                     form.classList.add('was-validated');
-                    //Remove currency symbol from Price on Submit
+
+                    //Remove currency symbol from Price on form submission
                     var input = document.getElementById('price')
                     input.value = input.value.replace("£", "");
                 }, true);

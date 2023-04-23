@@ -7,14 +7,24 @@ body {
     margin-bottom: 60px;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+/*Global Overrides*/
+h2, 
+input,
+a, 
+p, 
+.container {
+    color: #fff ;
 }
 
-.navbar-color {
+.navbar {
+    align-items: center;
     background-color: #2c3034;
+}
+
+.form-select,
+.form-control {
+    color: #fff !important;
+    border-color: #fff;
 }
 
 .modsHeader {
@@ -26,20 +36,10 @@ body {
     background-color: #2c3034;
 }
 
-/*START:Global overrides*/
-* {
-    color: #fff;
-}
-
-    input, textarea{
-        color: #fff !important;
-        cursor: text !important;
-    }
-/*END:Global overrides*/
-
 /*START:Main Search bar*/
 #inlineSearch {
     padding-bottom: 25px;
+    line-height: 50px;
 }
 
     #inlineSearch .col {
@@ -50,19 +50,47 @@ body {
 #searchModName {
     height: 55px;
 }
-    #searchModName::placeholder {
-        color: #fff;
-    }
 
-    #searchModType {
-        color: #fff;
-    }
+.ts-control {
+    color: #fff;
+}
+
+#searchModType-ts-control,
+#selectModType-ts-control {
+    color: #fff !important;
+}
+
+button:disabled {
+    cursor: not-allowed !important;
+    pointer-events: all !important;
+}
+
+#searchModType-ts-control::placeholder {
+    color: #8a9198 !important;
+}
+
+.form-check-reverse > label, 
+.form-check-reverse > input {
+    cursor: pointer !important;
+    pointer-events: all !important;
+}
 /*END:Main Search bar*/
+
+/*START: AJAX Obsolete switch*/
+.form-check-label {
+    color: #fff !important;
+}
+
+.form-check-input:checked {
+    background-color: #22bf76;
+    border-color: #22bf76;
+}
+/*END: AJAX Obsolete switch*/
 
 /*START:Tom Select dropdown*/
 .ts-wrapper.form-control,
 .ts-wrapper.form-select {
-    height: 55px !important;
+    height: 55px;
 }
 
 .ts-control {
@@ -106,7 +134,7 @@ tr:not(#headers):hover {
     cursor: pointer;
 }
 
-a#sortColumns {
+a.sortColumns {
     color: #fff;
     text-decoration: none;
 }
@@ -114,6 +142,11 @@ a#sortColumns {
 td {
     transition: 0.25s;
     box-shadow: inset 0 0 0 2px;
+}
+
+#obsoleteMod td {
+    text-decoration: line-through;
+    color: grey;
 }
 
 #containsPDF {
@@ -131,6 +164,19 @@ td {
         background: #212529 !important;
         z-index: -2;
     }
+
+#totalPrice,
+totalPriceStatic {
+    display: inline;
+    float: left;
+}
+
+#modsFloat,
+#totalMods,
+#totalModsStatic {
+    display: inline;
+    float: right;
+}
 /*END: Mods table*/
 
 /*START: Mod modal*/
@@ -138,13 +184,181 @@ td {
     cursor: grab;
 }
 
-#dynamicNotes {
-    overflow: hidden;
-    scroll-behavior: unset;
-    resize: none;
+label,
+#selectModType-ts-control::placeholder {
+    color: #8a9198 !important;
 }
 
+#obsoleteLabel {
+    vertical-align: central !important;
+    margin-top: 6%;
+    color: #fff;
+}
+
+.checkbox-wrapper input {
+    position: absolute;
+    opacity: 0;
+}
+
+    .checkbox-wrapper input:checked + label svg path {
+        stroke-dashoffset: 0;
+    }
+
+    .checkbox-wrapper input + label {
+        display: block;
+        border: 1px solid #fff;
+        width: 55px;
+        height: 55px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all .2s ease;
+    }
+
+        .checkbox-wrapper input + label svg {
+            pointer-events: none;
+            padding: 15%;
+        }
+
+            .checkbox-wrapper input + label svg path {
+                fill: none;
+                stroke: #22bf76;
+                stroke-width: 4px;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+                stroke-dasharray: 90;
+                stroke-dashoffset: 91;
+               transition: all 250ms cubic-bezier(1,0,.37,.91);
+            }
+
+#dynamicNotes {
+    scroll-behavior: unset;
+    resize: none;
+    max-height: 500px;
+}
+
+/*Override the inherited styling from the btn-group class wuith the default radius*/
+.btn-group > .btn-group:not(:first-child) > .btn, .btn-group > .btn:nth-child(n+3), .btn-group > :not(.btn-check) + .btn {
+    border-top-left-radius: 0.375rem !important;
+    border-bottom-left-radius: 0.375rem !important;
+}
+.btn-group tn-group > .btn.dropdown-toggle-split:first-child, .btn-group > .btn:not(:last-child):not(.dropdown-toggle) {
+    border-top-right-radius: 0.375rem !important;
+    border-bottom-right-radius: 0.375rem !important;
+}
+
+#loader-wrapper {
+    position: absolute;
+    padding-bottom: 70px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: #212529;
+    opacity: 1;
+    animation: fadeIn .6s;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+#loaderCaption {
+    text-align: center;
+    position: absolute;
+    top: 55%;
+    width: 100%;
+    height: 100px;
+}
+
+#loader {
+    display: block;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 100px;
+    height: 100px;
+    margin: -50px 0 0 -50px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #22bf76;
+    -webkit-animation: spin 2s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
+    animation: spin 2s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+}
+
+    #loader:before {
+        content: "";
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-top-color: #e74c3c;
+        -webkit-animation: spin 3s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
+        animation: spin 3s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+    }
+
+    #loader:after {
+        content: "";
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-top-color: #0dcaf0;
+        -webkit-animation: spin 1.5s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
+        animation: spin 1.5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+    }
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg); /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(0deg); /* IE 9 */
+        transform: rotate(0deg); /* Firefox 16+, IE 10+, Opera */
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg); /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(360deg); /* IE 9 */
+        transform: rotate(360deg); /* Firefox 16+, IE 10+, Opera */
+    }
+}
+
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg); /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(0deg); /* IE 9 */
+        transform: rotate(0deg); /* Firefox 16+, IE 10+, Opera */
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg); /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(360deg); /* IE 9 */
+        transform: rotate(360deg); /* Firefox 16+, IE 10+, Opera */
+    }
+}
 /*END: Mods modal*/
+
+/*START: Invoice modal*/
+#tooltipText {
+    position: absolute;
+    background-color: #2c3034;
+    padding: 2px;
+    text-align: center;
+    left: 35%;
+    opacity: 1;
+}
+/*END: Invoice modal*/
 
 /*START: Buttons*/
 .btn-success {
@@ -182,7 +396,7 @@ td {
     }
 /*END: Buttons*/
 
-/*Sticky footer styles*/
+/*Footer*/
 .footer {
     position: absolute;
     bottom: 0;

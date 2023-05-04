@@ -170,16 +170,18 @@ else
 
 <div class="container align-middle text-center">
     <a asp-action="Index"
-       asp-route-sortOrder="@ViewData["CurrentSort"]"
        asp-route-pageNumber="@(Model.PageIndex - 1)"
-       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       asp-route-modName="@ViewData["ModName"]"
+       asp-route-modType="@ViewData["ModType"]"
+       asp-route-excludeObsolete="@ViewData["ExcludeObsolete"]"
        class="btn btn-default btn-outline-light @prevDisabled">
         Previous
     </a>
     <a asp-action="Index"
-       asp-route-sortOrder="@ViewData["CurrentSort"]"
        asp-route-pageNumber="@(Model.PageIndex + 1)"
-       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       asp-route-modName="@ViewData["ModName"]"
+       asp-route-modType="@ViewData["ModType"]"
+       asp-route-excludeObsolete="@ViewData["ExcludeObsolete"]"
        class="btn btn-default btn-outline-light @nextDisabled">
         Next
     </a>

@@ -86,7 +86,7 @@ namespace BensModManager.Controllers
             };
             #endregion
 
-            var pageSize = 20;
+            var pageSize = 15;
             return View(await PaginatedList<Mod>.CreateAsync(mods.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 

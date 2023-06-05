@@ -41,7 +41,7 @@ namespace BensModManager.Controllers
         #endregion
 
         //GET: Mods
-        public async Task<IActionResult> Index(string modName, string modType, string excludeObsolete, string sortOrder, int? pageNumber)
+        public IActionResult Index(string modName, string modType, string excludeObsolete, string sortOrder)
         {
             //Set the search parameters
             ViewData["ModName"] = modName;
@@ -86,8 +86,7 @@ namespace BensModManager.Controllers
             };
             #endregion
 
-            var pageSize = 15;
-            return View(await PaginatedList<Mod>.CreateAsync(mods.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(mods.AsNoTracking());
         }
 
         //GET: Total price of all mods
@@ -229,7 +228,7 @@ namespace BensModManager.Controllers
                 taskMerge.DownloadFile(mergedPath);
 
                 /*Change the name of the merged PDF to the last name of the uploaded PDF in the array to match the saved file path in the database
-                It's a bit hacky but you cannot change the name of the merged file in flight using this PDF library*/
+                It's a bit hacky but you cannot change the name of the merged file in-flight using this PDF library*/
                 string extension = Path.GetExtension(files[^1].FileName);
                 System.IO.File.Move(Directory.GetCurrentDirectory() + "\\wwwroot\\files\\merged.pdf", Directory.GetCurrentDirectory() + "\\wwwroot\\files\\" + files[^1].FileName.Replace(extension, ".pdf"));
 

@@ -1,4 +1,4 @@
-﻿@model PaginatedList<BensModManager.Models.Mod>
+﻿@model IEnumerable<BensModManager.Models.Mod>
 
 <div class="title-container text-center">
     <h1 class="modsHeader">Mods</h1>
@@ -154,7 +154,7 @@ else
 {
     @if (@ViewData["ModName"] != null || @ViewData["ModType"] != null || @ViewData["ExcludeObsolete"] != null)
     {
-        <h2 id="modsFloat">&nbsp;Mods</h2><h2 id="totalModsStatic"></h2><h2 id="totalMods">@Model.Count out of&nbsp;</h2>
+        <h2 id="modsFloat">&nbsp;Mods</h2><h2 id="totalModsStatic"></h2><h2 id="totalMods">@Model.Count() out of&nbsp;</h2>
         <h2 id="totalPrice">@string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:C}", @Model.Sum(x => x.Price)) of&nbsp;</h2><h2 id="totalPriceStatic"></h2>
     }
     else
@@ -162,30 +162,6 @@ else
         <h2 id="modsFloat">&nbsp;Mods</h2><h2 id="totalModsStatic"></h2><h2 id="totalPriceStatic">Total: </h2>
     }
 }
-
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
-
-<div class="container align-middle text-center">
-    <a asp-action="Index"
-       asp-route-pageNumber="@(Model.PageIndex - 1)"
-       asp-route-modName="@ViewData["ModName"]"
-       asp-route-modType="@ViewData["ModType"]"
-       asp-route-excludeObsolete="@ViewData["ExcludeObsolete"]"
-       class="btn btn-default btn-outline-light @prevDisabled">
-        Previous
-    </a>
-    <a asp-action="Index"
-       asp-route-pageNumber="@(Model.PageIndex + 1)"
-       asp-route-modName="@ViewData["ModName"]"
-       asp-route-modType="@ViewData["ModType"]"
-       asp-route-excludeObsolete="@ViewData["ExcludeObsolete"]"
-       class="btn btn-default btn-outline-light @nextDisabled">
-        Next
-    </a>
-</div>
 
 <script>
     //Disable the search button if there is no search criteria

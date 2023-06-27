@@ -17,12 +17,12 @@ namespace BensModManager.Models
 					DbContextOptions<BensModManagerContext>>()))
             {
                 //Check if any records exist
-                if (context.Mod.Any())
+                if (context.Mods.Any())
                 {
                     return;
                 }
 
-                context.Mod.AddRange(
+                context.Mods.AddRange(
                     new Mod
                     {
                         ModName = "MST Intake and Turbo Inlet",

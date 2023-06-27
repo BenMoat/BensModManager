@@ -9,6 +9,6 @@ namespace BensModManager.Data
 			: base(options)
 		{
 		}
-		public DbSet<Mod> Mod { get; set; }
+		public DbSet<Mod> Mods { get; set; }
 	}
 }

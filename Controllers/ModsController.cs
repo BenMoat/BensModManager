@@ -48,7 +48,7 @@ namespace BensModManager.Controllers
             ViewData["ModType"] = modType;
             ViewData["ExcludeObsolete"] = excludeObsolete;
 
-            var mods = from s in _context.Mod
+            var mods = from s in _context.Mods
                        select s;
 
             //Search criteria
@@ -92,7 +92,7 @@ namespace BensModManager.Controllers
         //GET: Total price of all mods
         public string TotalPrice()
         {
-            var mods = from s in _context.Mod
+            var mods = from s in _context.Mods
                        select s;
 
             decimal totalPrice = mods.Sum(x => x.Price);
@@ -105,7 +105,7 @@ namespace BensModManager.Controllers
         //GET: Total amount of mods
         public int TotalMods()
         {
-            var mods = from s in _context.Mod
+            var mods = from s in _context.Mods
                        select s;
 
             var result = mods.Count();
@@ -116,7 +116,7 @@ namespace BensModManager.Controllers
         //GET: Mod types
         public IEnumerable<SelectListItem> ModTypes()
         {
-            var modTypes = _context.Mod.Select(u => new SelectListItem
+            var modTypes = _context.Mods.Select(u => new SelectListItem
             {
                 Text = u.ModType,
                 Value = u.ModType
@@ -133,7 +133,7 @@ namespace BensModManager.Controllers
                 return View(new Mod());
             else
             {
-                var modModel = await _context.Mod.FindAsync(id);
+                var modModel = await _context.Mods.FindAsync(id);
                 if (modModel == null)
                 {
                     return NotFound();
@@ -244,7 +244,7 @@ namespace BensModManager.Controllers
             _context.Update(modModel);
             await _context.SaveChangesAsync();
 
-            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mod.ToList()) });
+            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mods.ToList()) });
         }
 
         //GET: Mod invoice
@@ -255,7 +255,7 @@ namespace BensModManager.Controllers
                 return NotFound();
             }
 
-            var modModel = await _context.Mod.FirstOrDefaultAsync(m => m.ID == id);
+            var modModel = await _context.Mods.FirstOrDefaultAsync(m => m.ID == id);
 
             if (modModel == null)
             {
@@ -273,7 +273,7 @@ namespace BensModManager.Controllers
                 return NotFound();
             }
 
-            var modModel = await _context.Mod
+            var modModel = await _context.Mods
                 .FirstOrDefaultAsync(m => m.ID == id);
 
             return View(modModel);
@@ -284,7 +284,7 @@ namespace BensModManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteInvoiceConfirmed(int id)
         {
-            var modModel = await _context.Mod.FindAsync(id);
+            var modModel = await _context.Mods.FindAsync(id);
             if (modModel == null) return null;
             if (System.IO.File.Exists(modModel.FilePath))
             {
@@ -295,9 +295,9 @@ namespace BensModManager.Controllers
             System.IO.File.Delete(modModel.FilePath);
             modModel.FilePath = null;
 
-            _context.Mod.Update(modModel);
+            _context.Mods.Update(modModel);
             await _context.SaveChangesAsync();
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mod.ToList()) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mods.ToList()) });
         }
 
         //GET: Load DeleteMod popup
@@ -308,7 +308,7 @@ namespace BensModManager.Controllers
                 return NotFound();
             }
 
-            var modModel = await _context.Mod
+            var modModel = await _context.Mods
                 .FirstOrDefaultAsync(m => m.ID == id);
 
             return View(modModel);
@@ -319,7 +319,7 @@ namespace BensModManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteModConfirmed(int id)
         {
-            var modModel = await _context.Mod.FindAsync(id);
+            var modModel = await _context.Mods.FindAsync(id);
             if (modModel == null) return null;
 
             if (System.IO.File.Exists(modModel.FilePath))
@@ -327,9 +327,9 @@ namespace BensModManager.Controllers
                 System.IO.File.Delete(modModel.FilePath);
             }
 
-            _context.Mod.Remove(modModel);
+            _context.Mods.Remove(modModel);
             await _context.SaveChangesAsync();
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mod.ToList()) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Mods.ToList()) });
         }
     }
 }
